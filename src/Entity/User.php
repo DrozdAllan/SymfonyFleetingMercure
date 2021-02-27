@@ -37,6 +37,36 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Announcer;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $hair;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $tattoo;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $smoke;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $shortdescription;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $validadmin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +141,77 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getAnnouncer(): ?bool
+    {
+        return $this->Announcer;
+    }
+
+    public function setAnnouncer(bool $Announcer): self
+    {
+        $this->Announcer = $Announcer;
+
+        return $this;
+    }
+
+    public function getHair(): ?string
+    {
+        return $this->hair;
+    }
+
+    public function setHair(?string $hair): self
+    {
+        $this->hair = $hair;
+
+        return $this;
+    }
+
+    public function getTattoo(): ?bool
+    {
+        return $this->tattoo;
+    }
+
+    public function setTattoo(?bool $tattoo): self
+    {
+        $this->tattoo = $tattoo;
+
+        return $this;
+    }
+
+    public function getSmoke(): ?bool
+    {
+        return $this->smoke;
+    }
+
+    public function setSmoke(?bool $smoke): self
+    {
+        $this->smoke = $smoke;
+
+        return $this;
+    }
+
+    public function getShortdescription(): ?string
+    {
+        return $this->shortdescription;
+    }
+
+    public function setShortdescription(?string $shortdescription): self
+    {
+        $this->shortdescription = $shortdescription;
+
+        return $this;
+    }
+
+    public function getValidadmin(): ?bool
+    {
+        return $this->validadmin;
+    }
+
+    public function setValidadmin(?bool $validadmin): self
+    {
+        $this->validadmin = $validadmin;
+
+        return $this;
     }
 }

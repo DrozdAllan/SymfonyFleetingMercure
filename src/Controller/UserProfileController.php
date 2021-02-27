@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class UserProfileController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/profile", name="profile")
      */
     public function home(UserRepository $userRepository)
     {
@@ -18,7 +17,7 @@ class HomeController extends AbstractController
         $users = $userRepository->findBy($criteria, ['id' => 'DESC'], 4);
 
 
-        return $this->render('home.html.twig', [
+        return $this->render('profile/profile.html.twig', [
             'users' => $users
         ]);
     }

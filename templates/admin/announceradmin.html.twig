@@ -1,0 +1,52 @@
+{% extends "shared/_nude.html.twig" %}
+
+{% block body %}
+
+	<table classe="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">
+					Username
+				</th>
+				<th scope="col">
+					cheveux
+				</th>
+				<th scope="col">
+					tatouage
+				</th>
+				<th scope="col">
+					fume
+				</th>
+                <th scope="col">
+					description
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for A in waitingAnnouncers %}
+				<tr>
+					<th scope="row">
+						{{ A.username }}
+					</th>
+					<td>
+						{{ A.hair }}
+					</td>
+					<td>
+						{{ A.tattoo }}
+					</td>
+					<td>
+						{{ A.smoke }}
+					</td>
+					<td>
+						{{ A.shortdescription }}
+					</td>
+                    <td>
+                    <a href="{{ path('announcervalidate', {'id': A.id}) }}" class="btn btn-success btn-sm">Valider</a>
+                    </td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
