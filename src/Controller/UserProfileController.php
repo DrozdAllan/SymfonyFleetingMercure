@@ -7,6 +7,8 @@ use App\Form\UserModifyFormType;
 use App\Repository\UserRepository;
 use App\Form\AnnouncerModifyFormType;
 use App\Form\AnnouncerRegistrationType;
+use App\Form\UploadMediaFormType;
+use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

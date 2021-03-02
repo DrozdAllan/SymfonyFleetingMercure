@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\User;
 use App\Form\AnnouncerRegistrationType;
 use App\Form\RegistrationFormType;
+use App\Form\UploadMediaFormType;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +65,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/announcer", name="announcer_register")
      */
-    public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(AnnouncerRegistrationType::class, $user);
@@ -96,7 +98,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/announcer.html.twig', [
-            'formView' => $form->createView(),
+            'formView' => $form->createView()
         ]);
     }
 }

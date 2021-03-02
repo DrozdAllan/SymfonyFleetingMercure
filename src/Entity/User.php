@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -68,6 +68,16 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $validadmin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="user")
+     */
+    private $mediaId;
+
+    public function __construct()
+    {
+        $this->mediaId = new ArrayCollection();
+    }
 
 
 
@@ -217,6 +227,36 @@ class User implements UserInterface
     public function setValidadmin(?bool $validadmin): self
     {
         $this->validadmin = $validadmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMediaId(): Collection
+    {
+        return $this->mediaId;
+    }
+
+    public function addMediaId(Media $mediaId): self
+    {
+        if (!$this->mediaId->contains($mediaId)) {
+            $this->mediaId[] = $mediaId;
+            $mediaId->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaId(Media $mediaId): self
+    {
+        if ($this->mediaId->removeElement($mediaId)) {
+            // set the owning side to null (unless already changed)
+            if ($mediaId->getUser() === $this) {
+                $mediaId->setUser(null);
+            }
+        }
 
         return $this;
     }

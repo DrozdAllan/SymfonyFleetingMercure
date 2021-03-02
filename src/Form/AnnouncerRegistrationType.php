@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Media;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -14,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AnnouncerRegistrationType extends AbstractType
 {
@@ -54,9 +54,6 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('shortdescription', TextareaType::class, [
                 'label' => 'Veuillez vous décrire en quelques mots',
             ])
-            // ->add('imageFile', VichImageType::class, [
-            //     'required' => true,
-            // ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Je reconnais avoir lu les conditions d\'utilisation et les accepte',
                 'mapped' => false,
@@ -91,7 +88,7 @@ class AnnouncerRegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }
