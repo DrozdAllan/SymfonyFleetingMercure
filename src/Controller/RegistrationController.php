@@ -84,12 +84,15 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+            // Ajout d'un flash pour prévenir de la prise en charge Admin et redirect home
+            $this->addFlash("success", "Inscription réussie ! Votre profil va être étudié pour validation");
+            return $this->redirectToRoute('home');
+            // return $guardHandler->authenticateUserAndHandleSuccess(
+            //     $user,
+            //     $request,
+            //     $authenticator,
+            //     'main' // firewall name in security.yaml
+            // );
         }
 
         return $this->render('registration/announcer.html.twig', [

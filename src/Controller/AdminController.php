@@ -2,20 +2,27 @@
 
 namespace App\Controller;
 
+use App\Form\AnnouncerAdminType;
 use App\Repository\UserRepository;
+use App\Form\AnnouncerRegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")
      */
-    public function home()
+    public function home(UserRepository $userRepository)
     {
-        return $this->render('admin/index.html.twig');
+        $adminqueue = count($userRepository->findBy(['Announcer' => '1', 'validadmin' => null ]));
+
+        return $this->render('admin/index.html.twig', [
+            'adminqueue' => $adminqueue
+        ]);
     }
 
     /**
@@ -43,5 +50,30 @@ class AdminController extends AbstractController
         $em->flush();
         //3 Retour à la même page
         return $this->redirectToRoute('announceradmin');
+    }
+
+    /**
+     * @Route("/admin/announcers/modify?{id}", name="announcermodify")
+     */
+    public function announcermodify($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em) {
+        //1 Récupérer l'id de l'annonceur à modifier
+        $announcer = $userRepository->find($id);
+
+        //2 Renvoyer les champs pour l'admin dans un nouveau form avec handlerequest
+        $form = $this->createForm(AnnouncerAdminType::class, $announcer);
+        $form->handleRequest($request);
+
+        //3 Action du submit
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('announceradmin');
+        }
+
+        //4 Renvoi au formulaire car render toujours à la fin 
+        $formView = $form->createView();
+        return $this->render('admin/announcermodify.html.twig', [
+            'announcer' => $announcer,
+            'formView' => $formView
+        ]);
     }
 }

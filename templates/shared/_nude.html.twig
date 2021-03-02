@@ -26,9 +26,9 @@
 	</head>
 
 	<body>
-    {% include "shared/_navbar.html.twig" %}
-		{% block body %}
+		{% include "shared/_navbar.html.twig" %}
 
-		{% endblock %}
-	</body>
-</html>
+		<div class="container text-center p-3"> {% block body %}{% endblock %}
+			</div>
+		</body>
+	</html>

@@ -1,6 +1,69 @@
 {% extends "shared/_nude.html.twig" %}
 
 {% block body %}
-    <h1>Votre profil</h1>
-    <h4>Username : </h4>
+	{% for rubrique, messages in app.flashes %}
+		<div class="alert alert-{{rubrique}}">
+			{% for message in messages %}
+				<p>
+					{{ message }}
+				</p>
+			{% endfor %}
+		</div>
+	{% endfor %}
+	<h2>
+		Bienvenue sur votre profil
+		{{ app.user.username }}
+	</h2>
+
+	<h4>
+		Nom d'utilisateur :
+		{{ app.user.username }}
+	</h4>
+
+	{% if app.user.announcer == 1 %}
+
+		<h4>
+			Cheveux :
+			{{ app.user.hair }}
+		</h4>
+
+
+		<h4>
+			Tatouage :
+			{{ app.user.tattoo | boolean }}
+		</h4>
+
+		<h4>
+			Fume :
+			{{ app.user.smoke | boolean }}
+		</h4>
+
+
+		<h4>
+			Description :
+			{{ app.user.shortdescription }}
+		</h4>
+
+		{# <h4>
+			Image :
+			<img src="{{ vich_uploader_asset(app.user,'imageFile') }}"/>
+		</h4> #}
+
+
+		<h4>
+			<a href="{{ path('modifyannouncerprofile') }}" class="btn btn-success btn-sm">
+				Modifier son profil
+			</a>
+		</h4>
+	{% else %}
+		<h4>
+			<a href="{{ path('modifyuserprofile') }}" class="btn btn-success btn-sm">
+				Modifier son profil
+			</a>
+		</h4>
+	{% endif %}
+	<a href="#" class="btn btn-success btn-sm">
+		Modifier son mot de passe
+	</a>
+
 {% endblock %}

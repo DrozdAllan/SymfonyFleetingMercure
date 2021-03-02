@@ -1,0 +1,39 @@
+{% extends "shared/_nude.html.twig" %}
+
+{% block title %}
+	Edition de l'annonce de
+	{{announcer.username}}
+{% endblock %}
+
+{% block body %}
+	<h1>Edition de l'annonce de
+	{{announcer.username}}</h1>
+
+
+	<h1>Nouveau produit</h1>
+
+	{# {{ form(formView) }} #}
+
+	{{form_start(formView)}}
+
+	{{form_errors(formView)}}
+
+	{# {{form_widget(formView)}} #}
+
+	<div class="row">
+		<div class="col">
+			{{form_row(formView.username)}}
+
+		</div>
+		<div class="col">
+			{{ form_row(formView.shortdescription) }}
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-danger">
+		<i class="fas fa-save"></i>
+		Modifier l'annonce de l'annonceur
+	</button>
+
+	{{form_end(formView)}}
+{% endblock %}

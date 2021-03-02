@@ -25,7 +25,8 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="d-flex" id="wrapper">
+		<div
+			class="d-flex" id="wrapper">
 			<!-- Sidebar -->
 			<div class="bg-dark border-right border-primary" id="sidebar-wrapper">
 				<div class="sidebar-heading">
@@ -60,7 +61,17 @@
 				{% include "shared/_navbar.html.twig" %}
 
 				<div class="container text-center p-3">
-					{% block body %}{% endblock %} 
+					{% for rubrique, messages in app.flashes %}
+						<div class="alert alert-{{rubrique}}">
+							{% for message in messages %}
+								<p>
+									{{ message }}
+								</p>
+							{% endfor %}
+						</div>
+					{% endfor %}
+					{% block body %}
+					{% endblock %}
 				</div>
 			</div>
 			<!-- /#page-content-wrapper -->
@@ -71,8 +82,9 @@
 		<!-- Menu Toggle Script -->
 		<script>
 			$ ("#menu-toggle").click (function (e) {
-                e.preventDefault ();
-                $ ("#wrapper").toggleClass ("toggled");
-            });
+e.preventDefault ();
+$ ("#wrapper").toggleClass ("toggled");
+});
 		</script>
+	</body>
 </html>

@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AnnouncerRegistrationType extends AbstractType
 {
@@ -53,6 +54,9 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('shortdescription', TextareaType::class, [
                 'label' => 'Veuillez vous décrire en quelques mots',
             ])
+            // ->add('imageFile', VichImageType::class, [
+            //     'required' => true,
+            // ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Je reconnais avoir lu les conditions d\'utilisation et les accepte',
                 'mapped' => false,
@@ -81,8 +85,7 @@ class AnnouncerRegistrationType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

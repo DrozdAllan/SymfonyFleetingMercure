@@ -17,7 +17,7 @@
 				<th scope="col">
 					fume
 				</th>
-                <th scope="col">
+				<th scope="col">
 					description
 				</th>
 			</tr>
@@ -32,17 +32,28 @@
 						{{ A.hair }}
 					</td>
 					<td>
-						{{ A.tattoo }}
+						{{ A.tattoo | boolean }}
 					</td>
 					<td>
-						{{ A.smoke }}
+						{{ A.smoke | boolean }}
 					</td>
 					<td>
 						{{ A.shortdescription }}
 					</td>
-                    <td>
-                    <a href="{{ path('announcervalidate', {'id': A.id}) }}" class="btn btn-success btn-sm">Valider</a>
-                    </td>
+					<td>
+						{# <img src="{{ vich_uploader_asset(A) }}" alt="{{ A.name }}" /> #}
+					</td>
+		
+					<td>
+						<a href="{{ path('announcervalidate', {'id': A.id}) }}" class="btn btn-success btn-sm">
+							Valider
+						</a>
+					</td>
+					<td>
+						<a href="{{ path('announcermodify', {'id': A.id}) }}" class="btn btn-success btn-sm">
+							Modifier l'annonce
+						</a>
+					</td>
 
 				</tr>
 			{% endfor %}
