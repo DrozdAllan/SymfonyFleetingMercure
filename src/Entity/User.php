@@ -69,18 +69,6 @@ class User implements UserInterface
      */
     private $validadmin;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Media::class, mappedBy="user")
-     */
-    private $mediaId;
-
-    public function __construct()
-    {
-        $this->mediaId = new ArrayCollection();
-    }
-
-
-
     
 
     public function getId(): ?int
@@ -227,36 +215,6 @@ class User implements UserInterface
     public function setValidadmin(?bool $validadmin): self
     {
         $this->validadmin = $validadmin;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMediaId(): Collection
-    {
-        return $this->mediaId;
-    }
-
-    public function addMediaId(Media $mediaId): self
-    {
-        if (!$this->mediaId->contains($mediaId)) {
-            $this->mediaId[] = $mediaId;
-            $mediaId->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMediaId(Media $mediaId): self
-    {
-        if ($this->mediaId->removeElement($mediaId)) {
-            // set the owning side to null (unless already changed)
-            if ($mediaId->getUser() === $this) {
-                $mediaId->setUser(null);
-            }
-        }
 
         return $this;
     }
