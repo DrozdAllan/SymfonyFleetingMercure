@@ -43,11 +43,14 @@
 			Description :
 			{{ app.user.shortdescription }}
 		</h4>
-
-		{# <h4>
+		{% if app.user %}
+		
+		<h4>
 			Image :
-			<img src="{{ vich_uploader_asset(app.user,'imageFile') }}"/>
-		</h4> #}
+			<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+
+		</h4>
+		{% endif %}
 
 
 		<h4>

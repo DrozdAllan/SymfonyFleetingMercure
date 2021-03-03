@@ -20,9 +20,6 @@
 				<th scope="col">
 					description
 				</th>
-				<th scope="col">
-					image
-				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,8 +40,13 @@
 					<td>
 						{{ A.shortdescription }}
 					</td>
+
 					<td>
-						{# <img src="{{ vich_uploader_asset(A) }}" alt="{{ A.name }}" /> #}
+						{# {% for image in waitingAnnouncers.images %}
+							<div>
+								<img src="{{ asset('/uploads/images/'~ image.name) }}" alt="Image">
+							</div>
+						{% endfor %} #}
 					</td>
 		
 					<td>

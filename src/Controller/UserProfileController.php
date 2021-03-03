@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\User;
 use App\Form\UserModifyFormType;
 use App\Repository\UserRepository;
 use App\Form\AnnouncerModifyFormType;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,10 +21,15 @@ class UserProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profilehome()
+    public function profilehome(ImageRepository $imageRepository)
     {
 
-        
+        // $userImage = new Image();
+        // $userId = $this->getUser()->getId();
+        // $userImage = $imageRepository->findBy(['user' => $userId]);
+        // return $this->render('profile/profile.html.twig', [
+        //     'image' => $userImage['0']
+        // ]);
         return $this->render('profile/profile.html.twig');
     }
 

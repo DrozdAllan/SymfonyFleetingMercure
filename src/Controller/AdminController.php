@@ -37,6 +37,7 @@ class AdminController extends AbstractController
         
         $waitingAnnouncers = $userRepository->findBy($criteria, ['id' => 'ASC']);
         
+
         return $this->render('admin/announceradmin.html.twig', [
             'waitingAnnouncers' => $waitingAnnouncers
         ]);
