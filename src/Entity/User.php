@@ -69,6 +69,16 @@ class User implements UserInterface
      */
     private $validadmin;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="user")
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
     
 
     public function getId(): ?int
@@ -215,6 +225,36 @@ class User implements UserInterface
     public function setValidadmin(?bool $validadmin): self
     {
         $this->validadmin = $validadmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
 
         return $this;
     }

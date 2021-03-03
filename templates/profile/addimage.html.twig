@@ -1,16 +1,12 @@
 {% extends "shared/_nude.html.twig" %}
 
 {% block body %}
-{# 
-	{{ form_start(formView) }}
-	{{ form_errors(formView) }}
-	
+<h1>Ajouter une image</h1>
 
-	{{ form_row(formView.imageFile) }}
+{{ form_start(formView) }}
 
+    {{ form_row(formView.image) }}
 
-	<button type="submit" class="btn btn-success mt-3">
-		Ajouter une image
-	</button>
-	{{ form_end(formView) }} #}
+	<button type="submit" class="btn btn-danger">Ajouter la photo</button>
+{{ form_end(formView) }}
 {% endblock %}

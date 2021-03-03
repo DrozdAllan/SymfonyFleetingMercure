@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Form\AnnouncerAdminType;
 use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use App\Form\AnnouncerRegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +30,11 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/announcers", name="announceradmin")
      */
-    public function announcersadmin(UserRepository $userRepository)
+    public function announcersadmin(UserRepository $userRepository, ImageRepository $imageRepository)
     {
-     
+
         $criteria = ['Announcer' => '1', 'validadmin' => null ];
+        
         $waitingAnnouncers = $userRepository->findBy($criteria, ['id' => 'ASC']);
         
         return $this->render('admin/announceradmin.html.twig', [

@@ -2,25 +2,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Media;
+
 use App\Entity\User;
-use App\Form\AnnouncerRegistrationType;
+use App\Entity\Image;
 use App\Form\RegistrationFormType;
-use App\Form\UploadMediaFormType;
+use App\Form\AnnouncerRegistrationType;
 use App\Security\LoginFormAuthenticator;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\ImageUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/choice", name="register_choice")
      */
-    public function choice() {
+    public function choice()
+    {
 
         return $this->render('registration/choice.html.twig');
     }
@@ -65,9 +69,10 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/announcer", name="announcer_register")
      */
-    public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, EntityManagerInterface $em): Response
     {
         $user = new User();
+        $image = new Image();
         $form = $this->createForm(AnnouncerRegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -81,9 +86,20 @@ class RegistrationController extends AbstractController
             );
 
             $user->setAnnouncer('1');
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
+
+
+            $image->setUser($user);
+            $imageFileName = $imageUploader->upload($imageFile);
+            $image->setImageFilename($imageFileName);
+
+
+            $em->persist($user);
+            $em->persist($image);
+
+            $em->flush();
             // do anything else you need here, like send an email
 
             // Ajout d'un flash pour prévenir de la prise en charge Admin et redirect home
