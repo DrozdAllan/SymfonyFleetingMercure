@@ -91,10 +91,10 @@ class RegistrationController extends AbstractController
             $imageFile = $form->get('image')->getData();
 
 
-            $image->setUser($user);
             $imageFileName = $imageUploader->upload($imageFile);
             $image->setImageFilename($imageFileName);
-
+            
+            $user->addImage($image);
 
             $em->persist($user);
             $em->persist($image);

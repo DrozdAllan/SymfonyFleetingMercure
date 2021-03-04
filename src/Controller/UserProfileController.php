@@ -24,12 +24,7 @@ class UserProfileController extends AbstractController
     public function profilehome(ImageRepository $imageRepository)
     {
 
-        // $userImage = new Image();
-        // $userId = $this->getUser()->getId();
-        // $userImage = $imageRepository->findBy(['user' => $userId]);
-        // return $this->render('profile/profile.html.twig', [
-        //     'image' => $userImage['0']
-        // ]);
+        
         return $this->render('profile/profile.html.twig');
     }
 

@@ -44,12 +44,9 @@
 			{{ app.user.shortdescription }}
 		</h4>
 		{% if app.user %}
-		
-		<h4>
-			Image :
-			<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
-
-		</h4>
+			{% for image in app.user.images %}
+				<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+			{% endfor %}
 		{% endif %}
 
 

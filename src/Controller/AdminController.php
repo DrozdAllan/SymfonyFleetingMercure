@@ -30,7 +30,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/announcers", name="announceradmin")
      */
-    public function announcersadmin(UserRepository $userRepository, ImageRepository $imageRepository)
+    public function announcersadmin(UserRepository $userRepository)
     {
 
         $criteria = ['Announcer' => '1', 'validadmin' => null ];

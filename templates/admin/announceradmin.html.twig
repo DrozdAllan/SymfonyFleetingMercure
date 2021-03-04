@@ -4,7 +4,7 @@
 
 	<table classe="table table-hover">
 		<thead>
-			<tr>
+			<tr class="">
 				<th scope="col">
 					Username
 				</th>
@@ -20,14 +20,17 @@
 				<th scope="col">
 					description
 				</th>
+				<th scope="col">
+					image
+				</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for A in waitingAnnouncers %}
 				<tr>
-					<th scope="row">
+					<td scope="row">
 						{{ A.username }}
-					</th>
+					</td>
 					<td>
 						{{ A.hair }}
 					</td>
@@ -42,19 +45,20 @@
 					</td>
 
 					<td>
-						{# {% for image in waitingAnnouncers.images %}
-							<div>
-								<img src="{{ asset('/uploads/images/'~ image.name) }}" alt="Image">
-							</div>
-						{% endfor %} #}
+						<div>
+							{% for image in A.images %}
+
+								<img src="{{ asset('/uploads/images/'~ image.imageFilename) }}" alt="Image" width="80">
+
+							{% endfor %}
+						</div>
 					</td>
-		
+
 					<td>
 						<a href="{{ path('announcervalidate', {'id': A.id}) }}" class="btn btn-success btn-sm">
 							Valider
 						</a>
-					</td>
-					<td>
+					
 						<a href="{{ path('announcermodify', {'id': A.id}) }}" class="btn btn-success btn-sm">
 							Modifier l'annonce
 						</a>
@@ -65,4 +69,10 @@
 		</tbody>
 	</table>
 
+	<style>
+		table,
+		td, th {
+			border: 1px solid #333;
+		}
+	</style>
 {% endblock %}
