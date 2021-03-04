@@ -14,12 +14,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(UserRepository $userRepository, ImageRepository $imageRepository)
+    public function home(UserRepository $userRepository)
     {
-        $AssociatedImage = [];
-        // ['id' => ['user' => objet utilisateur, 'imageFilename' => nom de l'image]]
-
-        
         $criteria = ['validadmin' => '1' ];
         $users = $userRepository->findBy($criteria, ['id' => 'DESC'], 4);
 

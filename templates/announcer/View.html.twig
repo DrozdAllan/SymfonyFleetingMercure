@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<h1>
+		Profil de
+		{{ announcer.username }}
+	</h1>
+
+
+	Cheveux :
+	{{ announcer.hair }}
+    <br>
+	Tatouage :
+	{{ announcer.tattoo | boolean }}
+    <br>
+	Fume :
+	{{ announcer.smoke | boolean }}
+    <br>
+
+	{% for image in announcer.images %}
+		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="250">
+	{% endfor %}
+	<p class="card-text">
+		{{ announcer.shortdescription }}
+	</p>
+
+
+{% endblock %}
