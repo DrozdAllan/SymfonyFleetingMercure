@@ -4,14 +4,13 @@ namespace App\Controller;
 
 
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ViewAnnouncerController extends AbstractController
 {
     /**
-     * @Route("/announcer/{username}", name="announcer")
+     * @Route("/announcer/{username}", name="announcer_view")
      */
     public function ViewAnnouncer($username, UserRepository $userRepository)
     {
@@ -23,4 +22,5 @@ class ViewAnnouncerController extends AbstractController
             'announcer' => $announcer
         ]);
     }
+
 }

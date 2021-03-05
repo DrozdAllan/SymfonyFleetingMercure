@@ -2,18 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
-use App\Entity\User;
 use App\Form\UserModifyFormType;
-use App\Repository\UserRepository;
 use App\Form\AnnouncerModifyFormType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\User as UserUser;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserProfileController extends AbstractController
@@ -21,10 +15,8 @@ class UserProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profilehome(ImageRepository $imageRepository)
+    public function profilehome()
     {
-
-        
         return $this->render('profile/profile.html.twig');
     }
 
@@ -50,6 +42,34 @@ class UserProfileController extends AbstractController
         return $this->render('profile/modifyannouncerprofile.html.twig', [
             'formView' => $formView
         ]);
+    }
+
+     /**
+     * @Route("/profile/deleteimage/{imageid}", name="announcerdeleteimage")
+     * Apparemment pas safe mais ballec
+     */
+    public function announcerDeleteImage($imageid, Request $request, ImageRepository $imageRepository, EntityManagerInterface $em)
+    {
+        $image = $imageRepository->findOneBy(['id' => $imageid]);
+
+        if ($image) {
+
+            // Supprimer image du dossier Public/Uploads
+            $nom = $image->getImageFilename();
+
+            $filePath = "uploads\\images\\" . $nom;
+            // dd($filePath);
+            unlink($filePath);
+
+            // Supprimer image de la DB
+            $em->remove($image);
+            $em->flush();
+            // $this->addFlash("success", "Image ajoutée avec succès");
+
+            //redirection vers le profil de l'announcer
+            return $this->redirectToRoute('modifyannouncerprofile');
+        }
+
     }
 
     /**

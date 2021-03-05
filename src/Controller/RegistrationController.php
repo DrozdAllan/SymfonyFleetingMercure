@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/announcer", name="announcer_register")
+     * @Route("/announcer-register", name="announcer_register")
      */
     public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, EntityManagerInterface $em): Response
     {

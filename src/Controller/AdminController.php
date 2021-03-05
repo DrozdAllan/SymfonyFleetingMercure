@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
 use App\Form\AnnouncerAdminType;
+use App\Form\DeleteImageType;
 use App\Repository\UserRepository;
 use App\Repository\ImageRepository;
-use App\Form\AnnouncerRegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class AdminController extends AbstractController
 {
@@ -20,7 +19,7 @@ class AdminController extends AbstractController
      */
     public function home(UserRepository $userRepository)
     {
-        $adminqueue = count($userRepository->findBy(['Announcer' => '1', 'validadmin' => null ]));
+        $adminqueue = count($userRepository->findBy(['Announcer' => '1', 'validadmin' => null]));
 
         return $this->render('admin/index.html.twig', [
             'adminqueue' => $adminqueue
@@ -33,10 +32,10 @@ class AdminController extends AbstractController
     public function announcersadmin(UserRepository $userRepository)
     {
 
-        $criteria = ['Announcer' => '1', 'validadmin' => null ];
-        
+        $criteria = ['Announcer' => '1', 'validadmin' => null];
+
         $waitingAnnouncers = $userRepository->findBy($criteria, ['id' => 'ASC']);
-        
+
 
         return $this->render('admin/announceradmin.html.twig', [
             'waitingAnnouncers' => $waitingAnnouncers
@@ -44,9 +43,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/announcers/validate?{id}", name="announcervalidate")
+     * @Route("/admin/announcers-validate/{id}", name="announcervalidate")
      */
-    public function announcervalidate($id, UserRepository $userRepository, EntityManagerInterface $em) {
+    public function announcervalidate($id, UserRepository $userRepository, EntityManagerInterface $em)
+    {
         //1 Récupérer l'id validé
         $announcer = $userRepository->find($id);
         //2 Changer le statut validadmin de null à 1 avec l'entity manager
@@ -57,9 +57,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/announcers/modify?{id}", name="announcermodify")
+     * @Route("/admin/announcers-modify/{id}", name="announcermodify")
      */
-    public function announcermodify($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em) {
+    public function announcermodify($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em)
+    {
         //1 Récupérer l'id de l'annonceur à modifier
         $announcer = $userRepository->find($id);
 
@@ -79,5 +80,45 @@ class AdminController extends AbstractController
             'announcer' => $announcer,
             'formView' => $formView
         ]);
+    }
+
+    /**
+     * @Route("/admin/deleteimage/{imageid}", name="admindeleteimage")
+     * Apparemment pas safe mais ballec
+     */
+    public function adminDeleteImage($imageid, Request $request, ImageRepository $imageRepository, EntityManagerInterface $em)
+    {
+        $image = $imageRepository->findOneBy(['id' => $imageid]);
+
+
+        if ($image) {
+            $announcerId = $image->getUser()->getId();
+            // dump($imageid);
+            // 13 image id
+
+            // dump($announcerId);
+            // 14 announcer id 
+
+            $urlBase = $this->generateUrl('announcermodify', ['id' => $announcerId]);
+
+            // dd($urlBase);
+
+
+            // Supprimer image du dossier Public/Uploads
+            $nom = $image->getImageFilename();
+
+            $filePath = "uploads\\images\\" . $nom;
+            // dd($filePath);
+            unlink($filePath);
+
+            // Supprimer image de la DB
+            $em->remove($image);
+            $em->flush();
+            // $this->addFlash("success", "Image ajoutée avec succès");
+
+            //redirection vers le basePath
+            return $this->redirect($urlBase);
+        }
+
     }
 }

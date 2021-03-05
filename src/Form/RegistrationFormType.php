@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
@@ -23,15 +24,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Entrez un nom d\'utilisateur'
                 ]
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'Je reconnais avoir lu les conditions d\'utilisation et les accepte',
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -52,7 +44,20 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ]);
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'Je reconnais avoir lu les conditions d\'utilisation et les accepte',
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Confirmer l\'inscription'
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

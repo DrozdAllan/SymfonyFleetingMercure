@@ -6,30 +6,29 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Edition de l'annonce de
-	{{announcer.username}}</h1>
+	<h1>
+		Edition de l'annonce de
+		{{announcer.username}}
+	</h1>
 
 
 	{{form_start(formView)}}
 
 	{{form_errors(formView)}}
 
-	{# {{form_widget(formView)}} #}
+	{{form_widget(formView)}}
 
-	<div class="row">
-		<div class="col">
-			{{form_row(formView.username)}}
-
-		</div>
-		<div class="col">
-			{{ form_row(formView.shortdescription) }}
-		</div>
-	</div>
-
-	<button type="submit" class="btn btn-danger">
+	<button type="submit" class="btn btn-danger m-3">
 		<i class="fas fa-save"></i>
 		Modifier l'annonce de l'annonceur
 	</button>
 
 	{{form_end(formView)}}
+
+
+	{% for image in announcer.images %}
+		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+		<a href="{{ path('admindeleteimage', {'imageid': image.id}) }}" class="btn btn-success">Supprimer l'image</a>
+	{% endfor %}
+
 {% endblock %}

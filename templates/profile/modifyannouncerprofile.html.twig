@@ -4,18 +4,28 @@
 
 	{{ form_start(formView) }}
 	{{ form_errors(formView) }}
-	
+
 	{{ form_row(formView.username) }}
 	{{ form_row(formView.hair) }}
 	{{ form_row(formView.tattoo) }}
 	{{ form_row(formView.smoke) }}
 
 	{{ form_row(formView.shortdescription) }}
-	<span class="alert">ATTENTION : Modifier votre description demandera une nouvelle validation administrateur, votre profil ne sera donc pas visible en attendant</span>
+	<span class="alert">
+		ATTENTION : Modifier votre description demandera une nouvelle validation administrateur, votre profil ne sera donc pas visible en attendant
+	</span>
 
 
 	<button type="submit" class="btn btn-success mt-3">
-		Modifier son profil
+		Confirmer modification
 	</button>
 	{{ form_end(formView) }}
+
+
+	{% for image in app.user.images %}
+		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+		<a href="{{ path('announcerdeleteimage', {'imageid': image.id}) }}" class="btn btn-success">
+			Supprimer l'image
+		</a>
+	{% endfor %}
 {% endblock %}

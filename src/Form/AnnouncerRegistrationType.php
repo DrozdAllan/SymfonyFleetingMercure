@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AnnouncerRegistrationType extends AbstractType
@@ -104,7 +105,11 @@ class AnnouncerRegistrationType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid format image',
                     ])
                 ],
-            ]);
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Confirmer l\'inscription'
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

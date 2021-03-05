@@ -23,6 +23,8 @@
 
 			{{ form_row(formView.plainPassword) }}
 
+			{{ form_row(formView.image) }}
+
 		</div>
 		<div class="col">
 			{{ form_row(formView.hair) }}
@@ -33,12 +35,11 @@
 
 			{{ form_row(formView.shortdescription) }}
 
+		</div>
 			{{ form_row(formView.agreeTerms) }}
 
-			<button type="submit" class="btn btn-success">
-				Confirmer l'inscription
-			</button>
+			{{ form_row(formView.submit) }}
+
 			{{ form_end(formView) }}
-		</div>
 	</div>
 {% endblock %}

@@ -6,12 +6,11 @@ use App\Entity\User;
 use App\Entity\Image;
 use App\Service\ImageUploader;
 use App\Form\UploadImageFormType;
-use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ImageController extends AbstractController
@@ -24,7 +23,7 @@ class ImageController extends AbstractController
 
         $image = new Image;
         $user = $this->getUser();
-        
+
         $form = $this->createForm(UploadImageFormType::class);
         $form->handleRequest($request);
 
@@ -38,7 +37,7 @@ class ImageController extends AbstractController
                 /** @var User $user */
                 $imageFileName = $imageUploader->upload($imageFile);
                 $image->setImageFilename($imageFileName);
-                
+
                 $user->addImage($image);
                 $em->persist($image);
                 $em->flush();
