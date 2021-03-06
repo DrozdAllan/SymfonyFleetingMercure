@@ -1,48 +1,68 @@
-<nav class="navbar navbar-expand navbar-primary bg-dark">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+	<nav class="navbar navbar-expand navbar-primary bg-dark">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-	<div class="collapse navbar-collapse" id="navbarColor01">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item" id="menu-toggle">
-				<a class="nav-link" href="#">Menu <i class="fas fa-angle-right"></i></a>
-			</li>
-			<li class="nav-item active">
-				<a class="nav-link" href="{{ path('home') }}">Accueil
-					<span class="sr-only">(current)</span>
-				</a>
-			</li>
-		</ul>
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="{{ path('home') }}">
+						Accueil
+					</a>
+				</li>
+				<form action="{{ path('search') }}" method="get" class="d-flex">
 
-		<a class="navbar-brand mr-auto" href="{{ path('home') }}"><img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/></a>
+					<input type="search" name="username" placeholder="Recherche rapide" class="form-control">
+					<br>
 
-		{# <form class="form-inline my-2 my-lg-0"> #}
-		<ul class="navbar-nav">
-			{% if app.user %}
-				{% if is_granted('ROLE_ADMIN') %}
+					<button class="btn btn-outline-success" type="submit">
+						Rechercher
+					</button>
+
+				</form>
+			</ul>
+
+			<a class="navbar-brand mr-auto" href="{{ path('home') }}">
+				<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
+			</a>
+
+			{# <form class="form-inline my-2 my-lg-0"> #}
+			<ul class="navbar-nav">
+				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+							<a href="{{ path('admin') }}" class="btn btn-warning">
+								Administration
+							</a>
+						</li>
+					{% endif %}
+					{% if is_granted('ROLE_USER') %}
+						<li class="nav-item">
+							<a href="{{ path('profile') }}" class="btn btn-warning">
+								Profil
+							</a>
+						</li>
+					{% endif %}
 					<li class="nav-item">
-						<a href="{{ path('admin') }}" class="btn btn-success">Administration</a>
+						<a href="{{ path('app_logout') }}" class="btn btn-danger">
+							Deconnexion
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a href="{{ path('registrationChoice') }}" class="btn btn-warning">
+							Inscription
+						</a>
+					</li>
+					&nbsp;
+					<li class="nav-item">
+						<a href="{{ path('app_login') }}" class="btn btn-warning">
+							Connexion
+						</a>
 					</li>
 				{% endif %}
-				{% if is_granted('ROLE_USER') %}
-					<li class="nav-item">
-						<a href="{{ path('profile') }}" class="btn btn-success">Profil</a>
-					</li>
-				{% endif %}
-				<li class="nav-item">
-					<a href="{{ path('app_logout') }}" class="btn btn-danger">Deconnexion</a>
-				</li>
-			{% else %}
-				<li class="nav-item">
-					<a href="{{ path('registrationChoice') }}" class="btn btn-success">Inscription</a>
-				</li>&nbsp;
-				<li class="nav-item">
-					<a href="{{ path('app_login') }}" class="btn btn-success">Connexion</a>
-				</li>
-			{% endif %}
 
 
-		</ul>
-	</div>
-</nav>
+			</ul>
+		</div>
+	</nav>
