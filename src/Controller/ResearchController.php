@@ -26,7 +26,7 @@ class ResearchController extends AbstractController
             // dd($info);
             
 
-            $url = $this->generateUrl('announcer_view', ['username' => $info]);
+            $url = $this->generateUrl('viewAnnouncer', ['username' => $info]);
 
             dd($url);
             $this->redirect($url);

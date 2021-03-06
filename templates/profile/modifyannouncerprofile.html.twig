@@ -24,7 +24,7 @@
 
 	{% for image in app.user.images %}
 		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
-		<a href="{{ path('announcerdeleteimage', {'imageid': image.id}) }}" class="btn btn-success">
+		<a href="{{ path('announcerDeleteImage', {'imageid': image.id}) }}" class="btn btn-success">
 			Supprimer l'image
 		</a>
 	{% endfor %}

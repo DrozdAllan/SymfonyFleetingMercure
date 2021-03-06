@@ -3,31 +3,32 @@
 namespace App\Controller;
 
 use App\Form\UserModifyFormType;
-use App\Form\AnnouncerModifyFormType;
+use App\Form\ModifyAnnouncerFormType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class UserProfileController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
      */
-    public function profilehome()
+    public function profile()
     {
         return $this->render('profile/profile.html.twig');
     }
 
     /**
-     * @Route("/profile/modifyannouncerprofile", name="modifyannouncerprofile")
+     * @Route("/profile/modify-announcer", name="modifyAnnouncerProfile")
      */
     public function modifyAnnouncerProfile(Request $request, EntityManagerInterface $em)
     {
         $usermodify = $this->getUser();
         // dd($usermodify);
-        $form = $this->createForm(AnnouncerModifyFormType::class, $usermodify);
+        $form = $this->createForm(ModifyAnnouncerFormType::class, $usermodify);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -39,13 +40,13 @@ class UserProfileController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('profile/modifyannouncerprofile.html.twig', [
+        return $this->render('profile/modifyAnnouncerProfile.html.twig', [
             'formView' => $formView
         ]);
     }
 
      /**
-     * @Route("/profile/deleteimage/{imageid}", name="announcerdeleteimage")
+     * @Route("/profile/deleteimage/{imageid}", name="announcerDeleteImage")
      * Apparemment pas safe mais ballec
      */
     public function announcerDeleteImage($imageid, Request $request, ImageRepository $imageRepository, EntityManagerInterface $em)
@@ -67,13 +68,13 @@ class UserProfileController extends AbstractController
             // $this->addFlash("success", "Image ajoutée avec succès");
 
             //redirection vers le profil de l'announcer
-            return $this->redirectToRoute('modifyannouncerprofile');
+            return $this->redirectToRoute('modifyAnnouncerProfile');
         }
 
     }
 
     /**
-     * @Route("/profile/modifyuserprofile", name="modifyuserprofile")
+     * @Route("/profile/modifyuserprofile", name="modifyUserProfile")
      */
     public function modifyUserProfile(Request $request, EntityManagerInterface $em)
     {
@@ -90,7 +91,7 @@ class UserProfileController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('profile/modifyuserprofile.html.twig', [
+        return $this->render('profile/modifyUserProfile.html.twig', [
             'formView' => $formView
         ]);
     }

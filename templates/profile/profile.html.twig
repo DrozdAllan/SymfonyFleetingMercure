@@ -27,7 +27,6 @@
 			{{ app.user.hair }}
 		</h4>
 
-
 		<h4>
 			Tatouage :
 			{{ app.user.tattoo | boolean }}
@@ -37,7 +36,6 @@
 			Fume :
 			{{ app.user.smoke | boolean }}
 		</h4>
-
 
 		<h4>
 			Description :
@@ -49,20 +47,19 @@
 			{% endfor %}
 		{% endif %}
 
-
 		<h4>
-			<a href="{{ path('modifyannouncerprofile') }}" class="btn btn-success btn-sm">
+			<a href="{{ path('modifyAnnouncerProfile') }}" class="btn btn-success btn-sm">
 				Modifier son profil
 			</a>
 		</h4>
 		<h4>
-			<a href="{{ path('addimage') }}" class="btn btn-success btn-sm">
+			<a href="{{ path('addImage') }}" class="btn btn-success btn-sm">
 				Ajouter une image
 			</a>
 		</h4>
 	{% else %}
 		<h4>
-			<a href="{{ path('modifyuserprofile') }}" class="btn btn-success btn-sm">
+			<a href="{{ path('modifyUserProfile') }}" class="btn btn-success btn-sm">
 				Modifier son profil
 			</a>
 		</h4>

@@ -10,9 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ViewAnnouncerController extends AbstractController
 {
     /**
-     * @Route("/announcer/{username}", name="announcer_view")
+     * @Route("/announcer/{username}", name="viewAnnouncer")
      */
-    public function ViewAnnouncer($username, UserRepository $userRepository)
+    public function viewAnnouncer($username, UserRepository $userRepository)
     {
         $criteria = ['username' => $username, 'validadmin' => 1];
         $announcer = $userRepository->findOneBy($criteria);

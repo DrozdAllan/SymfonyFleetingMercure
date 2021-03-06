@@ -39,12 +39,12 @@
 
 //     //2 Action du submit
 //     if ($form->isSubmitted() && $form->isValid()) {
-//         return $this->redirectToRoute('announceradmin');
+//         return $this->redirectToRoute('adminAnnouncers');
 //     }
 
 //     //4 Renvoi au formulaire car render toujours à la fin 
 //     $formView = $form->createView();
-//     return $this->render('admin/announcermodify.html.twig', [
+//     return $this->render('admin/announcerModify.html.twig', [
 //         'formView' => $formView
 //     ]);
 

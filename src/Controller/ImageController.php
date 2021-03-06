@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\Image;
 use App\Service\ImageUploader;
 use App\Form\UploadImageFormType;
-use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ImageController extends AbstractController
 {
     /**
-     * @Route("/profile/addimage", name="addimage")
+     * @Route("/profile/addimage", name="addImage")
      */
     public function addImage(Request $request, ImageUploader $imageUploader, EntityManagerInterface $em)
     {
@@ -49,7 +48,7 @@ class ImageController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('profile/addimage.html.twig', [
+        return $this->render('profile/addImage.html.twig', [
             'formView' => $formView
         ]);
     }

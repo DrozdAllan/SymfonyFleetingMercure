@@ -21,18 +21,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/choice", name="register_choice")
+     * @Route("/choice", name="registrationChoice")
      */
-    public function choice()
+    public function registrationChoice()
     {
 
         return $this->render('registration/choice.html.twig');
     }
 
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/user-register", name="registrationUser")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function registrationUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -67,9 +67,9 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/announcer-register", name="announcer_register")
+     * @Route("/announcer-register", name="registrationAnnouncer")
      */
-    public function Announcerregister(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, EntityManagerInterface $em): Response
+    public function registrationAnnouncer(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, EntityManagerInterface $em): Response
     {
         $user = new User();
         $image = new Image();

@@ -26,7 +26,7 @@
 	<br>
 
 	{% if is_granted("ROLE_ADMIN") %}
-	<a href="{{ path('announcermodify', {'id': announcer.id }) }}" class="btn btn-success">Modifier ce profil</a>
+	<a href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn btn-success">Modifier ce profil</a>
 	{% endif %}
 
 {% endblock %}

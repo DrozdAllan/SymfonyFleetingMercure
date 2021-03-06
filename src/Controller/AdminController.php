@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\AnnouncerAdminType;
-use App\Form\DeleteImageType;
+use App\Form\AdminAnnouncerType;
 use App\Repository\UserRepository;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,9 +26,9 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/announcers", name="announceradmin")
+     * @Route("/admin/announcers", name="adminAnnouncers")
      */
-    public function announcersadmin(UserRepository $userRepository)
+    public function adminAnnouncers(UserRepository $userRepository)
     {
 
         $criteria = ['Announcer' => '1', 'validadmin' => null];
@@ -37,15 +36,15 @@ class AdminController extends AbstractController
         $waitingAnnouncers = $userRepository->findBy($criteria, ['id' => 'ASC']);
 
 
-        return $this->render('admin/announceradmin.html.twig', [
+        return $this->render('admin/adminAnnouncers.html.twig', [
             'waitingAnnouncers' => $waitingAnnouncers
         ]);
     }
 
     /**
-     * @Route("/admin/announcers-validate/{id}", name="announcervalidate")
+     * @Route("/admin/announcer-validate/{id}", name="announcerValidate")
      */
-    public function announcervalidate($id, UserRepository $userRepository, EntityManagerInterface $em)
+    public function announcerValidate($id, UserRepository $userRepository, EntityManagerInterface $em)
     {
         //1 Récupérer l'id validé
         $announcer = $userRepository->find($id);
@@ -53,37 +52,37 @@ class AdminController extends AbstractController
         $announcer->setValidadmin('1');
         $em->flush();
         //3 Retour à la même page
-        return $this->redirectToRoute('announceradmin');
+        return $this->redirectToRoute('adminAnnouncers');
     }
 
     /**
-     * @Route("/admin/announcers-modify/{id}", name="announcermodify")
+     * @Route("/admin/announcer-modify/{id}", name="announcerModify")
      */
-    public function announcermodify($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em)
+    public function announcerModify($id, UserRepository $userRepository, Request $request, EntityManagerInterface $em)
     {
         //1 Récupérer l'id de l'annonceur à modifier
         $announcer = $userRepository->find($id);
 
         //2 Renvoyer les champs pour l'admin dans un nouveau form avec handlerequest
-        $form = $this->createForm(AnnouncerAdminType::class, $announcer);
+        $form = $this->createForm(AdminAnnouncerType::class, $announcer);
         $form->handleRequest($request);
 
         //3 Action du submit
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('announceradmin');
+            return $this->redirectToRoute('adminAnnouncers');
         }
 
         //4 Renvoi au formulaire car render toujours à la fin 
         $formView = $form->createView();
-        return $this->render('admin/announcermodify.html.twig', [
+        return $this->render('admin/announcerModify.html.twig', [
             'announcer' => $announcer,
             'formView' => $formView
         ]);
     }
 
     /**
-     * @Route("/admin/deleteimage/{imageid}", name="admindeleteimage")
+     * @Route("/admin/deleteimage/{imageid}", name="adminDeleteImage")
      * Apparemment pas safe mais ballec
      */
     public function adminDeleteImage($imageid, Request $request, ImageRepository $imageRepository, EntityManagerInterface $em)
@@ -99,7 +98,7 @@ class AdminController extends AbstractController
             // dump($announcerId);
             // 14 announcer id 
 
-            $urlBase = $this->generateUrl('announcermodify', ['id' => $announcerId]);
+            $urlBase = $this->generateUrl('announcerModify', ['id' => $announcerId]);
 
             // dd($urlBase);
 
