@@ -1,3 +1,16 @@
+.navbar .container-fluid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar-nav {
+  margin-bottom: 2;
+}
+
 .navbar-nav a.nav-link, .navbar-nav .btn {
   color: #c98e0f;
 }

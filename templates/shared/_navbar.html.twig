@@ -8,8 +8,15 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav me-auto mb-2 mb-md-0">
-
+				<ul class="navbar-nav me-auto mb-md-0">
+				
+						<form action="{{ path('search') }}" method="get" class="d-flex">
+							<input type="search" name="username" placeholder="Recherche rapide" class="form-control me-2">
+							<button class="btn btn-outline-success" type="submit">
+								Rechercher
+							</button>
+						</form>
+					
 					{% if app.user %}
 						{% if is_granted('ROLE_ADMIN') %}
 							<li class="nav-item">
@@ -44,16 +51,7 @@
 						</li>
 					{% endif %}
 				</ul>
-
-
-				<form action="{{ path('search') }}" method="get" class="d-flex">
-					<input type="search" name="username" placeholder="Recherche rapide" class="form-control me-2">
-					<button class="btn btn-outline-success" type="submit">
-						Rechercher
-					</button>
-				</form>
 			</div>
 		</div>
 	</nav>
 </header>
-
