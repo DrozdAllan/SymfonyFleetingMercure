@@ -1,55 +1,75 @@
-<header>
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" href="{{ path('home') }}">
-				<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
-			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav me-auto">
-				
-						<form action="{{ path('search') }}" method="get" class="d-flex">
-							<input type="search" name="username" placeholder="Recherche rapide" class="form-control me-2">
-							<button class="btn btn-outline-success" type="submit">
-								Rechercher
-							</button>
-						</form>
-					
-					{% if app.user %}
-						{% if is_granted('ROLE_ADMIN') %}
-							<li class="nav-item">
-								<a href="{{ path('admin') }}" class="btn btn-warning">
-									Administration
-								</a>
-							</li>
-						{% endif %}
-						{% if is_granted('ROLE_USER') %}
-							<li class="nav-item">
-								<a href="{{ path('profile') }}" class="btn btn-warning">
-									Profil
-								</a>
-							</li>
-						{% endif %}
-						<li class="nav-item">
-							<a href="{{ path('app_logout') }}" class="btn btn-danger">
-								Deconnexion
-							</a>
-						</li>
-					{% else %}
-						<li class="nav-item">
-							<a href="{{ path('registrationChoice') }}" class="btn btn-warning">
-								Inscription
-							</a>
-						</li>
-						&nbsp;
-						<li class="nav-item">
-							<a href="{{ path('app_login') }}" class="btn btn-warning">
-								Connexion
-							</a>
-						</li>
-					{% endif %}
-				</ul>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<a class="navbar-brand" href="{{ path('home') }}">
+		<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
+	</a>
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+
+	<div class="collapse navbar-collapse" id="navbarCollapse">
+		<div class="navbar-nav mr-auto">
+			<form class="form-inline" action="{{ path('search') }}" method="get">
+				<input type="search" name="username" placeholder="Recherche rapide" class="form-control" id="test">
+				<span>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+						Go
+					</button>
+				</span>
+			</form>
+
+			<div class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Recherche avancée
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">
+						Action
+					</a>
+					<a class="dropdown-item" href="#">
+						Another action
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">
+						Something else here
+					</a>
+				</div>
 			</div>
-	</nav>
-</header>
+			{% if app.user %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<div class="nav-item">
+						<a href="{{ path('admin') }}" class="btn btn-warning">
+							Administration
+						</a>
+					</div>
+				{% endif %}
+				{% if is_granted('ROLE_USER') %}
+					<div class="nav-item">
+						<a href="{{ path('profile') }}" class="btn btn-warning">
+							Profil
+						</a>
+					</div>
+				{% endif %}
+				<div class="nav-item">
+					<a href="{{ path('app_logout') }}" class="btn btn-danger">
+						Deconnexion
+					</a>
+				</div>
+			{% else %}
+				<div class="btn-group mx-0" role="group" aria-label="Basic example">
+					<button type="button" class="btn btn-success nav-item">
+						<a href="{{ path('registrationChoice') }}">
+							Inscription
+						</a>
+					</button>
+					<button type="button" class="btn btn-success nav-item">
+						<a href="{{ path('app_login') }}">
+							Connexion
+						</a>
+					</button>
+				</div>
+			{% endif %}
+
+		</div>
+	</div>
+</nav>

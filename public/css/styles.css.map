@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "ACKA,AACI,WADO,CACP,CAAC,AAAA,SAAS,EADd,WAAW,CACK,IAAI,CAAC;EACb,KAAK,EAAE,OAAO;CAAG",
+    "mappings": "ACGA,AACI,WADO,CACP,CAAC,AAAA,SAAS,EADd,WAAW,CACK,IAAI,CAAC;EACb,KAAK,EAAE,OAAO;CAAG",
     "sources": [
         "sass/styles.sass",
         "sass/_navbar.sass"
