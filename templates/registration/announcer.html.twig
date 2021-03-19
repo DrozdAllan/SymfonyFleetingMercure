@@ -10,36 +10,156 @@
 			{{ flashError }}
 		</div>
 	{% endfor %}
+	<!-- Button trigger modal -->
 
-	<div class="row">
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">
+						Termes et Conditions
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						Les Termes et Conditions ci-dessous s’appliquent à tous ceux qui ont accès au site Fleeting.com, désigné le « Site » ci-après, merci de lire attentivement les Termes et Conditions avant d’accéder au site internet fleeting.com en tant qu’annonceur, membre ou simplement visiteur. Par la simple utilisation du Site, vous reconnaissez avoir pris connaissance des Termes et Conditions et déclarez les accepter sans restriction ni réserve.
+					</p>
+					<p>
+						Le Site est un espace publicitaire d’annonce, désigné « l’Annonceur » ci-après, proposant des services d’accompagnement en accord avec la loi en vigueur.
+					</p>
+					<p>
+						Le Site ne négocie en rien et ne joue aucun rôle dans la réservation de tous les services de l’Annonceur, seul celui-ci est responsable et à une totale liberté de contrôle. Le Site n’est pas responsable de toute négociation ou accord entre l’Annonceur et une personne et/ou des personnes. Sur ces faits, l’Annonceur est totalement indépendant du Site. Le Webmaster ainsi que les Administrateurs n’ont aucune connaissance des activités des Annonceurs. Le Site n’intervient jamais dans une discussion ou prise de contact entre un visiteur, membre et annonceur.
+					</p>
+					<p>
+						L’utilisation du Site est limitée aux personnes physiques majeures selon les lois de leur pays.
+					</p>
+					<h5>
+						Inscription
+					</h5>
+					<p>
+						L’inscription sur le Site est totalement gratuite, toute personne physique majeure selon les lois de son pays peut s’inscrire sur le Site. Nous, administrateurs du Site, nous coopérons pleinement avec les autorités compétentes pour toutes questions concernant les annonces lié à une personne mineure, à leurs demandes sous preuve, nous supprimerons immédiatement l’annonce de cette personne, sans remboursement.
+					</p>
+					<p>
+						L’Annonceur est responsable des contenus vidéos, photos et textes qu’il publie sur le Site et valide ces informations qui lui appartiennes, Fleeting.com conservera également l’adresse IP des Annonceurs qui sont stockées à des fins de sécurité, l’Annonceur en est informé et également informé l’utilisation de cookies.
+					</p>
+					<p>
+						Toutes images de contenu obscène, immorale ou pouvant choquer certaines personnes ne sont pas autorisés, ne seront pas validés et l’adhésion* sera suspendue sans remboursement.
+					</p>
+					<p>
+						*adhésion défini l’Annonceur qui s’est enregistré sur le Site pour pouvoir afficher sa publicité et accéder aux zones du Site.
+					</p>
+					<p>
+						Lors de l’inscription, l’Annonceur choisit un mot de passe et un nom d’utilisateur pour accéder à son compte, il est responsable de ces informations et peut à tout moment modifier, compléter ou supprimer ces informations.
+					</p>
+					<p>
+						Après l’inscription, Fleeting.com se réserve le droit, sous 48H, de valider ou de supprimer les annonces sans préavis. Fleeting.com modère les annonces mais ne peut être tenu pour responsable si les points ci-dessus ne sont pas respectés :
+					</p>
+					<p>
+						Le Site ne dispose pas des moyens nécessaires pour assurer l’identité de l’Annonceur et de la véracité du contenu de son annonce.
+					</p>
+					<p>
+						Une fois l’annonce validé par le Site, l’Annonceur à accès à son annonce.
+					</p>
+					<p>
+						Les Propriétaires désigné « les Propriétaires, Nous, Notre, Administrateurs » ci-avant et ci-après, n’accepte aucune responsabilité à part entière qui pourrait survenir à la suite de ce qui est énoncé ou sous-entendus dans, ou à partir du contenu des pages au sein du Site et de son utilisation.
+					</p>
+					<p>
+						Nous fournissons uniquement des zones du Site pour les entrepreneurs indépendants, Nous ne fournissons en aucun cas l’accès au site pour des activités illégales et nous ne le tolérerons pas.
+					</p>
+					<h5>
+						Octroi de droits des annonces
+					</h5>
+					<p>
+						Nous sommes les propriétaires des droits légaux sur tout le contenu mis à disposition sur le Site. En acceptant ces Termes et Conditions, vous transférez et assignez la propriété de tous les droits d’auteur à vos soumissions d’utilisateurs, matériel promotionnel, vidéos personnalises, contenu téléchargeable, chat, communications connexes, travaux dérivés et noms, ressemblances, voix, écritures, publicités, logos, y compris toutes vos images et vidéos, ainsi que tous documents audio et textuels que vous avez fournis sur le Site. La compilation de tout le contenu et les matériaux sur le Site est la propriété exclusive du Site et protégée par les lois et règlements internationaux sur les droits d’auteur.
+					</p>
+					<h5>
+						Fonctionnalités optionnelles payantes
+					</h5>
+					<p>
+						L’utilisation du site est entièrement gratuite, les personnes ont néanmoins la possibilité de souscrire à certaines fonctionnalités optionnelles payantes. Le Site propose deux modalités de paiement : par virement bancaire et/ou par carte bancaire. Les remboursements seront crédités sur la carte de crédit utilisé.
+					</p>
+					<h5>
+						Politique de remboursement
+					</h5>
+					<p>
+						Juste l’Annonceur peut demander le remboursement sans pénalité et sans motif mais son droit de rétractation ne peut plus être exercé dès lors que l’Annonceur a commencé à bénéficier des services payants.
+					</p>
+					<p>
+						Pour solliciter un éventuel remboursement, merci d’utiliser notre formulaire de contact. Merci d’indiquer la raison et le numéro de transaction, compte ou nom d’utilisateur
+					</p>
+					<h5>
+						Droit à l'oubli
+					</h5>
+					<p>
+						L’Annonceur peut à tout moment supprimer définitivement son annonce et/ou son compte, il ne sera 
+																																				alors plus possible de récupérer quoi que ce soit.
+					</p>
+					<p>
+						Vous pouvez nous en envoyer un message via notre formulaire de contact si vous souhaitez de l’aide.
+					</p>
+					<h5>
+						Général
+					</h5>
+					<p>
+						Nous ne serons pas responsables de tous défauts et de toute suspension/résiliation de l'accès au Site ou de tout contenu découlant d'un évènement de cas de force majeure mentionné ci-après :insuffisance des infrastructures, l'intervention du gouvernement, les guerres, troubles civils, le détournement, l’escroquerie, incendie, inondation, accident, tempête, grève, lock-out, les attaques terroristes, ou une action collective nous ou nos fournisseurs affecter. En outre, nous ne serons pas tenus responsables de toute panne du serveur qui héberge le Site. Si aucun de ces termes et conditions sont jugée illégale, invalide ou inapplicable en vertu du droit alors à la mesure et au sein de la juridiction dans laquelle ce terme est illégale, invalide ou inapplicable, elle sera retirée et supprimée à partir de ces termes, le reste des termes resteront en vigueur et de plein effet et continuera à être obligatoireet exécutoire. Ces Termes et Conditions seront régis et interprètes conformément aux lois de la Suisse. Litiges en rapport avec ces termes doivent être soumis à la compétence exclusive des tribunaux de la Suisse.
+					</p>
+					<p>
+						Vous pouvez nous contacter en utilisant notre formulaire de contact. Ces termes peuvent être mis àjour de temps à autre sans préavis. Vous devriez consulter cette page régulièrement pour des changements.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">
+						Fermer
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
 		<h1>
 			Nouvel annonceur
 		</h1>
-		<div class="col">
+		<div class="row">
+			<div class="col">
 
-			{{ form_start(formView) }}
+				{{ form_start(formView) }}
 
-			{{ form_row(formView.username) }}
+				{{ form_row(formView.username) }}
 
-			{{ form_row(formView.plainPassword) }}
+				{{ form_row(formView.plainPassword) }}
 
-			{{ form_row(formView.image) }}
+				{{ form_row(formView.image) }}
 
+			</div>
+			<div class="col">
+				{{ form_row(formView.hair) }}
+
+				{{ form_row(formView.tattoo) }}
+
+				{{ form_row(formView.smoke) }}
+
+				{{ form_row(formView.shortdescription) }}
+
+			</div>
 		</div>
-		<div class="col">
-			{{ form_row(formView.hair) }}
 
-			{{ form_row(formView.tattoo) }}
-
-			{{ form_row(formView.smoke) }}
-
-			{{ form_row(formView.shortdescription) }}
-
+		<div class="my-2">
+			Je reconnais avoir lu les
+			<a href="" data-toggle="modal" data-target="#staticBackdrop">
+				conditions d'utilisation
+			</a>
+			et les accepte
+			<input type="checkbox" required="true" unchecked>
 		</div>
-			{{ form_row(formView.agreeTerms) }}
 
-			{{ form_row(formView.submit) }}
+		{{ form_row(formView.submit) }}
 
-			{{ form_end(formView) }}
-	</div>
-{% endblock %}
+		{{ form_end(formView) }}
+	</p>
+</div>{% endblock %}

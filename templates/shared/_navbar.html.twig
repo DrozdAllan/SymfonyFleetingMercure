@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md">
 	<a class="navbar-brand" href="{{ path('home') }}">
 		<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
 	</a>
@@ -9,29 +9,35 @@
 
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav mr-auto">
+
 			<form class="form-inline" action="{{ path('search') }}" method="get">
-				<input type="search" name="username" placeholder="Recherche rapide" class="form-control" id="test">
-				<span>
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-						Go
-					</button>
-				</span>
+
+				<div class="form-group">
+					<input type="search" class="form-control" name="username" aria-describedby="advancedSearch" placeholder="Recherche rapide">
+				</div>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+					Go
+				</button>
 			</form>
 
 			<div class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Recherche avancée
+					Recherche
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">
-						Action
-					</a>
-					<a class="dropdown-item" href="#">
-						Another action
-					</a>
+					<form class="form-inline" action="{{ path('search') }}" method="get">
+
+						<div class="form-group">
+							<input type="search" class="form-control" name="username" aria-describedby="advancedSearch" placeholder="Recherche rapide">
+						</div>
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+							Go
+						</button>
+					</form>
+
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="#">
-						Something else here
+						Recherche avancée
 					</a>
 				</div>
 			</div>

@@ -12,6 +12,8 @@
 		{# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
+			
+			{# bootstrap 4.6 #}
 			<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 			<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 		{% endblock %}
@@ -21,7 +23,7 @@
 
 
 
-		<div class="container-fluid text-center p-5 mt-5">
+		<div class="container-fluid text-center p-5" id="basediv">
 
 			{% include "shared/_flash.html.twig" %}
 
@@ -39,9 +41,7 @@
 				$(".navbar-collapse").toggle('show');
 			});
 		</script>
-
-
-
 		{% endblock %}
+		
 	</body>
 </html>

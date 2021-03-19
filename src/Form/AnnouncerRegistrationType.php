@@ -56,15 +56,14 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('shortdescription', TextareaType::class, [
                 'label' => 'Veuillez vous décrire en quelques mots',
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'Je reconnais avoir lu les conditions d\'utilisation et les accepte',
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+            // ->add('agreeTerms', CheckboxType::class, [
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new IsTrue([
+            //             'message' => 'You should agree to our terms.',
+            //         ]),
+            //     ],
+            // ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
