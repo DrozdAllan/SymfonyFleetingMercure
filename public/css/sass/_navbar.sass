@@ -1,9 +1,17 @@
-
-.navbar
+nav.navbar
     background-color: $secondary-color
     a.nav-link, .btn
         color: #c98e0f
-
-
-// @media screen and ( max-width: 765px )
-    
+    .dropdown-menu
+        position: absolute
+        left: -10rem
+        top: 4rem
+        padding: 0 
+        margin: 0 
+        border: none
+        height: 2.4rem
+    .btn-group.dropdown
+        @include lt-sm
+            display: none
+        // @media (max-width: 576px) {
+        // display: none }

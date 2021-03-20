@@ -1,69 +1,44 @@
-<nav class="navbar navbar-expand-md">
+<nav class="navbar navbar-expand-sm">
+
 	<a class="navbar-brand" href="{{ path('home') }}">
 		<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
 	</a>
+
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
+		<span class="navbar-toggler-icon">
+			<i class="fas fa-search"></i>
+		</span>
 	</button>
 
 
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav mr-auto">
-
-			<form class="form-inline" action="{{ path('search') }}" method="get">
-
-				<div class="form-group">
-					<input type="search" class="form-control" name="username" aria-describedby="advancedSearch" placeholder="Recherche rapide">
-				</div>
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-					Go
-				</button>
-			</form>
-
-			<div class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Recherche
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<form class="form-inline" action="{{ path('search') }}" method="get">
-
-						<div class="form-group">
-							<input type="search" class="form-control" name="username" aria-describedby="advancedSearch" placeholder="Recherche rapide">
-						</div>
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-							Go
-						</button>
-					</form>
-
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">
-						Recherche avancée
-					</a>
-				</div>
-			</div>
 			{% if app.user %}
-				{% if is_granted('ROLE_ADMIN') %}
-					<div class="nav-item">
-						<a href="{{ path('admin') }}" class="btn btn-warning">
-							Administration
-						</a>
-					</div>
-				{% endif %}
 				{% if is_granted('ROLE_USER') %}
-					<div class="nav-item">
-						<a href="{{ path('profile') }}" class="btn btn-warning">
-							Profil
-						</a>
+					<div class="btn-group mx-0" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-success nav-item">
+							<a href="{{ path('profile') }}" class="btn btn-warning">
+								Profil
+							</a>
+						</button>
+						<button type="button" class="btn btn-success nav-item">
+							<a href="{{ path('app_logout') }}" class="btn btn-danger">
+								Deconnexion
+							</a>
+						</button>
 					</div>
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="nav-item">
+							<a href="{{ path('admin') }}" class="btn btn-warning">
+								Administration
+							</a>
+						</div>
+					{% endif %}
 				{% endif %}
-				<div class="nav-item">
-					<a href="{{ path('app_logout') }}" class="btn btn-danger">
-						Deconnexion
-					</a>
-				</div>
 			{% else %}
 				<div class="btn-group mx-0" role="group" aria-label="Basic example">
 					<button type="button" class="btn btn-success nav-item">
+
 						<a href="{{ path('registrationChoice') }}">
 							Inscription
 						</a>
@@ -75,7 +50,28 @@
 					</button>
 				</div>
 			{% endif %}
-
 		</div>
+
+
+		<div class="btn-group dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-search"></i>
+			</a>
+			<div class="dropdown-menu">
+				<form class="" action="{{ path('search') }}" method="get">
+
+					<div class="input-group mb-3">
+						<input type="text" name="username" class="form-control" placeholder="Recherche rapide">
+						<div class="input-group-btn">
+							<button class="btn btn-inline-success" type="submit" id="button-addon">
+								<i class="fas fa-check"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
 	</div>
 </nav>
