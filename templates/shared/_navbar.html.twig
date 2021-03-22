@@ -6,7 +6,7 @@
 
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon">
-			<i class="fas fa-search"></i>
+			<i class="fas fa-align-justify"></i>
 		</span>
 	</button>
 
@@ -50,15 +50,25 @@
 					</button>
 				</div>
 			{% endif %}
+			<form class="mobileSearch" action="{{ path('simpleSearch') }}" method="get">
+				<div class="input-group m-2">
+					<input type="text" name="username" class="form-control" placeholder="Recherche rapide">
+					<div class="input-group-append">
+						<button class="btn btn-inline" type="submit">
+							<i class="fas fa-check"></i>
+						</button>
+					</div>
+				</div>
+			</form>
 		</div>
 
 
-		<div class="btn-group dropdown">
+		<div class="btn-group dropdown desktopSearch">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-search"></i>
 			</a>
 			<div class="dropdown-menu">
-				<form class="" action="{{ path('search') }}" method="get">
+				<form class="" action="{{ path('simpleSearch') }}" method="get">
 
 					<div class="input-group mb-3">
 						<input type="text" name="username" class="form-control" placeholder="Recherche rapide">

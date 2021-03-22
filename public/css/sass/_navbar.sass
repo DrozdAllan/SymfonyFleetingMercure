@@ -10,8 +10,11 @@ nav.navbar
         margin: 0 
         border: none
         height: 2.4rem
-    .btn-group.dropdown
+        .transition
+            transition: all 2s ease
+    .mobileSearch
         @include lt-sm
             display: none
-        // @media (max-width: 576px) {
-        // display: none }
+    .desktopSearch
+        @include st-sm
+            display: none

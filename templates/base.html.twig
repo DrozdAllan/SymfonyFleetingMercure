@@ -24,7 +24,7 @@
 
 
 
-		<div class="container-fluid text-center p-5" id="basediv">
+		<div class="text-center py-5" id="basediv">
 
 			{% include "shared/_flash.html.twig" %}
 
@@ -36,11 +36,15 @@
 			{#{{ encore_entry_script_tags('app') }}#}
 		<script src="{{ asset('js/jquery.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.js') }}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 
 		<script>
-			$(".navbar-toggler").on("click", function(){
-				$(".navbar-collapse").toggle('show');
-			});
+			$(document).ready(function () {
+       			bsCustomFileInput.init()
+				$(".navbar-toggler").on("click", function(){
+					$(".navbar-collapse").toggle('show');
+				});
+    		});
 		</script>
 		{% endblock %}
 		

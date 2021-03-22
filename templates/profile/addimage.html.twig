@@ -1,12 +1,16 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h1>Ajouter une image</h1>
+	<h1>
+		Ajouter une image
+	</h1>
 
-{{ form_start(formView) }}
+	{{ form_start(formView) }}
 
-    {{ form_row(formView.image) }}
+	{{ form_row(formView.image) }}
 
-	<button type="submit" class="btn btn-danger">Ajouter la photo</button>
-{{ form_end(formView) }}
+	<button type="submit" class="btn btn-danger">
+		Ajouter la photo
+	</button>
+	{{ form_end(formView) }}
 {% endblock %}

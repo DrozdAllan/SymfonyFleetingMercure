@@ -16,8 +16,19 @@ nav.navbar .dropdown-menu {
   height: 2.4rem;
 }
 
+nav.navbar .dropdown-menu .transition {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+@media screen and (min-width: 576px) {
+  nav.navbar .mobileSearch {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 575px) {
-  nav.navbar .btn-group.dropdown {
+  nav.navbar .desktopSearch {
     display: none;
   }
 }
@@ -26,7 +37,34 @@ nav.navbar .dropdown-menu {
   background-color: #ffb400;
 }
 
-main div.album {
+main {
   background-color: #ffb400;
+}
+
+main .videoBanner {
+  background-color: #000;
+  margin-top: -50px;
+}
+
+main .carousel img {
+  width: 250px;
+  height: 250px;
+  border-radius: 5px;
+}
+
+main .carousel .carousel-caption {
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+main .carousel:hover .carousel-caption {
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 /*# sourceMappingURL=styles.css.map */

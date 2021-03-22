@@ -11,7 +11,7 @@ class ResearchController extends AbstractController
 {
 
     /**
-     * @Route("/search", name="search")
+     * @Route("/search", name="simpleSearch")
      */
     public function simpleSearch(Request $request, UserRepository $userRepository)
     {
@@ -23,6 +23,18 @@ class ResearchController extends AbstractController
        
         return $this->render('search/simpleSearch.html.twig', [
             'announcers' => $result
+        ]);
+    }
+
+    /**
+     * @Route("/research", name="advancedSearch")
+     */
+    public function advancedSearch(Request $request, UserRepository $userRepository)
+    {
+
+
+        return $this->render('search/advancedSearch.html.twig', [
+            
         ]);
     }
 }

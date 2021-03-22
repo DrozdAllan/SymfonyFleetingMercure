@@ -34,35 +34,35 @@ $screen-xxl-max: 5000px
     @content
 
 // media lt queries
-@mixin lt-sm 
+@mixin st-sm 
   @media screen and (max-width: #{$screen-sm-max})
     @content
 
-@mixin lt-md
+@mixin st-md
   @media screen and (max-width: #{$screen-md-max})
     @content 
 
-@mixin lt-lg
+@mixin st-lg
   @media screen and (max-width: #{$screen-lg-max})
     @content
 
-@mixin lt-xl
+@mixin st-xl
   @media screen and (max-width: #{$screen-xl-max})
     @content
 
 // media gt queries
-@mixin gt-sm
+@mixin lt-sm
   @media screen and (min-width: #{$screen-sm-min})
     @content
 
-@mixin gt-md
+@mixin lt-md
   @media screen and (min-width: #{$screen-md-min})
     @content
 
-@mixin gt-lg
+@mixin lt-lg
   @media screen and (min-width: #{$screen-lg-min})
     @content
 
-@mixin gt-xl
+@mixin lt-xl
   @media screen and (min-width: #{$screen-xl-min})
     @content
