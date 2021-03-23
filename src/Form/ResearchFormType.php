@@ -17,27 +17,30 @@ class ResearchFormType extends AbstractType
         $builder
             ->add('hair', ChoiceType::class, [
                 'label' => 'Cheveux',
-                'placeholder' => 'Choisissez une longueur de cheveux',
                 'choices' => [
+                    'Tout' => null,
                     'Courts' => 'Courts',
                     'Longs' => 'Longs',
                 ],
+                'required' => true
             ])
             ->add('tattoo', ChoiceType::class, [
                 'label' => 'Tatouage',
-                'placeholder' => 'Avez vous des tatouages',
                 'choices' => [
+                    'Tout' => null,
                     'Oui' => '1',
                     'Non' => '0',
                 ],
+                'required' => true
             ])
             ->add('smoke', ChoiceType::class, [
                 'label' => 'Fume',
-                'placeholder' => 'Vous arrive-t-il de fumer',
                 'choices' => [
+                    'Tout' => null,
                     'Oui' => '1',
                     'Non' => '0',
                 ],
+                'required' => true
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher'

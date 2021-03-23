@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\ResearchFormType;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class ResearchController extends AbstractController
 {
@@ -26,15 +28,4 @@ class ResearchController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/research", name="advancedSearch")
-     */
-    public function advancedSearch(Request $request, UserRepository $userRepository)
-    {
-
-
-        return $this->render('search/advancedSearch.html.twig', [
-            
-        ]);
-    }
 }
