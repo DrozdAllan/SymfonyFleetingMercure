@@ -67,4 +67,8 @@ main .carousel:hover .carousel-caption {
           transition-duration: 1s;
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+main .advancedSearch {
+  border-radius: 5px;
+}
 /*# sourceMappingURL=styles.css.map */
