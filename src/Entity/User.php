@@ -34,16 +34,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity="Participant", mappedBy="user")
-     */
-    private $participants;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="user")
-     */
-    private $messages;
-
-    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -84,10 +74,14 @@ class User implements UserInterface
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->participants = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
@@ -272,36 +266,6 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Participant[]
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(Participant $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-            $participant->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(Participant $participant): self
-    {
-        if ($this->participants->removeElement($participant)) {
-            // set the owning side to null (unless already changed)
-            if ($participant->getUser() === $this) {
-                $participant->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Message[]
      */
     public function getMessages(): Collection
@@ -313,7 +277,7 @@ class User implements UserInterface
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setUser($this);
+            $message->setAuthor($this);
         }
 
         return $this;
@@ -323,8 +287,8 @@ class User implements UserInterface
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getUser() === $this) {
-                $message->setUser(null);
+            if ($message->getAuthor() === $this) {
+                $message->setAuthor(null);
             }
         }
 

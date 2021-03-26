@@ -2,19 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping\Index;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
- * @ORM\Table(indexes={@Index(name="created_at_index", columns={"created_at"})})
- * @ORM\HasLifecycleCallbacks()
  */
 class Message
 {
-    use Timestamp;
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,19 +18,25 @@ class Message
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages")
+     * @ORM\Column(type="datetime")
      */
-    private $conversation;
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Channel::class, inversedBy="messages")
+     */
+    private $channel;
 
     public function getId(): ?int
     {
@@ -54,26 +55,38 @@ class Message
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getAuthor(): ?User
     {
-        return $this->user;
+        return $this->author;
     }
 
-    public function setUser(?User $user): self
+    public function setAuthor(?User $author): self
     {
-        $this->user = $user;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getConversation(): ?Conversation
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->conversation;
+        return $this->createdAt;
     }
 
-    public function setConversation(?Conversation $conversation): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->conversation = $conversation;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getChannel(): ?Channel
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?Channel $channel): self
+    {
+        $this->channel = $channel;
 
         return $this;
     }

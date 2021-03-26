@@ -25,6 +25,12 @@
 	{% endfor %}
 	<br>
 
+	{% if app.user %}
+	<a href="{{ path('newChannel', {'targetId': announcer.id }) }}" class="btn btn-success">
+			Chat
+		</a>
+	{% endif %}
+
 	{% if is_granted("ROLE_ADMIN") %}
 		<a href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn btn-success">
 			Modifier ce profil
