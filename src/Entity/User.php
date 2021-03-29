@@ -75,14 +75,20 @@ class User implements UserInterface
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user", orphanRemoval=true)
      */
     private $messages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Channel::class, mappedBy="Users")
+     */
+    private $channels;
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->channels = new ArrayCollection();
     }
 
     
@@ -277,7 +283,7 @@ class User implements UserInterface
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setAuthor($this);
+            $message->setUser($this);
         }
 
         return $this;
@@ -287,9 +293,36 @@ class User implements UserInterface
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getAuthor() === $this) {
-                $message->setAuthor(null);
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Channel[]
+     */
+    public function getChannels(): Collection
+    {
+        return $this->channels;
+    }
+
+    public function addChannel(Channel $channel): self
+    {
+        if (!$this->channels->contains($channel)) {
+            $this->channels[] = $channel;
+            $channel->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChannel(Channel $channel): self
+    {
+        if ($this->channels->removeElement($channel)) {
+            $channel->removeUser($this);
         }
 
         return $this;

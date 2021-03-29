@@ -24,12 +24,17 @@ class Channel
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="channels")
+     */
+    private $Users;
+
 
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->Participants = new ArrayCollection();
+        $this->Users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,6 +68,30 @@ class Channel
                 $message->setChannel(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->Users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->Users->contains($user)) {
+            $this->Users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->Users->removeElement($user);
 
         return $this;
     }
