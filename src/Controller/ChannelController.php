@@ -16,21 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ChannelController extends AbstractController
 {
     /**
-     * @Route("/chat", name="chat")
-     */
-    public function getChannels(ChannelRepository $channelRepository): Response
-    {
-        $channels = $channelRepository->findAll();
-
-
-        return $this->render('channel/index.html.twig', [
-            'channels' => $channels ?? []
-        ]);
-    }
-
-
-    /**
-     * @Route("/chat/new/{targetId}", name="newChannel")
+     * @Route("/chat/new/{targetId}", name="checkChannel")
      */
     public function newChannel(Request $request, $targetId, ChannelRepository $channelRepository, UserRepository $userRepository, EntityManagerInterface $em)
     {
@@ -52,6 +38,7 @@ class ChannelController extends AbstractController
         // Si déjà existant renvoyer à la page de chat dans la bonne conv
         if ($recup != null) {
             dd("channel déjà existant");
+            // return $this->render('channel/chat.html.twig');
         }
 
         // Sinon, creation nouveau channel avec ces deux users
@@ -73,5 +60,19 @@ class ChannelController extends AbstractController
         }
 
         return $this->redirectToRoute('home');
+    }
+
+
+    /**
+     * @Route("/chat", name="chatHub")
+     */
+    public function getChannels(ChannelRepository $channelRepository, UserRepository $userRepository)
+    {
+
+        $userChannels = $this->getUser()->getChannels();
+
+        return $this->render('channel/chat.html.twig', [
+            'channels' => $userChannels
+        ]);
     }
 }

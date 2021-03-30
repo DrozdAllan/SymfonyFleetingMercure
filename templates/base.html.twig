@@ -32,12 +32,11 @@
 			{% endblock %}
 		</div>
 
-		{% block javascripts %}
 			{#{{ encore_entry_script_tags('app') }}#}
+		
 		<script src="{{ asset('js/jquery.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.js') }}"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
-
 		<script>
 			$(document).ready(function () {
        			bsCustomFileInput.init()
@@ -46,6 +45,7 @@
 				});
     		});
 		</script>
+		{% block javascripts %}
 		{% endblock %}
 		
 	</body>

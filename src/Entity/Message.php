@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MessageRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -14,17 +15,20 @@ class Message
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("message")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("message")
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("message")
      */
     private $user;
 
@@ -35,6 +39,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity=Channel::class, inversedBy="messages")
+     * @Groups("message")
      */
     private $channel;
 

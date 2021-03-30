@@ -26,7 +26,7 @@
 	<br>
 
 	{% if app.user %}
-	<a href="{{ path('newChannel', {'targetId': announcer.id }) }}" class="btn btn-success">
+	<a href="{{ path('checkChannel', {'targetId': announcer.id }) }}" class="btn btn-success">
 			Chat
 		</a>
 	{% endif %}

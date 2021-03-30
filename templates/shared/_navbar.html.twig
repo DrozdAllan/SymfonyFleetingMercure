@@ -62,7 +62,13 @@
 			</form>
 		</div>
 
-
+		{% if app.user %}
+		
+		<a class="nav-link" href="{{ path('chatHub') }}"  role="button">
+				<i class="fas fa-envelope"></i>
+			</a>
+		
+		{% endif %}
 		<div class="btn-group dropdown desktopSearch">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-search"></i>
