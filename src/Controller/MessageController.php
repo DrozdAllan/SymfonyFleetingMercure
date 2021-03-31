@@ -20,8 +20,17 @@ class MessageController extends AbstractController
      */
     public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, EntityManagerInterface $em)
     {
-        //recup data POST and deserialize
-        $data = \json_encode($request->getContent(), true); 
+        //recup data POST
+        $data = $request->getContent();
+
+        dump($data);
+
+        $tamere = json_decode($data, true); //decodage du JSON en array
+
+        dump($tamere);
+
+        dd($tamere['content']);
+
         if (empty($content = $data['content'])) {
             throw new AccessDeniedHttpException('no data sent');
         }
@@ -42,9 +51,6 @@ class MessageController extends AbstractController
         $jsonMessage = $serializer->serialize($message, 'json', [
             'groups' => ['message']
         ]);
-
-
-
 
         return new JsonResponse(
             $jsonMessage,

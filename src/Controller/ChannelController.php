@@ -37,8 +37,8 @@ class ChannelController extends AbstractController
         
         // Si déjà existant renvoyer à la page de chat dans la bonne conv
         if ($recup != null) {
-            dd("channel déjà existant");
-            // return $this->render('channel/chat.html.twig');
+            // dd("channel déjà existant");
+            return $this->redirectToRoute('chatHub');
         }
 
         // Sinon, creation nouveau channel avec ces deux users
@@ -52,14 +52,14 @@ class ChannelController extends AbstractController
         $channel->addUser($User);
         $channel->addUser($targetUser);
 
-        dd($channel);
+        // dd($channel);
 
         $em->persist($channel);
         $em->flush();
 
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('chatHub');
     }
 
 
@@ -70,6 +70,10 @@ class ChannelController extends AbstractController
     {
 
         $userChannels = $this->getUser()->getChannels();
+
+        $values = $userChannels->getValues();
+
+        // dd($values);
 
         return $this->render('channel/chat.html.twig', [
             'channels' => $userChannels
