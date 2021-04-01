@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Repository\ChannelRepository;
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,28 +23,27 @@ class MessageController extends AbstractController
     public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, EntityManagerInterface $em)
     {
         //recup data POST
-        $data = $request->getContent();
+        $dataJSON = $request->getContent();
 
-        dump($data);
+        $dataArray = json_decode($dataJSON, true); //decodage du JSON en array
 
-        $tamere = json_decode($data, true); //decodage du JSON en array
+        $msgContent = $dataArray['content'];
 
-        dump($tamere);
-
-        dd($tamere['content']);
-
-        if (empty($content = $data['content'])) {
+        if (empty($msgContent)) {
             throw new AccessDeniedHttpException('no data sent');
         }
 
         $channel = $channelRepository->findOneBy([
-            'id' => $data['channel'] // On cherche à savoir de quel channel provient le message
+            'id' => $dataArray['channel'] // On cherche à savoir de quel channel provient le message
         ]);
 
         $message = new Message();
-        $message->setContent($content);
+        $message->setContent($msgContent);
         $message->setChannel($channel);
         $message->setUser($this->getUser());
+        $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
+
+        // dd($message);
 
         $em->persist($message);
         $em->flush();

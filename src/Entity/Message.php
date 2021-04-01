@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
+use DateTime;
+use DateTimeZone;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -80,7 +82,6 @@ class Message
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 

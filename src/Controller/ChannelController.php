@@ -71,7 +71,7 @@ class ChannelController extends AbstractController
 
         $userChannels = $this->getUser()->getChannels();
 
-        $values = $userChannels->getValues();
+        // $values = $userChannels->getValues();
 
         // dd($values);
 
