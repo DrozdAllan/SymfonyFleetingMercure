@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminAnnouncerType extends AbstractType
+class AdminAnnouncersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

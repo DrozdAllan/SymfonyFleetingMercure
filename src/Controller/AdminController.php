@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\AdminAnnouncerType;
+use App\Form\AdminAnnouncersType;
 use App\Repository\UserRepository;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,7 +64,7 @@ class AdminController extends AbstractController
         $announcer = $userRepository->find($id);
 
         //2 Renvoyer les champs pour l'admin dans un nouveau form avec handlerequest
-        $form = $this->createForm(AdminAnnouncerType::class, $announcer);
+        $form = $this->createForm(AdminAnnouncersType::class, $announcer);
         $form->handleRequest($request);
 
         //3 Action du submit

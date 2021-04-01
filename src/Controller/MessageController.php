@@ -14,13 +14,15 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 
 class MessageController extends AbstractController
 {
     /**
      * @Route("/message", name="message", methods={"POST"})
      */
-    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, EntityManagerInterface $em)
+    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher)
     {
         //recup data POST
         $dataJSON = $request->getContent();
@@ -45,13 +47,25 @@ class MessageController extends AbstractController
 
         // dd($message);
 
-        $em->persist($message);
-        $em->flush();
+        // $em->persist($message);
+        // $em->flush();
 
 
         $jsonMessage = $serializer->serialize($message, 'json', [
             'groups' => ['message']
         ]);
+
+        // dd($jsonMessage);
+        
+        $update = new Update(
+            'https://127.0.0.1:8000/chat',
+            $jsonMessage);
+
+        // dd($update);
+
+        $publisher($update);
+        
+
 
         return new JsonResponse(
             $jsonMessage,
