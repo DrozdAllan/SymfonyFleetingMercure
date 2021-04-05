@@ -16,13 +16,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class MessageController extends AbstractController
 {
     /**
      * @Route("/message", name="message", methods={"POST"})
      */
-    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher)
+    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher, MessageBusInterface $bus)
     {
         //recup data POST
         $dataJSON = $request->getContent();
@@ -45,7 +46,7 @@ class MessageController extends AbstractController
         $message->setUser($this->getUser());
         $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
 
-        // dd($message);
+        // dump($message);
 
         // $em->persist($message);
         // $em->flush();
@@ -55,17 +56,32 @@ class MessageController extends AbstractController
             'groups' => ['message']
         ]);
 
-        // dd($jsonMessage);
-        
+        dump($jsonMessage);
+
+        /**
+         * 
+         *     BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUG A CE NIVEAU : CEST AU MOMENT DE UPDATE QUE CA MERDE
+         *  Les infos "data" ($jsonMessage) créées dans l'update existent bien mais les array user et channel semblent vides
+         *  le serialize 'groups' pue la merde il rend user et channel en empty array
+         * 
+         * Le insomnia contient le bon format d'info pour afficher l'update correctement dans le tchat, surement possible d'enlever Id et Channel de l'update
+         * 
+         */
         $update = new Update(
-            'https://127.0.0.1:8000/chat',
-            $jsonMessage);
+            'ping',
+            json_encode(['content'=>'bonjour','user'=>'Benjam','channel'=>'1'])
+        );
 
         // dd($update);
+        dump($update);
+
+        $bus->dispatch($update);
+
+        dd($bus);
 
         $publisher($update);
         
-
+        dd($publisher);
 
         return new JsonResponse(
             $jsonMessage,

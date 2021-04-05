@@ -87,12 +87,11 @@ $(document).ready(function() {
 		.then((response) => {
             console.log(response);
 			const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Recup du Link envoyé par le controller
-    					// .replace("mercure", "localhost:3000"); // Remplacement dans l'url à tester
 
-			console.log(link); // Donne https://127.0.0.1:8000/.well-known/mercure qui fonctionne dans le navigateur
+			console.log(link); // Donne https://127.0.0.1:8000/.well-known/mercure qui fonctionne dans le navigateur @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			const hub = new URL(link);
 
-			hub.searchParams.append('topic', 'http://127.0.0.1:8000/chat'); // On ajoute le topic souhaité aux paramètres de la requête vers le Hub
+			hub.searchParams.append('topic', 'ping'); // On ajoute le topic souhaité aux paramètres de la requête vers le Hub
 			
 			const eventSource = new EventSource(hub); // Abonnement aux updates
 			
@@ -104,17 +103,20 @@ $(document).ready(function() {
 				const message = JSON.parse(data); // Le contenu des événements est sous format JSON, il faut le parser
 
 				console.log(message);
-        		
+				
+        		// Changer le query selector pour qu'il insere le nouveau message dans le bon channel (en utilisant le for channel in channels)
+
 				document.querySelector('.bg-light').insertAdjacentHTML( // On injecte le nouveau message selon le HTML déjà présent plus haut dans notre fichier Twig
         			'beforeend',
-            		appUser === message.user.id ?
+					// marche pas pour l'instant, le appUser ne donne pas le user.username
+            		appUser === message.user ?
             		`<div class="row w-75 float-right">
-            		<b>${message.user.username}</b>
+            		<b>${message.user}</b>
             		<p class="alert alert-info w-100">${message.content}</p>
         			</div>` :
             		`<div class="row w-75 float-left">
-            			<b>${message.user.username}</b>
-            			<p class="alert alert-success w-100">${message.content}</p>
+            			<b>${message.user}</b>
+            			<p class="alert alert-success w-100">${message.content} sur le channel ${message.channel}</p>
         			</div>`
     			)
     			chatDiv.scrollTop = chatDiv.scrollHeight; // On demande au navigateur de scroller le chat tout en bas pour bien apercevoir le dernier message apparu
