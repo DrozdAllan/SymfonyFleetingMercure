@@ -17,8 +17,8 @@
 				{% endif %}
 			{% endfor %}
 
-			<div class="container" style="height: 600px">
-				<div class="container bg-light h-75 overflow-auto">
+			<div class="container chatBloc" style="height: 600px" data-channel="{{ channel.id }}">
+				<div class="container chatText bg-light h-75 overflow-auto">
 					{% for message in channel.messages %}
 						{% if app.user == message.user %}
 							<div class="row w-75 float-right">
@@ -38,7 +38,7 @@
 					{% endfor %}
 				</div>
 				<div>
-					<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data" data-channel="{{ channel.id }}">
+					<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
 						<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
 						<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
 					</form>
@@ -57,6 +57,53 @@ $(document).ready(function() {
     let chatDiv = document.querySelector('.overflow-auto');
     chatDiv.scrollTop = chatDiv.scrollHeight; // On souhaite scroller toujours jusqu'au dernier message du chat
 
+	// var channelsId = []; // Pour bibi les channels utilisés par l'utilisateur connecté
+	// $(".chatBloc").each(function() {
+   	// channelsId.push($(this).data('channel'));
+	// });
+
+
+
+	// 									CONNEXION ET ECOUTE AU HUB
+
+
+	const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Recup du Link envoyé par le controller
+
+	console.log(link); // Donne https://127.0.0.1:8000/.well-known/mercure qui fonctionne
+	const hub = new URL(link);
+
+	hub.searchParams.append('topic', 'ping'); // On ajoute le topic souhaité aux paramètres de la requête vers le Hub
+			
+	const eventSource = new EventSource(hub); // Abonnement aux updates
+
+	eventSource.onmessage = ({data}) => { // On écoute les événements publiés par le Hub
+    			
+		const message = JSON.parse(data); // Le contenu des événements est sous format JSON, il faut le parser
+
+		console.log(message);
+
+		if (message.from === "{{ app.user.username }}") {
+			$('div[data-channel=' + message.channel + '] .chatText').append(
+				`<div class='row w-75 float-right'>
+            	<b>${message.from}</b>
+            	<p class='alert alert-info w-100'> ${message.content} </p>
+        		</div>`
+    		);
+		} else {
+            $('div[data-channel=' + message.channel + '] .chatText').append(
+				`<div class='row w-75 float-left'>
+            	<b>${message.from}</b>
+            	<p class='alert alert-success w-100'> ${message.content} </p>
+        		</div>`
+    		);
+		}
+
+    	chatDiv.scrollTop = chatDiv.scrollHeight; // On demande au navigateur de scroller le chat tout en bas pour bien apercevoir le dernier message apparu
+	}
+
+
+			//												 ENVOIE AU HUB 
+
     $("button.buttonChat").click(function(e) {
         e.preventDefault(); // Empêche la page de se rafraîchir après le submit du formulaire
 
@@ -64,11 +111,14 @@ $(document).ready(function() {
 
 		const message = inputBeforeButton[0].value;
 
-		const channelNb = $(this).parent().data('channel');
+		const channelNb = $(this).parents(".chatBloc").data('channel');
+
+		const expeditor = "{{app.user.username}}";
             
 		const data = { // La variable data sera envoyée au controller
             content: message, // On transmet le message...
-			channel: channelNb // ... Et le canal correspondant
+			channel: channelNb, // ... Et le canal correspondant
+			from: expeditor
         };
 
         console.log(data); // Pour vérifier vos informations
@@ -86,41 +136,6 @@ $(document).ready(function() {
 		})
 		.then((response) => {
             console.log(response);
-			const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Recup du Link envoyé par le controller
-
-			console.log(link); // Donne https://127.0.0.1:8000/.well-known/mercure qui fonctionne dans le navigateur @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			const hub = new URL(link);
-
-			hub.searchParams.append('topic', 'ping'); // On ajoute le topic souhaité aux paramètres de la requête vers le Hub
-			
-			const eventSource = new EventSource(hub); // Abonnement aux updates
-			
-
-			const appUser = {{ app.user.id }};
-
-			eventSource.onmessage = ({data}) => { // On écoute les événements publiés par le Hub
-    			
-				const message = JSON.parse(data); // Le contenu des événements est sous format JSON, il faut le parser
-
-				console.log(message);
-				
-        		// Changer le query selector pour qu'il insere le nouveau message dans le bon channel (en utilisant le for channel in channels)
-
-				document.querySelector('.bg-light').insertAdjacentHTML( // On injecte le nouveau message selon le HTML déjà présent plus haut dans notre fichier Twig
-        			'beforeend',
-					// marche pas pour l'instant, le appUser ne donne pas le user.username
-            		appUser === message.from ?
-            		`<div class="row w-75 float-right">
-            		<b>${message.from}</b>
-            		<p class="alert alert-info w-100">${message.content}</p>
-        			</div>` :
-            		`<div class="row w-75 float-left">
-            			<b>${message.from}</b>
-            			<p class="alert alert-success w-100">${message.content} sur le channel ${message.channel}</p>
-        			</div>`
-    			)
-    			chatDiv.scrollTop = chatDiv.scrollHeight; // On demande au navigateur de scroller le chat tout en bas pour bien apercevoir le dernier message apparu
-			}
 
 		}) 
     });

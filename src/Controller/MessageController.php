@@ -16,14 +16,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class MessageController extends AbstractController
 {
     /**
      * @Route("/message", name="message", methods={"POST"})
      */
-    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher, MessageBusInterface $bus)
+    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher)
     {
         //recup data POST
         $dataJSON = $request->getContent();
@@ -58,30 +57,31 @@ class MessageController extends AbstractController
 
         dump($jsonMessage);
 
+        $receivedContent = $dataArray['content'];
+        $receivedFrom = $dataArray['from'];
+        $receivedChannel = $dataArray['channel'];
+
+        $messagequimarche = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel]);
+
         /**
          * 
          *     BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUG A CE NIVEAU : CEST AU MOMENT DE UPDATE QUE CA MERDE
          *  Les infos "data" ($jsonMessage) créées dans l'update existent bien mais les array user et channel semblent vides
          *  le serialize 'groups' pue la merde il rend user et channel en empty array
          * 
-         * Le insomnia contient le bon format d'info pour afficher l'update correctement dans le tchat, surement possible d'enlever Id et Channel de l'update
+         * todo: si je n'arrive pas, virer le groups et recréer les infos à renvoyer dans l'update avec le controller et les repository
          * 
          */
         $update = new Update(
             'ping',
-            json_encode(['content'=>'bonjour','from'=>'Benjam','channel'=>'1'])
+            // $jsonMessage
+            $messagequimarche
         );
 
         // dd($update);
         dump($update);
 
-        $bus->dispatch($update);
-
-        dd($bus);
-
         $publisher($update);
-        
-        dd($publisher);
 
         return new JsonResponse(
             $jsonMessage,
