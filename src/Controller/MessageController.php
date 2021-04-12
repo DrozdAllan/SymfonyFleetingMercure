@@ -69,7 +69,7 @@ class MessageController extends AbstractController
          */
         $update = new Update(
             'ping',
-            json_encode(['content'=>'bonjour','user'=>'Benjam','channel'=>'1'])
+            json_encode(['content'=>'bonjour','from'=>'Benjam','channel'=>'1'])
         );
 
         // dd($update);
