@@ -29,7 +29,7 @@ class MessageController extends AbstractController
 
         $dataArray = json_decode($dataJSON, true); //decodage du JSON en array
 
-        $msgContent = $dataArray['content'];
+        $msgContent = htmlentities($dataArray['content']);
 
         if (empty($msgContent)) {
             throw new AccessDeniedHttpException('no data sent');
@@ -50,41 +50,32 @@ class MessageController extends AbstractController
         // $em->persist($message);
         // $em->flush();
 
+        $receivedContent = htmlentities($dataArray['content']);
+        $receivedFrom = htmlentities($dataArray['from']);
+        $receivedChannel = htmlentities($dataArray['channel']);
 
-        $jsonMessage = $serializer->serialize($message, 'json', [
-            'groups' => ['message']
-        ]);
+        $receivedChannelToStr = strval($receivedChannel);
 
-        dump($jsonMessage);
-
-        $receivedContent = $dataArray['content'];
-        $receivedFrom = $dataArray['from'];
-        $receivedChannel = $dataArray['channel'];
-
-        $messagequimarche = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel]);
+        $jsonToWebsocket = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel]);
 
         /**
          * 
-         *     BUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUG A CE NIVEAU : CEST AU MOMENT DE UPDATE QUE CA MERDE
-         *  Les infos "data" ($jsonMessage) créées dans l'update existent bien mais les array user et channel semblent vides
-         *  le serialize 'groups' pue la merde il rend user et channel en empty array
          * 
-         * todo: si je n'arrive pas, virer le groups et recréer les infos à renvoyer dans l'update avec le controller et les repository
+         * todo: essayer le serializer ou bien essayer l'authentification
          * 
          */
+
         $update = new Update(
-            'ping',
-            // $jsonMessage
-            $messagequimarche
+            $receivedChannelToStr,
+            $jsonToWebsocket
         );
 
-        // dd($update);
         dump($update);
 
         $publisher($update);
 
         return new JsonResponse(
-            $jsonMessage,
+            $jsonToWebsocket,
             Response::HTTP_OK,
             [],
             true

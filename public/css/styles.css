@@ -71,4 +71,18 @@ main .carousel:hover .carousel-caption {
 main .advancedSearch {
   border-radius: 5px;
 }
+
+.chatBloc {
+  height: 600px;
+}
+
+.chatBloc .chatText {
+  height: 75%;
+  overflow: auto;
+}
+
+.chatBloc .chatText .row {
+  width: 60%;
+  padding: 3px;
+}
 /*# sourceMappingURL=styles.css.map */
