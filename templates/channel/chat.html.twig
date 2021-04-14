@@ -4,55 +4,103 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
 
-		{% for channel in channels %}
 
-			{% for user in channel.users %}
-				{% if app.user != user %}
-					<h1>
-						<b>
-							{{user.username }}</b>
-					</h1>
-				{% endif %}
-			{% endfor %}
 
-			<div class="container chatBloc" style="height: 600px" data-channel="{{ channel.id }}">
-				<div class="container chatText bg-light">
-					{% for message in channel.messages %}
-						{% if app.user == message.user %}
-							<div class="row float-right">
-								<b>{{ message.user.username }}</b>
-								<p class="alert alert-info w-100">
-									{{ message.content }}
-								</p>
-							</div>
-						{% else %}
-							<div class="row float-left">
-								<b>{{ message.user.username }}</b>
-								<p class="alert alert-success w-100">
-									{{ message.content }}
-								</p>
-							</div>
+<div class="container chatContainer">
+	<div class="row">
+  		<div class="col-2">
+    		<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      		{# <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a> #}
+				{% for key, channel in channels %}
+					{% for user in channel.users %}
+						{% if app.user != user %}
+							<a class="nav-link" data-toggle="pill" href="#v-pills-{{key}}" role="tab" aria-selected="false"><b>{{user.username }}</b></a>
 						{% endif %}
 					{% endfor %}
-					</div>
-				<div>
-					<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
-						<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
-						<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
-					</form>
-				</div>
+				{% endfor %}
 			</div>
-		{% endfor %}
+  		</div>
+
+
+		<div class="col-10">
+    		<div class="tab-content" id="v-pills-tabContent">
+      		{# <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">pédé</div> #}
+
+				{% for key, channel in channels %}
+							
+					<div class="tab-pane fade" id="v-pills-{{key}}" role="tabpanel" data-channel="{{ channel.id }}">
+	
+						<div class="container chatBloc">
+							<div class="container chatText">
+								{% for message in channel.messages %}
+									{% if app.user == message.user %}
+										<div class="row float-right">
+											<span>{{ message.user.username }} <sub>{{message.createdAt|date("H:i d/m") }}</sub> </span>
+											<p class="alert alert-info w-100">
+											{{ message.content }}
+										</div>
+									{% else %}
+										<div class="row float-left">
+											<span>{{ message.user.username }} <sub>{{message.createdAt|date("H:i d/m") }}</sub> </span>
+											<p class="alert alert-success w-100">
+											{{ message.content }}
+											</p>
+										</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+						
+						<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
+							<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
+							<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
+						</form>
+						</div>
+					</div>
+
+				{% endfor %}
+  			</div>
+		</div> 
 	</div>
+</div>
+		
+
+
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% block javascripts %}
     <script>
 
 $(document).ready(function() {
+
+
+
+
+		$('.nav-link').mousemove(function( event ) {
+			$('.chatText').scrollTop($('.chatText').height()); // Faire une fonction pour scroll max en fonction de la fenetre de chat ouverte par le click. @@@@@@@
+		});
+
+
+
+
 
 	// 									CONNEXION ET ECOUTE AU HUB
 
@@ -78,35 +126,36 @@ $(document).ready(function() {
 		if (message.from === "{{ app.user.username }}") {
 			$('div[data-channel=' + message.channel + '] .chatText').append(
 				`<div class='row w-75 float-right'>
-            	<b>${message.from}</b>
+            	<b>${message.from}</b> à ${message.createdAt}
             	<p class='alert alert-info w-100'> ${message.content} </p>
         		</div>`
     		);
 		} else {
             $('div[data-channel=' + message.channel + '] .chatText').append(
 				`<div class='row w-75 float-left'>
-            	<b>${message.from}</b>
+            	<b>${message.from}</b> à ${message.createdAt}
             	<p class='alert alert-success w-100'> ${message.content} </p>
         		</div>`
     		);
 		}
 
-		$('.chatText').scrollTop(100); // Scroll after message received
+		$('.chatText').scrollTop($('.chatText').height()); // Scroll after message received
 	}
 
-	$('.chatText').scrollTop(99999); //  On souhaite scroller toujours jusqu'au dernier message du chat
+	
 
 
 			//												 ENVOIE AU HUB 
 
     $("button.buttonChat").click(function(e) {
         e.preventDefault(); // Empêche la page de se rafraîchir après le submit du formulaire
+		
 
 		const inputBeforeButton = $(this).siblings('input');
 
 		const message = inputBeforeButton[0].value;
 
-		const channelNb = $(this).parents(".chatBloc").data('channel');
+		const channelNb = $(this).parents(".tab-pane").data('channel');
 
 		const expeditor = "{{app.user.username}}";
             
@@ -117,13 +166,14 @@ $(document).ready(function() {
         };
 
         console.log(data); // Pour vérifier vos informations
+
+		inputBeforeButton[0].value = ''; // Efface le message dans l'input
             
 		fetch('/message', { // Envoie du form en JSON vers le controller de messages
             method: 'POST',
             body: JSON.stringify(data) // On envoie les data sous format JSON
         }).then((response) => {
 			if(response.ok) {
-				inputBeforeButton[0].value = ''; // Efface le message dans l'input
 				return response;
 			} else {
 				throw new Error('Something went wrong');
@@ -134,9 +184,6 @@ $(document).ready(function() {
 
 		}) 
     });
-
-
 });
-
     </script>
 {% endblock %}

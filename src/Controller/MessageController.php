@@ -22,7 +22,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/message", name="message", methods={"POST"})
      */
-    public function sendMessage(Request $request, ChannelRepository $channelRepository, SerializerInterface $serializer, PublisherInterface $publisher)
+    public function sendMessage(Request $request, ChannelRepository $channelRepository, PublisherInterface $publisher, EntityManagerInterface $em)
     {
         //recup data POST
         $dataJSON = $request->getContent();

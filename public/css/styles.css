@@ -72,16 +72,20 @@ main .advancedSearch {
   border-radius: 5px;
 }
 
-.chatBloc {
-  height: 600px;
+.chatContainer {
+  background-color: #233142;
 }
 
-.chatBloc .chatText {
-  height: 75%;
+.chatContainer .chatBloc {
+  background-color: #455d7a;
+}
+
+.chatContainer .chatBloc .chatText {
+  height: 700px;
   overflow: auto;
 }
 
-.chatBloc .chatText .row {
+.chatContainer .chatBloc .chatText .row {
   width: 60%;
   padding: 3px;
 }
