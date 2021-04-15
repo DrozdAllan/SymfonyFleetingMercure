@@ -29,9 +29,9 @@ class MessageController extends AbstractController
 
         $dataArray = json_decode($dataJSON, true); //decodage du JSON en array
 
-        $msgContent = htmlentities($dataArray['content']);
+        $receivedContent = htmlentities($dataArray['content']);
 
-        if (empty($msgContent)) {
+        if (empty($receivedContent)) {
             throw new AccessDeniedHttpException('no data sent');
         }
 
@@ -40,23 +40,23 @@ class MessageController extends AbstractController
         ]);
 
         $message = new Message();
-        $message->setContent($msgContent);
+        $message->setContent($receivedContent);
         $message->setChannel($channel);
         $message->setUser($this->getUser());
         $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
 
-        // dump($message);
+        dump($message);
 
         // $em->persist($message);
         // $em->flush();
 
-        $receivedContent = htmlentities($dataArray['content']);
         $receivedFrom = htmlentities($dataArray['from']);
         $receivedChannel = htmlentities($dataArray['channel']);
+        $receivedAt = date('H:i', strtotime('+2 hour'));
 
         $receivedChannelToStr = strval($receivedChannel);
 
-        $jsonToWebsocket = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel]);
+        $jsonToWebsocket = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel, 'createdAt' => $receivedAt]);
 
         /**
          * 
