@@ -9,26 +9,19 @@ use App\Form\RegistrationFormType;
 use App\Form\AnnouncerRegistrationType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\ImageUploader;
+use App\Service\DescriptionFilter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RegistrationController extends AbstractController
 {
-    /**
-     * @Route("/choice", name="registrationChoice")
-     */
-    public function registrationChoice()
-    {
-
-        return $this->render('registration/choice.html.twig');
-    }
-
     /**
      * @Route("/user-register", name="registrationUser")
      */
@@ -69,14 +62,28 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/announcer-register", name="registrationAnnouncer")
      */
-    public function registrationAnnouncer(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, EntityManagerInterface $em): Response
+    public function registrationAnnouncer(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, DescriptionFilter $descriptionFilter, EntityManagerInterface $em): Response
     {
         $user = new User();
         $image = new Image();
         $form = $this->createForm(AnnouncerRegistrationType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            // check desc
+
+            $descriptionVerify = $descriptionFilter->filter($form->get('shortdescription')->getData());
+
+            if ($descriptionVerify === true) {
+                $form->get('shortdescription')->addError(new FormError("votre description contient un ou plusieurs mots interdits"));
+                return $this->render('registration/announcer.html.twig', [
+                    'formView' => $form->createView()
+                ]);
+            }
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -102,19 +109,24 @@ class RegistrationController extends AbstractController
             $em->flush();
             // do anything else you need here, like send an email
 
-            // Ajout d'un flash pour prévenir de la prise en charge Admin et redirect home
-            $this->addFlash("success", "Inscription réussie ! Votre profil va être étudié pour validation");
-            return $this->redirectToRoute('home');
-            // return $guardHandler->authenticateUserAndHandleSuccess(
-            //     $user,
-            //     $request,
-            //     $authenticator,
-            //     'main' // firewall name in security.yaml
-            // );
+            return $this->redirectToRoute('registrationAnnouncerSuccess');
         }
 
         return $this->render('registration/announcer.html.twig', [
             'formView' => $form->createView()
         ]);
     }
+
+
+     /**
+     * @Route("/announcer-register-success", name="registrationAnnouncerSuccess")
+     */
+    public function registrationAnnouncerSuccess()
+    {
+
+
+        return $this->render('registration/announcerSuccess.html.twig');
+    }
+
+
 }

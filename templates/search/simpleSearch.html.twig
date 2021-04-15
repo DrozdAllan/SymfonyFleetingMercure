@@ -2,34 +2,35 @@
 
 
 {% block body %}
+	<div class="container">
+		<div class="row">
+			<h1>
+				Résultat de votre recherche :
+			</h1>
 
-	<div class="row">
-		<h1>
-			Résultat de votre recherche :
-		</h1>
+			{% for announcer in announcers %}
 
-		{% for announcer in announcers %}
+				<div class="card text-white bg-warning m-3" style="max-width: 20rem;">
+					<div class="card-header">
+						<h3>
+							{{ announcer.username }}
+						</h3>
+					</div>
+					<div class="card-body">
+						{% for image in announcer.images %}
+							<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="250">
+						{% endfor %}
+						<p class="card-text">
+							{{ announcer.shortdescription }}
+						</p>
 
-			<div class="card text-white bg-warning m-3" style="max-width: 20rem;">
-				<div class="card-header">
-					<h3>
-						{{ announcer.username }}
-					</h3>
+					</div>
+					<a href="{{ path('viewAnnouncer', {'username': announcer.username}) }}">
+						En savoir plus
+					</a>
 				</div>
-				<div class="card-body">
-					{% for image in announcer.images %}
-						<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="250">
-					{% endfor %}
-					<p class="card-text">
-						{{ announcer.shortdescription }}
-					</p>
-
-				</div>
-				<a href="{{ path('viewAnnouncer', {'username': announcer.username}) }}">
-					En savoir plus
-				</a>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		</div>
 	</div>
 
 {% endblock %}

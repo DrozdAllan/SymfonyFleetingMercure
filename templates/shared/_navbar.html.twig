@@ -36,19 +36,24 @@
 					{% endif %}
 				{% endif %}
 			{% else %}
-				<div class="btn-group mx-0" role="group" aria-label="Basic example">
-					<button type="button" class="btn btn-success nav-item">
 
-						<a href="{{ path('registrationChoice') }}">
+
+					<div class="dropdown">
+						<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Inscription
 						</a>
-					</button>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" href="{{ path('registrationAnnouncer') }}">Annonceur</a>
+							<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
+						</div>
+					</div>
 					<button type="button" class="btn btn-success nav-item">
 						<a href="{{ path('app_login') }}">
 							Connexion
 						</a>
+
 					</button>
-				</div>
 			{% endif %}
 			<form class="mobileSearch" action="{{ path('simpleSearch') }}" method="get">
 				<div class="input-group m-2">
@@ -63,23 +68,23 @@
 		</div>
 
 		{% if app.user %}
-		
-		<button type="button" class="btn btn-success nav-item">
-						<a href="{{ path('vip') }}">
-							V.I.P.
-						</a>
-					</button>
 
-		<a class="nav-link" href="{{ path('chatHub') }}"  role="button">
+			<button type="button" class="btn btn-success nav-item">
+				<a href="{{ path('vip') }}">
+					V.I.P.
+				</a>
+			</button>
+
+			<a class="nav-link" href="{{ path('chatHub') }}" role="button">
 				<i class="fas fa-envelope"></i>
-		</a>
-		
+			</a>
+
 		{% endif %}
-		<div class="btn-group dropdown desktopSearch">
+		<div class="btn-group dropright desktopSearch">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-search"></i>
 			</a>
-			<div class="dropdown-menu">
+			<div class="dropdown-menu desktopSearchDropdown">
 				<form class="" action="{{ path('simpleSearch') }}" method="get">
 
 					<div class="input-group mb-3">
@@ -97,3 +102,4 @@
 
 	</div>
 </nav>
+

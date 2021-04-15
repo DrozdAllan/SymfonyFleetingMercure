@@ -85,7 +85,7 @@ class AnnouncerRegistrationType extends AbstractType
                 ],
             ])
             ->add('image', FileType::class, [
-                'label' => 'image (jpeg/png)',
+                'label' => 'Photo',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -104,6 +104,7 @@ class AnnouncerRegistrationType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid format image',
                     ])
                 ],
+                'help' => 'jpeg/png',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Confirmer l\'inscription'
