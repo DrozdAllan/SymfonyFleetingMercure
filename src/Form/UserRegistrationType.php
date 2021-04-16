@@ -12,9 +12,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class RegistrationFormType extends AbstractType
+class UserRegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,14 +46,19 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            // ])
+            ->add('confirmPassword', PasswordType::class, [
+                'label' => 'Confirmez le mot de passe',
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => 'Confirmez le mot de passe'
+                ],
+            ])
+            ->add('mail', EmailType::class, [
+                'label' => 'Adresse mail',
+                'attr' => [
+                'placeholder' => 'Entrez une adresse mail'
+                ],
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Confirmer l\'inscription'
             ])

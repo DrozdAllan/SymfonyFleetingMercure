@@ -6,54 +6,51 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class ModifyAnnouncerFormType extends AbstractType
+class ResearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'Nom d\'utilisateur',
-                'attr' => [
-                    'placeholder' => 'Entrez un nom d\'utilisateur'
-                ]
-            ])
             ->add('hair', ChoiceType::class, [
                 'label' => 'Cheveux',
-                'placeholder' => 'Choisissez une longueur de cheveux',
                 'choices' => [
+                    'Tout' => null,
                     'Courts' => 'Courts',
                     'Longs' => 'Longs',
                 ],
+                'required' => true
             ])
             ->add('tattoo', ChoiceType::class, [
                 'label' => 'Tatouage',
-                'placeholder' => 'Avez vous des tatouages',
                 'choices' => [
+                    'Tout' => null,
                     'Oui' => '1',
                     'Non' => '0',
                 ],
+                'required' => true
             ])
             ->add('smoke', ChoiceType::class, [
                 'label' => 'Fume',
-                'placeholder' => 'Vous arrive-t-il de fumer',
                 'choices' => [
+                    'Tout' => null,
                     'Oui' => '1',
                     'Non' => '0',
                 ],
+                'required' => true
             ])
-            ->add('shortdescription', TextareaType::class, [
-                'label' => 'Veuillez vous décrire en quelques mots',
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher'
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

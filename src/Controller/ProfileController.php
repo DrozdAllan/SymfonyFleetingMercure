@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Form\UserModifyFormType;
-use App\Form\ModifyAnnouncerFormType;
+use App\Form\UserModifyType;
+use App\Form\ModifyAnnouncerType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class ProfileController extends AbstractController
     {
         $usermodify = $this->getUser();
         // dd($usermodify);
-        $form = $this->createForm(ModifyAnnouncerFormType::class, $usermodify);
+        $form = $this->createForm(ModifyAnnouncerType::class, $usermodify);
 
         $form->handleRequest($request);
 
@@ -79,7 +79,7 @@ class ProfileController extends AbstractController
     public function modifyUserProfile(Request $request, EntityManagerInterface $em)
     {
         $usermodify = $this->getUser();
-        $form = $this->createForm(UserModifyFormType::class, $usermodify);
+        $form = $this->createForm(UserModifyType::class, $usermodify);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

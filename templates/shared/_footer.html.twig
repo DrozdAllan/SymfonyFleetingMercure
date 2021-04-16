@@ -1,17 +1,5 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-	Register
-{% endblock %}
-
 {% block body %}
-	{% for flashError in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">
-			{{ flashError }}
-		</div>
-	{% endfor %}
-
-	<!-- Modal -->
+    <!-- Modal -->
 	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
@@ -97,7 +85,7 @@
 					</h5>
 					<p>
 						L’Annonceur peut à tout moment supprimer définitivement son annonce et/ou son compte, il ne sera 
-																																																												alors plus possible de récupérer quoi que ce soit.
+																																				alors plus possible de récupérer quoi que ce soit.
 					</p>
 					<p>
 						Vous pouvez nous en envoyer un message via notre formulaire de contact si vous souhaitez de l’aide.
@@ -120,51 +108,81 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
-			<h1>
-				Nouvel annonceur
-			</h1>
-		<div class="row">
-			<div class="col">
+{% endblock %}
 
-				{{ form_start(formView) }}
 
-				{{ form_errors(formView) }}
 
-				{{ form_row(formView.username) }}
+<footer class="bg-dark text-center text-lg-start">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Footer Content</h5>
 
-				{{ form_row(formView.plainPassword) }}
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+          molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
+          voluptatem veniam, est atque cumque eum delectus sint!
+        </p>
+      </div>
+      <!--Grid column-->
 
-				{{ form_row(formView.confirmPassword) }}
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Links</h5>
 
-				{{ form_row(formView.mail) }}
+        <ul class="list-unstyled mb-0">
+          <li>
+            <a href="#!" class="text-dark">Link 1</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Link 2</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Link 3</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Link 4</a>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
 
-				{{ form_row(formView.image) }}
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase mb-0">Links</h5>
 
-			</div>
-			<div class="col">
-				{{ form_row(formView.hair) }}
-
-				{{ form_row(formView.tattoo) }}
-
-				{{ form_row(formView.smoke) }}
-
-				{{ form_row(formView.shortdescription) }}
-
-			</div>
-		</div>
-
-		<div class="my-2">
-			Je reconnais avoir lu les
-			<a href="" data-toggle="modal" data-target="#staticBackdrop">
+        <ul class="list-unstyled">
+          <li>
+            <a href="">
+				contact
+			</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Link 2</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Link 3</a>
+          </li>
+          <li>
+            <a href="" data-toggle="modal" data-target="#staticBackdrop">
 				conditions d'utilisation
 			</a>
-			et les accepte
-			<input type="checkbox" required="true" unchecked>
-		</div>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+  <!-- Grid container -->
 
-		{{ form_row(formView.submit) }}
-
-		{{ form_end(formView) }}
-	</div>
-{% endblock %}
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>

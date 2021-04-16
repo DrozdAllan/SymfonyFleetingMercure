@@ -12,10 +12,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AnnouncerRegistrationType extends AbstractType
@@ -56,14 +57,6 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('shortdescription', TextareaType::class, [
                 'label' => 'Veuillez vous décrire en quelques mots',
             ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            // ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -82,6 +75,19 @@ class AnnouncerRegistrationType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                ],
+            ])
+            ->add('confirmPassword', PasswordType::class, [
+                'label' => 'Confirmez le mot de passe',
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => 'Confirmez le mot de passe'
+                ],
+            ])
+            ->add('mail', EmailType::class, [
+                'label' => 'Adresse mail',
+                'attr' => [
+                'placeholder' => 'Entrez une adresse mail'
                 ],
             ])
             ->add('image', FileType::class, [
@@ -104,7 +110,7 @@ class AnnouncerRegistrationType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid format image',
                     ])
                 ],
-                'help' => 'jpeg/png',
+                'help' => 'jpeg/png, max: 1 Mo',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Confirmer l\'inscription'

@@ -18,7 +18,7 @@ class ViewAnnouncerController extends AbstractController
         $announcer = $userRepository->findOneBy($criteria);
 
         
-        return $this->render('announcer/View.html.twig', [
+        return $this->render('announcerView/View.html.twig', [
             'announcer' => $announcer
         ]);
     }

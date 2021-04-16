@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Image;
 use App\Service\ImageUploader;
-use App\Form\UploadImageFormType;
+use App\Form\UploadImageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +23,7 @@ class ImageController extends AbstractController
         $image = new Image;
         $user = $this->getUser();
 
-        $form = $this->createForm(UploadImageFormType::class);
+        $form = $this->createForm(UploadImageType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

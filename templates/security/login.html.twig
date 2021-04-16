@@ -24,37 +24,40 @@
 		{% endif %}
 
 		<div class="container">
-			
-				<h1 class="h3 mb-3 font-weight-normal">
-					Connexion
-				</h1>
-				<label for="inputUsername">
-					Nom d'utilisateur
-				</label>
-				<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
-				<label for="inputPassword">
-					Mot de passe
-				</label>
-				<input type="password" name="password" id="inputPassword" class="form-control" required>
 
-				<input
-				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<h1 class="h3 mb-3 font-weight-normal">
+				Connexion
+			</h1>
+			<label for="inputUsername">
+				Nom d'utilisateur
+			</label>
+			<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+			<label for="inputPassword">
+				Mot de passe
+			</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" required>
 
-				{#
-									        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-									        See https://symfony.com/doc/current/security/remember_me.html
-									
-									        <div class="checkbox mb-3">
-									            <label>
-									                <input type="checkbox" name="_remember_me"> Remember me
-									            </label>
-									        </div>
-									    #}
+			<input
+			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			
-				<button class="btn btn-primary btn-lg mt-3" type="submit">
-					Connexion
-				</button>
+			{#
+												        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+												        See https://symfony.com/doc/current/security/remember_me.html
+												
+												        <div class="checkbox mb-3">
+												            <label>
+												                <input type="checkbox" name="_remember_me"> Remember me
+												            </label>
+												        </div>
+												    #}
+
+
+			<button class="btn btn-primary btn-lg mt-3" type="submit">
+				Connexion
+			</button>
 		</div>
 	</form>
+	<a href="{{ path('app_forgot_password_request') }}">
+		Mot de passe oublié</a>
+
 {% endblock %}

@@ -5,11 +5,6 @@
 {% endblock %}
 
 {% block body %}
-	{% for flashError in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">
-			{{ flashError }}
-		</div>
-	{% endfor %}
 
 	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
@@ -96,7 +91,7 @@
 					</h5>
 					<p>
 						L’Annonceur peut à tout moment supprimer définitivement son annonce et/ou son compte, il ne sera 
-																								alors plus possible de récupérer quoi que ce soit.
+																														alors plus possible de récupérer quoi que ce soit.
 					</p>
 					<p>
 						Vous pouvez nous en envoyer un message via notre formulaire de contact si vous souhaitez de l’aide.
@@ -125,16 +120,23 @@
 			Nouvel utilisateur
 		</h1>
 
-		{{ form_start(formView) }}
+		<div class="row">
+			<div class="col">
+				{{ form_start(formView) }}
 
+				
+				{{ form_row(formView.username) }}
 
-		<div class="col">
-			{{ form_row(formView.username) }}
+				{{ form_row(formView.mail) }}
+			</div>
+			<div class="col">
+				{{ form_row(formView.plainPassword) }}
 
-			{{ form_row(formView.plainPassword) }}
+				{{ form_row(formView.confirmPassword) }}
+
+			</div>
 
 		</div>
-
 		<div class="my-2">
 			Je reconnais avoir lu les
 			<a href="" data-toggle="modal" data-target="#staticBackdrop">

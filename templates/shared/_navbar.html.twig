@@ -16,20 +16,14 @@
 			{% if app.user %}
 				{% if is_granted('ROLE_USER') %}
 					<div class="btn-group mx-0" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-success nav-item">
-							<a href="{{ path('profile') }}" class="btn btn-warning">
-								Profil
+						<a class="btn btn-secondary nav-item" href="{{ path('profile') }}"> 	Profil
 							</a>
-						</button>
-						<button type="button" class="btn btn-success nav-item">
-							<a href="{{ path('app_logout') }}" class="btn btn-danger">
-								Deconnexion
+						<a class="btn btn-secondary nav-item" href="{{ path('app_logout') }}">	Deconnexion
 							</a>
-						</button>
 					</div>
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="nav-item">
-							<a href="{{ path('admin') }}" class="btn btn-warning">
+							<a href="{{ path('admin') }}">
 								Administration
 							</a>
 						</div>
@@ -48,12 +42,9 @@
 							<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
 						</div>
 					</div>
-					<button type="button" class="btn btn-success nav-item">
-						<a href="{{ path('app_login') }}">
+						<a class="btn btn-secondary nav-item" role="button" href="{{ path('app_login') }}">
 							Connexion
 						</a>
-
-					</button>
 			{% endif %}
 			<form class="mobileSearch" action="{{ path('simpleSearch') }}" method="get">
 				<div class="input-group m-2">
@@ -69,11 +60,9 @@
 
 		{% if app.user %}
 
-			<button type="button" class="btn btn-success nav-item">
-				<a href="{{ path('vip') }}">
+			<a class="btn btn-secondary nav-item" href="{{ path('vip') }}">
 					V.I.P.
 				</a>
-			</button>
 
 			<a class="nav-link" href="{{ path('chatHub') }}" role="button">
 				<i class="fas fa-envelope"></i>

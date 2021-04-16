@@ -5,7 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Image;
-use App\Form\RegistrationFormType;
+use App\Form\UserRegistrationType;
 use App\Form\AnnouncerRegistrationType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\ImageUploader;
@@ -28,10 +28,21 @@ class RegistrationController extends AbstractController
     public function registrationUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            if ($form->get('confirmPassword')->getData() !== $form->get('plainPassword')->getData()) {
+
+                $form->get('confirmPassword')->addError(new FormError('Erreur dans la confirmation du mot de passe'));
+
+                return $this->render('registration/user.html.twig', [
+                    'formView' => $form->createView(),
+                ]);
+            }
+            
+            
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -44,7 +55,10 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+
             // do anything else you need here, like send an email
+            $this->addFlash('success', 'inscription réussie');
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -53,7 +67,7 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-
+  
         return $this->render('registration/user.html.twig', [
             'formView' => $form->createView(),
         ]);
@@ -78,11 +92,22 @@ class RegistrationController extends AbstractController
             $descriptionVerify = $descriptionFilter->filter($form->get('shortdescription')->getData());
 
             if ($descriptionVerify === true) {
-                $form->get('shortdescription')->addError(new FormError("votre description contient un ou plusieurs mots interdits"));
+                $form->get('shortdescription')->addError(new FormError("Votre description contient un ou plusieurs mots interdits"));
                 return $this->render('registration/announcer.html.twig', [
                     'formView' => $form->createView()
                 ]);
             }
+            
+            elseif ($form->get('confirmPassword')->getData() !== $form->get('plainPassword')->getData()) {
+
+                $form->get('confirmPassword')->addError(new FormError('Erreur dans la confirmation du mot de passe'));
+
+                return $this->render('registration/announcer.html.twig', [
+                    'formView' => $form->createView(),
+                ]);
+            }
+
+
 
             // encode the plain password
             $user->setPassword(

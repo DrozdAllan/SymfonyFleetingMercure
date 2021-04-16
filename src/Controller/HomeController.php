@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ResearchFormType;
+use App\Form\ResearchType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $criteria = ['validadmin' => '1'];
         $users = $userRepository->findBy($criteria, ['id' => 'DESC'], 8);
 
-        $form = $this->createForm(ResearchFormType::class, $user);
+        $form = $this->createForm(ResearchType::class, $user);
         $form->handleRequest($request);
 
 

@@ -2,30 +2,55 @@
 
 {% block body %}
 
-	{{ form_start(formView) }}
-	{{ form_errors(formView) }}
+	<div class="container">
 
-	{{ form_row(formView.username) }}
-	{{ form_row(formView.hair) }}
-	{{ form_row(formView.tattoo) }}
-	{{ form_row(formView.smoke) }}
+		<div class="row">
+			<div class="col">
+				{{ form_start(formView) }}
 
-	{{ form_row(formView.shortdescription) }}
-	<span class="alert">
-		ATTENTION : Modifier votre description demandera une nouvelle validation administrateur, votre profil ne sera donc pas visible en attendant
-	</span>
+				{{ form_row(formView.username) }}
+
+			</div>
+			<div class="col">
+				{{ form_row(formView.hair) }}
+				{{ form_row(formView.tattoo) }}
+				{{ form_row(formView.smoke) }}
+
+				{{ form_row(formView.shortdescription) }}
+				<span class="alert">
+					ATTENTION : Modifier votre description demandera une nouvelle validation administrateur, votre profil ne sera donc pas visible en attendant
+				</span>
+
+			</div>
+
+			<div class="col-12">
+
+				<button type="submit" class="btn btn-primary">
+					Confirmer modification
+				</button>
+				{{ form_end(formView) }}
+
+			</div>
+
+			<div class="col-12">
+				<a href="{{ path('addImage') }}" class="btn btn-secondary">
+					Ajouter une image
+				</a>
+			</div>
+		</div>
 
 
-	<button type="submit" class="btn btn-success mt-3">
-		Confirmer modification
-	</button>
-	{{ form_end(formView) }}
+		<div class="row">
 
+			{% for image in app.user.images %}
+				<div class="col">
+					<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+					<a href="{{ path('announcerDeleteImage', {'imageid': image.id}) }}" class="btn btn-danger">
+						Supprimer l'image
+					</a>
+				</div>
+			{% endfor %}
+		</div>
 
-	{% for image in app.user.images %}
-		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
-		<a href="{{ path('announcerDeleteImage', {'imageid': image.id}) }}" class="btn btn-success">
-			Supprimer l'image
-		</a>
-	{% endfor %}
+	</div>
 {% endblock %}

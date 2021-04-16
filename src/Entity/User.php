@@ -84,6 +84,11 @@ class User implements UserInterface
      */
     private $channels;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mail;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -324,6 +329,18 @@ class User implements UserInterface
         if ($this->channels->removeElement($channel)) {
             $channel->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
 
         return $this;
     }
