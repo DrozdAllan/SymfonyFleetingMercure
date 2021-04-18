@@ -16,27 +16,26 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MessageController extends AbstractController
 {
     /**
      * @Route("/message", name="message", methods={"POST"})
      */
-    public function sendMessage(Request $request, ChannelRepository $channelRepository, PublisherInterface $publisher, EntityManagerInterface $em)
+    public function sendMessage(Request $request, ChannelRepository $channelRepository, NormalizerInterface $normalizer, SerializerInterface $serializer, PublisherInterface $publisher, EntityManagerInterface $em)
     {
-        //recup data POST
-        $dataJSON = $request->getContent();
 
-        $dataArray = json_decode($dataJSON, true); //decodage du JSON en array
+        $data = json_decode($request->getContent()); //decodage du JSON en objet (add parameter true pour avoir en array)
 
-        $receivedContent = htmlentities($dataArray['content']);
+        $receivedContent = htmlentities($data->content);
 
         if (empty($receivedContent)) {
             throw new AccessDeniedHttpException('no data sent');
         }
 
         $channel = $channelRepository->findOneBy([
-            'id' => $dataArray['channel'] // On cherche à savoir de quel channel provient le message
+            'id' => $data->channel // On cherche à savoir de quel channel provient le message
         ]);
 
         $message = new Message();
@@ -45,37 +44,20 @@ class MessageController extends AbstractController
         $message->setUser($this->getUser());
         $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
 
-        dump($message);
-
         // $em->persist($message);
         // $em->flush();
 
-        $receivedFrom = htmlentities($dataArray['from']);
-        $receivedChannel = htmlentities($dataArray['channel']);
-        $receivedAt = date('H:i', strtotime('+2 hour'));
+        $jsonMessage = $serializer->serialize($message, 'json', [
+            'groups' => ['chatmessage']
+        ]);
 
-        $receivedChannelToStr = strval($receivedChannel);
-
-        $jsonToWebsocket = json_encode(['content' => $receivedContent, 'from'=> $receivedFrom, 'channel' => $receivedChannel, 'createdAt' => $receivedAt]);
-
-        /**
-         * 
-         * 
-         * todo: essayer le serializer ou bien essayer l'authentification
-         * 
-         */
-
-        $update = new Update(
-            $receivedChannelToStr,
-            $jsonToWebsocket
-        );
-
-        dump($update);
-
-        $publisher($update);
+        $publisher(new Update(
+            ["$data->channel"],
+            $jsonMessage
+        ));
 
         return new JsonResponse(
-            $jsonToWebsocket,
+            $jsonMessage,
             Response::HTTP_OK,
             [],
             true

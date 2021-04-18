@@ -22,12 +22,14 @@ class Message
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("chatmessage")
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("chatmessage")
      */
     private $user;
 
@@ -38,6 +40,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity=Channel::class, inversedBy="messages")
+     * @Groups("chatmessage")
      */
     private $channel;
 

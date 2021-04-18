@@ -107,7 +107,6 @@ $(document).ready(function() {
 
 	const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Recup du Link envoyé par le controller
 
-	console.log(link); // https://127.0.0.1:8000/.well-known/mercure
 	const hub = new URL(link);
 
 
@@ -121,19 +120,17 @@ $(document).ready(function() {
     			
 		const message = JSON.parse(data); // Le contenu des événements est sous format JSON, il faut le parser
 
-		console.log(message);
-
-		if (message.from === "{{ app.user.username }}") {
-			$('div[data-channel=' + message.channel + '] .chatText').append(
+		if (message.user.username === "{{ app.user.username }}") {
+			$('div[data-channel=' + message.channel.id + '] .chatText').append(
 				`<div class='row float-right'>
-            		<span> ${message.from} <sub> ${message.createdAt} </sub> </span>
+            		<span> ${message.user.username} </span>
             	<p class='alert alert-info w-100'> ${message.content} </p>
         		</div>`
     		);
 		} else {
-            $('div[data-channel=' + message.channel + '] .chatText').append(
+            $('div[data-channel=' + message.channel.id + '] .chatText').append(
 				`<div class='row float-left'>
-            	<span> ${message.from}<sub> ${message.createdAt} </sub> </span>
+            	<span> ${message.user.username} </span>
             	<p class='alert alert-success w-100'> ${message.content} </p>
         		</div>`
     		);
@@ -150,22 +147,14 @@ $(document).ready(function() {
     $("button.buttonChat").click(function(e) {
         e.preventDefault(); // Empêche la page de se rafraîchir après le submit du formulaire
 		
-
 		const inputBeforeButton = $(this).siblings('input');
-
 		const message = inputBeforeButton[0].value;
-
 		const channelNb = $(this).parents(".tab-pane").data('channel');
-
-		const expeditor = "{{app.user.username}}";
             
-		const data = { // La variable data sera envoyée au controller
-            content: message, // On transmet le message...
-			channel: channelNb, // ... Et le canal correspondant
-			from: expeditor
+		const data = { 
+            content: message,
+			channel: channelNb
         };
-
-        console.log(data); // Pour vérifier vos informations
 
 		inputBeforeButton[0].value = ''; // Efface le message dans l'input
             
