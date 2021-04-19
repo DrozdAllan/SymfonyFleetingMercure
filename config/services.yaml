@@ -34,3 +34,8 @@ services:
     App\Service\ImageUploader:
         arguments:
             $targetDirectory: '%images_directory%'
+
+    App\Service\StripeService:
+        arguments:
+            $secretKey: '%env(STRIPE_SECRET_KEY)%'
+            $publicKey: '%env(STRIPE_PUBLIC_KEY)%'

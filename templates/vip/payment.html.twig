@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	
+<div class="container">
+
+
+	<div class="offre">
+	<h4>Vous avez choisi l'offre {{offre}}</h4>
+	</div>
+
+	<!-- Display a payment form -->
+	<form id="payment-form">
+		<div id="card-element"><!--Stripe.js injects the Card Element--></div>
+		<button id="submit" class="btn btn-success">
+			<div class="spinner hidden" id="spinner"></div>
+			<span id="button-text">Valider le paiement</span>
+		</button>
+		<p id="card-error" role="alert"></p>
+	</form>
+
+	<h4><a href="#">Revenir aux autres offres</a></h4>
+
+</div>
+
+{% endblock %}
+{% block javascripts %}
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+	const clientSecret = '{{ clientSecret }}';
+	const stripePublicKey = '{{ stripePublicKey }}';
+	</script>
+	<script src="/js/payment.js"></script>
+{% endblock %}
