@@ -32,17 +32,20 @@ class VipController extends AbstractController
         $paymentIntent = $stripeService->getPaymentIntent($offer);
 
         if ($offer == 1) {
-            $offre = "3 Jours : 18€";
+            $offre = "3 Jours";
+            $amount = 18;
         }
         elseif ($offer == 2) {
-            $offre = "1 Semaine : 42€";
+            $offre = "1 Semaine";
+            $amount = 42;
         }
 
 
         return $this->render('vip/payment.html.twig', [
             'clientSecret' => $paymentIntent->client_secret,
             'stripePublicKey' => $stripeService->getPublicKey(),
-            'offre' => $offre
+            'offre' => $offre,
+            'amount' => $amount
         ]);
     }
 
