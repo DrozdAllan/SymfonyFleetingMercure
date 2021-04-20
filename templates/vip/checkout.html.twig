@@ -7,12 +7,12 @@
 
 
 	<div class="offre">
-	<h4>Vous avez choisi l'offre {{offre}}</h4>
+	<h4>Vous avez choisi l'offre {{text}}</h4>
 	</div>
 
 	<!-- Display a payment form -->
 	<form id="payment-form">
-	<div>Paiement pour {{offre}} : {{amount}}€</div>
+	<div>Paiement pour {{text}} : {{amount | price}}</div>
 		<div id="card-element"><!--Stripe.js injects the Card Element--></div>
 		<button id="submit" class="btn btn-success">
 			<div class="spinner hidden" id="spinner"></div>
@@ -21,7 +21,7 @@
 		<p id="card-error" role="alert"></p>
 	</form>
 
-	<h4><a href="#">Revenir aux autres offres</a></h4>
+	<h4><a href="{{path('vip')}}">Revenir aux autres offres</a></h4>
 
 </div>
 
@@ -31,6 +31,7 @@
 	<script>
 	const clientSecret = '{{ clientSecret }}';
 	const stripePublicKey = '{{ stripePublicKey }}';
+	const stripeWebhook = '{{ stripeWebhook }}';
 	</script>
 	<script src="/js/payment.js"></script>
 {% endblock %}

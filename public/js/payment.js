@@ -29,7 +29,7 @@ form.addEventListener("submit", function (event) {
         console.log(result.error.message);
       } else {
         // The payment succeeded!
-        console.log(result);
+        window.location.replace(stripeWebhook);
       }
     });
 });

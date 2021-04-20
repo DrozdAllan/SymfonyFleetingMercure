@@ -90,12 +90,7 @@ main .advancedSearch {
   padding: 3px;
 }
 
-#payment-form {
-  width: 30vw;
-  min-width: 500px;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+.payment-form {
   -webkit-box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
           box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
@@ -103,30 +98,33 @@ main .advancedSearch {
   background-color: #455d7a;
 }
 
-#payment-form #card-element {
+.payment-form .card-element {
+  width: 50%;
+  margin: auto;
+  padding: 5px;
   border-radius: 4px 4px 0 0;
-  padding: 12px;
   border: 1px solid rgba(50, 50, 93, 0.1);
-  height: 44px;
-  width: 100%;
-  background: white;
+  background: #596fd6;
 }
 
-#payment-form button {
-  background: #5469d4;
+.payment-form button {
+  width: 50%;
+  margin-right: auto;
+  margin-bottom: 50px;
+  background: #ffb400;
   color: #ffffff;
-  font-family: Arial, sans-serif;
   border-radius: 0 0 4px 4px;
   border: 0;
   padding: 12px 16px;
-  font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  display: block;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
   -webkit-box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
           box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-  width: 100%;
+}
+
+.payment-form a {
+  color: #596fd6;
+  font-weight: 600;
+  text-decoration: none;
 }
 /*# sourceMappingURL=styles.css.map */
