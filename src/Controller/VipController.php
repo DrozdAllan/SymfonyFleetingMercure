@@ -2,16 +2,51 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateTimeZone;
+use App\Entity\User;
 use Psr\Log\LoggerInterface;
+use App\Service\VipValidation;
+use App\Repository\UserRepository;
+use DateInterval;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VipController extends AbstractController
 {
+    /**
+     * @Route("/vip/test", name="viptest")
+     */
+    public function viptest(VipValidation $vipValidation, UserRepository $userRepository, EntityManagerInterface $em)
+    {
+        
+        $customerMail = "bubu@gmail.com";
+
+        $paidAmount = 2000;
+
+        $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
+
+        $User = $userRepository->findOneBy(['mail' => $customerMail]);
+
+        $Now = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $VipExpireDate = $Now->add($VipTime); 
+
+        // dd($VipExpireDate);
+        /** @var User $User */
+        
+        $User->setVip($VipExpireDate);
+        $em->flush();
+
+
+        return $this->render('vip/test.html.twig');
+    }
+
+
     /**
      * @Route("/vip", name="vip")
      */
@@ -87,7 +122,7 @@ class VipController extends AbstractController
     /**
      * @Route("/webhook", name="webhook", methods={"POST"})
      */
-    public function Webhook(LoggerInterface $loggerInterface)
+    public function Webhook(LoggerInterface $loggerInterface, UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
     {
         \Stripe\Stripe::setApiKey('%env(STRIPE_SECRET_KEY)%');
 
@@ -110,14 +145,19 @@ class VipController extends AbstractController
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
 
+                $loggerInterface->warning("payment_intent.succeeded");
 
                 // Remplacer cette fonction par le système de mise en place du status VIP en fonction du paiement effectué (sûrement un service)
+                $paidAmount = $paymentIntent->amount;
+                $loggerInterface->critical($paidAmount);
+                // 2000
+                
+                $customerMail = $paymentIntent->charges->data[0]->billing_details->email;
+                $loggerInterface->critical($customerMail);
 
-                // handlePaymentIntentSucceeded($paymentIntent);
-                
-                
-                
-                $loggerInterface->warning("payment_intent.succeeded");
+                $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
+                $loggerInterface->critical($VipTime);
+            
                 break;
                 // ... handle other event types
             default:

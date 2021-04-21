@@ -16,16 +16,26 @@ class HomeController extends AbstractController
      */
     public function home(UserRepository $userRepository, Request $request)
     {
+        
+        // créer une fonction findUsersStillVip pour les afficher
+        $vip = $userRepository->findBy(['vip' => null]);
+
+        // dd($vip);
+
+        $users = $userRepository->findBy(['validadmin' => '1'], ['id' => 'DESC'], 8);
+        
+
+
+
         $user = new User;
-
-        $criteria = ['validadmin' => '1'];
-        $users = $userRepository->findBy($criteria, ['id' => 'DESC'], 8);
-
         $form = $this->createForm(ResearchType::class, $user);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            //  mettre la fonction de recherche dans un service
 
             $check = $form->getData();
             // dump($check);

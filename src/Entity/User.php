@@ -91,6 +91,11 @@ class User implements UserInterface
      */
     private $mail;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $vip;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -343,6 +348,18 @@ class User implements UserInterface
     public function setMail(string $mail): self
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getVip(): ?\DateTimeInterface
+    {
+        return $this->vip;
+    }
+
+    public function setVip(?\DateTimeInterface $vip): self
+    {
+        $this->vip = $vip;
 
         return $this;
     }
