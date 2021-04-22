@@ -4,12 +4,14 @@
 
 	<div class="container">
 
-		<div class="row">
+		<div class="row bg-dark mb-5">
 			<div class="col">
 				{{ form_start(formView) }}
-
 				{{ form_row(formView.username) }}
 
+				<a href="{{ path('modifyPassword') }}" class="btn btn-success btn-sm">
+					Modifier son mot de passe
+				</a>
 			</div>
 			<div class="col">
 				{{ form_row(formView.hair) }}
@@ -25,32 +27,35 @@
 
 			<div class="col-12">
 
-				<button type="submit" class="btn btn-primary">
-					Confirmer modification
+				<button type="submit" class="btn btn-success mt-3">
+					Confirmer les modifications
 				</button>
 				{{ form_end(formView) }}
-
-			</div>
-
-			<div class="col-12">
-				<a href="{{ path('addImage') }}" class="btn btn-secondary">
-					Ajouter une image
-				</a>
 			</div>
 		</div>
 
 
-		<div class="row">
-
+		<div class="row bg-dark mt-5">
+			Images visibles publiquement
+			<div class="col-12">
+				<a href="{{ path('addImage') }}" class="btn btn-primary">
+					Ajouter une image
+				</a>
+			</div>
 			{% for image in app.user.images %}
 				<div class="col">
 					<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="450">
+					<br>
 					<a href="{{ path('announcerDeleteImage', {'imageid': image.id}) }}" class="btn btn-danger">
 						Supprimer l'image
 					</a>
 				</div>
 			{% endfor %}
 		</div>
+		<br>
+		<a class="btn btn-danger nav-item" href="{{ path('accountTermination') }}">
+			Supprimer définitivement son compte
+		</a>
 
 	</div>
 {% endblock %}

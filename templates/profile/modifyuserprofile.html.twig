@@ -4,11 +4,19 @@
 
 	{{ form_start(formView) }}
 	{{ form_errors(formView) }}
-	
+
 	{{ form_row(formView.username) }}
 
 	<button type="submit" class="btn btn-success mt-3">
-		Modifier son profil
+		Confirmer les modifications
 	</button>
 	{{ form_end(formView) }}
+	<br>
+	<a href="{{ path('modifyPassword') }}" class="btn btn-success btn-sm">
+		Modifier son mot de passe
+	</a>
+	<br>
+	<a class="btn btn-danger nav-item" href="{{ path('accountTermination') }}">
+		Supprimer définitivement son compte
+	</a>
 {% endblock %}

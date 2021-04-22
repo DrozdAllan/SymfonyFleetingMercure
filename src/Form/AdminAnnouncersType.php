@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminAnnouncersType extends AbstractType
@@ -16,14 +17,16 @@ class AdminAnnouncersType extends AbstractType
     {
         $builder
         ->add('username', TextType::class, [
-            'label' => 'Nom d\'utilisateur',
+            'label' => 'Nom d\'utilisateur'
+        ])
+        ->add('mail', EmailType::class, [
+            'label' => 'Mail',
             'attr' => [
-                'placeholder' => 'Entrez un nom d\'utilisateur'
+                'disabled' => true
             ]
         ])
         ->add('hair', ChoiceType::class, [
             'label' => 'Cheveux',
-            'placeholder' => 'Choisissez une longueur de cheveux',
             'choices' => [
                 'Courts' => 'Courts',
                 'Longs' => 'Longs',
@@ -34,7 +37,6 @@ class AdminAnnouncersType extends AbstractType
         ])
         ->add('tattoo', ChoiceType::class, [
             'label' => 'Tatouage',
-            'placeholder' => 'Avez vous des tatouages',
             'choices' => [
                 'Oui' => '1',
                 'Non' => '0',
@@ -45,7 +47,6 @@ class AdminAnnouncersType extends AbstractType
         ])
         ->add('smoke', ChoiceType::class, [
             'label' => 'Fume',
-            'placeholder' => 'Vous arrive-t-il de fumer',
             'choices' => [
                 'Oui' => '1',
                 'Non' => '0',

@@ -83,7 +83,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/deleteimage/{imageid}", name="adminDeleteImage")
-     * Apparemment pas safe mais ballec
+     * Apparemment pas safe (voir token CSRF)
      */
     public function adminDeleteImage($imageid, Request $request, ImageRepository $imageRepository, EntityManagerInterface $em)
     {
