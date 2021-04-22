@@ -50,17 +50,15 @@ class ChannelRepository extends ServiceEntityRepository
 
     public function findChannelByUsers($userId, $targetId)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb
-            ->select('c')
-            ->where(':userId MEMBER OF c.Users')
+        return $this->createQueryBuilder('c')
+            ->andwhere(':userId MEMBER OF c.Users')
             ->andWhere(':targetId MEMBER OF c.Users')
             ->setParameters([
                 'userId' => $userId,
                 'targetId' => $targetId
             ])
+            ->getQuery()
+            ->getResult()
         ;
-        
-        return $qb->getQuery()->getResult();
     }
 }

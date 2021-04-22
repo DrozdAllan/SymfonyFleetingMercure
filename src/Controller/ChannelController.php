@@ -24,16 +24,12 @@ class ChannelController extends AbstractController
         // Recup id de l'user
         $User = $this->getUser();
         $UserId = $User->getId();
-
-        dump($UserId);
  
         // Recup de l'id de celui a qui il veut parler
-        dump($targetId);
+        // dump($targetId);
         
         // Verif que channel pas deja existant
         $recup = $channelRepository->findChannelByUsers($UserId, $targetId);
-        
-        dump($recup);
         
         
         // Si déjà existant renvoyer à la page de chat dans la bonne conv

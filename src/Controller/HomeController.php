@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ResearchType;
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeZone;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,14 +19,15 @@ class HomeController extends AbstractController
     public function home(UserRepository $userRepository, Request $request)
     {
         
-        // créer une fonction findUsersStillVip pour les afficher
-        $vip = $userRepository->findBy(['vip' => null]);
+        // prendre l'heure qu'il est pour voir qui est encore vip
+        $time = new DateTime('now', new DateTimeZone('Europe/Paris'));
 
-        // dd($vip);
 
-        $users = $userRepository->findBy(['validadmin' => '1'], ['id' => 'DESC'], 8);
+        $vips = $userRepository->findAnnouncersStillVip($time);
+
+
+        $announcers = $userRepository->findAnnouncersNotVip($time);
         
-
 
 
         $user = new User;
@@ -64,7 +67,7 @@ class HomeController extends AbstractController
             else {
                 $this->addFlash('danger', 'Vous devez choisir au moins un critère de recherche');
                 return $this->render('home.html.twig', [
-                    'users' => $users,
+                    'users' => $announcers,
                     'formView' => $form->createView()
                 ]);
             }
@@ -80,7 +83,8 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home.html.twig', [
-            'users' => $users,
+            'vips' => $vips,
+            'announcers' => $announcers,
             'formView' => $form->createView()
         ]);
     }

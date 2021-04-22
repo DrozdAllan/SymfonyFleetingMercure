@@ -10,6 +10,8 @@ use App\Form\AnnouncerRegistrationType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\ImageUploader;
 use App\Service\DescriptionFilter;
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -118,6 +120,7 @@ class RegistrationController extends AbstractController
             );
 
             $user->setAnnouncer('1');
+            $user->setVip(new DateTime('now', new DateTimeZone('Europe/Paris')));
 
             /** @var UploadedFile $imageFile */
             $imageFile = $form->get('image')->getData();

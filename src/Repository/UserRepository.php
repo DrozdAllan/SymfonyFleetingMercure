@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
+
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
@@ -53,22 +55,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findAnnouncersStillVip($nowTime)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('u.validadmin = 1')
+            ->andWhere('u.vip >= :now')
+            ->setParameter('now', $nowTime)
+            ->orderBy('u.vip', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findAnnouncersNotVip($nowTime)
+    {
+        return $this->createQueryBuilder('u')
+            ->Where('u.validadmin = 1')
+            ->andWhere('u.vip < :now')
+            ->setParameter('now', $nowTime)
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?User
