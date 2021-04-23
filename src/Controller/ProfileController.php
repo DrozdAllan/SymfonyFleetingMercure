@@ -4,22 +4,26 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserModifyType;
-use App\Form\ModifyAnnouncerType;
-use App\Repository\ImageRepository;
-use App\Form\ChangePasswordType;
-use App\Form\ProfileTerminationType;
-use App\Repository\UserRepository;
 use App\Service\ImageUploader;
+use App\Form\ChangePasswordType;
+use App\Form\ModifyAnnouncerType;
+use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
+use App\Form\ProfileTerminationType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use SymfonyCasts\Bundle\ResetPassword\Command\ResetPasswordRemoveExpiredCommand;
+use SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class ProfileController extends AbstractController
 {
@@ -115,7 +119,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/accounttermination", name="accountTermination")
      */
-    public function accountTermination(SessionInterface $session, TokenStorageInterface $tokenStorage, ImageUploader $imageUploader, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function accountTermination(ResetPasswordHelperInterface $resetPasswordHelperInterface, SessionInterface $session, TokenStorageInterface $tokenStorage, ImageUploader $imageUploader, Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
 
         $user = $this->getUser();
@@ -140,8 +144,17 @@ class ProfileController extends AbstractController
                     $user->removeImage($image);
                     $imageUploader->delete($image);
                 } 
-                //Puis suppression du reste
-                
+
+                // Suppression des channels concernés par l'user
+                $channels = $user->getChannels();
+
+                foreach ($channels as $channel) {
+                    $em->remove($channel);
+                }
+
+
+
+                // Puis suppression du reste
                 $em->remove($user);
                 $em->flush();
                 

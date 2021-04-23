@@ -22,7 +22,7 @@ class Channel
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="channel")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="channel", orphanRemoval=true)
      */
     private $messages;
 

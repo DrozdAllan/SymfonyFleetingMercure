@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             if ($form->get('confirmPassword')->getData() !== $form->get('plainPassword')->getData()) {
 
                 $form->get('confirmPassword')->addError(new FormError('Erreur dans la confirmation du mot de passe'));
@@ -43,8 +43,8 @@ class RegistrationController extends AbstractController
                     'formView' => $form->createView(),
                 ]);
             }
-            
-            
+
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-  
+
         return $this->render('registration/user.html.twig', [
             'formView' => $form->createView(),
         ]);
@@ -78,7 +78,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/announcer-register", name="registrationAnnouncer")
      */
-    public function registrationAnnouncer(Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, DescriptionFilter $descriptionFilter, EntityManagerInterface $em): Response
+    public function registrationAnnouncer(GuardAuthenticatorHandler $guardHandler,LoginFormAuthenticator $authenticator, Request $request, UserPasswordEncoderInterface $passwordEncoder, ImageUploader $imageUploader, DescriptionFilter $descriptionFilter, EntityManagerInterface $em): Response
     {
         $user = new User();
         $image = new Image();
@@ -98,9 +98,7 @@ class RegistrationController extends AbstractController
                 return $this->render('registration/announcer.html.twig', [
                     'formView' => $form->createView()
                 ]);
-            }
-            
-            elseif ($form->get('confirmPassword')->getData() !== $form->get('plainPassword')->getData()) {
+            } elseif ($form->get('confirmPassword')->getData() !== $form->get('plainPassword')->getData()) {
 
                 $form->get('confirmPassword')->addError(new FormError('Erreur dans la confirmation du mot de passe'));
 
@@ -128,7 +126,7 @@ class RegistrationController extends AbstractController
 
             $imageFileName = $imageUploader->upload($imageFile);
             $image->setImageFilename($imageFileName);
-            
+
             $user->addImage($image);
 
             $em->persist($user);
@@ -138,12 +136,17 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
             $this->addFlash('success', 'Inscription réussie ! Vous pouvez vous connectez mais un administrateur doit valider votre profil avant qu\'il soit affiché publiquement');
-            return $this->redirectToRoute('home');
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
         }
 
         return $this->render('registration/announcer.html.twig', [
             'formView' => $form->createView()
         ]);
     }
-
 }
