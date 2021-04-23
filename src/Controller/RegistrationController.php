@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
 
 
             // do anything else you need here, like send an email
-            $this->addFlash('success', 'inscription réussie');
+            $this->addFlash('success', 'Inscription réussie !');
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -137,24 +137,13 @@ class RegistrationController extends AbstractController
             $em->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('registrationAnnouncerSuccess');
+            $this->addFlash('success', 'Inscription réussie ! Vous pouvez vous connectez mais un administrateur doit valider votre profil avant qu\'il soit affiché publiquement');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('registration/announcer.html.twig', [
             'formView' => $form->createView()
         ]);
     }
-
-
-     /**
-     * @Route("/announcer-register-success", name="registrationAnnouncerSuccess")
-     */
-    public function registrationAnnouncerSuccess()
-    {
-
-
-        return $this->render('registration/announcerSuccess.html.twig');
-    }
-
 
 }

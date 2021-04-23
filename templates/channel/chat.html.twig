@@ -6,89 +6,89 @@
 {% block body %}
 
 
-
-<div class="container chatContainer">
-	<div class="row">
-  		<div class="col-2">
-    		<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      		{# <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a> #}
-				{% for key, channel in channels %}
-					{% for user in channel.users %}
-						{% if app.user != user %}
-							<a class="nav-link" data-toggle="pill" href="#v-pills-{{key}}" role="tab" aria-selected="false"><b>{{user.username }}</b></a>
-						{% endif %}
+	<div class="container chatContainer">
+		<div class="row">
+			<div class="col-2">
+				<div
+					class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+					{# <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a> #}
+					{% for key, channel in channels %}
+						{% for user in channel.users %}
+							{% if app.user != user %}
+								<a class="nav-link" data-toggle="pill" href="#v-pills-{{key}}" role="tab" aria-selected="false">
+									<b>{{user.username}}</b>
+								</a>
+							{% endif %}
+						{% endfor %}
 					{% endfor %}
-				{% endfor %}
+				</div>
 			</div>
-  		</div>
 
+			<div class="col-10">
+				<div
+					class="tab-content" id="v-pills-tabContent">
+					{# <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">pédé</div> #}
 
-		<div class="col-10">
-    		<div class="tab-content" id="v-pills-tabContent">
-      		{# <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">pédé</div> #}
+					{% for key, channel in channels %}
 
-				{% for key, channel in channels %}
-							
-					<div class="tab-pane fade" id="v-pills-{{key}}" role="tabpanel" data-channel="{{ channel.id }}">
-	
-						<div class="container chatBloc">
-							<div class="container chatText">
-								{% for message in channel.messages %}
-									{% if app.user == message.user %}
-										<div class="row float-right">
-											<span>{{ message.user.username }} <sub>{{message.createdAt|date("H:i d/m") }}</sub> </span>
-											<p class="alert alert-info w-100">
-											{{ message.content }}
-										</div>
-									{% else %}
-										<div class="row float-left">
-											<span>{{ message.user.username }} <sub>{{message.createdAt|date("H:i d/m") }}</sub> </span>
-											<p class="alert alert-success w-100">
-											{{ message.content }}
-											</p>
-										</div>
-									{% endif %}
-								{% endfor %}
+						<div class="tab-pane fade" id="v-pills-{{key}}" role="tabpanel" data-channel="{{ channel.id }}">
+
+							<div class="container chatBloc">
+								<div class="container chatText">
+									{% for message in channel.messages %}
+										{% if app.user == message.user %}
+											<div class="row float-right">
+												<span>{{ message.user.username }}
+													<sub>{{message.createdAt|date("H:i d/m") }}</sub>
+												</span>
+												<p class="alert alert-info w-100">{{ message.content }}
+												</p>
+											</div>
+										{% else %}
+											<div class="row float-left">
+												<span>{{ message.user.username }}
+													<sub>{{message.createdAt|date("H:i d/m") }}</sub>
+												</span>
+												<p class="alert alert-success w-100">
+													{{ message.content }}
+												</p>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+
+								<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
+									<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
+									<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
+								</form>
 							</div>
-						
-						<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
-							<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
-							<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
-						</form>
 						</div>
-					</div>
 
-				{% endfor %}
-  			</div>
-		</div> 
+					{% endfor %}
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
-		
-
 
 
 {% endblock %}
 
 
-
 {% block javascripts %}
-    <script>
-		$('.nav-link').mousemove(function( event ) {
-			$('.chatText').scrollTop($('.chatText').height()); // Faire une fonction pour scroll max en fonction de la fenetre de chat ouverte par le click
-		});
+	<script>
+		$('.nav-link').mousemove(function (event) {
+$('.chatText').scrollTop($('.chatText').height()); // Faire une fonction pour scroll max en fonction de la fenetre de chat ouverte par le click
+});
 	</script>
 
 	<script>
 
-	const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Get mercure server link from controller
+		const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Get mercure server link from controller
 
-	const hub = new URL(link); // Getting the URL link hub
+const hub = new URL(link); // Getting the URL link hub
 
-	{% for channel in channels %} // Add all topics the user have to the hub
-		hub.searchParams.append('topic',  '{{channel.id}}');
-	{% endfor %}
-    
-	const sessionuser = "{{app.user.username}}" // Get the actual user from twig to pass it into the chat.js
+{% for channel in channels %} // Add all topics the user have to the hub
+hub.searchParams.append('topic', '{{ channel.id }}');{% endfor %}const sessionuser = "{{ app.user.username }}" // Get the actual user from twig to pass it into the chat.js
 	</script>
 
 

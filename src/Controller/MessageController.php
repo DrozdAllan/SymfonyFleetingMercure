@@ -44,8 +44,8 @@ class MessageController extends AbstractController
         $message->setUser($this->getUser());
         $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
 
-        // $em->persist($message);
-        // $em->flush();
+        $em->persist($message);
+        $em->flush();
 
         $jsonMessage = $serializer->serialize($message, 'json', [
             'groups' => ['chatmessage']

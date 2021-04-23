@@ -16,10 +16,12 @@
 			{% if app.user %}
 				{% if is_granted('ROLE_USER') %}
 					<div class="btn-group mx-0" role="group" aria-label="Basic example">
-						<a class="btn btn-secondary nav-item" href="{{ path('profile') }}"> 	Profil
-							</a>
-						<a class="btn btn-secondary nav-item" href="{{ path('app_logout') }}">	Deconnexion
-							</a>
+						<a class="btn btn-secondary nav-item" href="{{ path('profile') }}">
+							Profil
+						</a>
+						<a class="btn btn-secondary nav-item" href="{{ path('app_logout') }}">
+							Deconnexion
+						</a>
 					</div>
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="nav-item">
@@ -32,19 +34,19 @@
 			{% else %}
 
 
-					<div class="dropdown">
-						<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Inscription
-						</a>
+				<div class="dropdown">
+					<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Inscription
+					</a>
 
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<a class="dropdown-item" href="{{ path('registrationAnnouncer') }}">Annonceur</a>
-							<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
-						</div>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<a class="dropdown-item" href="{{ path('registrationAnnouncer') }}">Annonceur</a>
+						<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
 					</div>
-						<a class="btn btn-secondary nav-item" role="button" href="{{ path('app_login') }}">
-							Connexion
-						</a>
+				</div>
+				<a class="btn btn-secondary nav-item" role="button" href="{{ path('app_login') }}">
+					Connexion
+				</a>
 			{% endif %}
 			<form class="mobileSearch" action="{{ path('simpleSearch') }}" method="get">
 				<div class="input-group m-2">
@@ -60,18 +62,20 @@
 
 		{% if app.user %}
 
-			<div class="dropdown">
-						<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							V.I.P.
-						</a>
+			{% if app.user.announcer == 1 %}
+				<div class="dropdown">
+					<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						V.I.P.
+					</a>
 
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<a class="dropdown-item" href="#">Déesse de Venus</a>
-							<a class="dropdown-item" href="#">Dieu de Mars</a>
-							<a class="dropdown-item" href="{{ path('vip') }}">Devenir V.I.P.</a>
-						</div>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<a class="dropdown-item" href="#">Déesse de Venus</a>
+						<a class="dropdown-item" href="#">Dieu de Mars</a>
+						<a class="dropdown-item" href="{{ path('vip') }}">Devenir V.I.P.</a>
 					</div>
-
+				</div>
+			{% endif %}
+			
 			<a class="nav-link" href="{{ path('chatHub') }}" role="button">
 				<i class="fas fa-envelope"></i>
 			</a>
@@ -99,4 +103,3 @@
 
 	</div>
 </nav>
-

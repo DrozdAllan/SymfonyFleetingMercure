@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container">
+
+
+		<h1>
+			Suppression définitive du compte
+		</h1>
+        <h3>Attention : cette action entraînera la suppression définitive de votre compte, messages, images associées et statut VIP s'il existe</h3>
+		<div class="row">
+
+			<div class="col">
+
+				{{ form_start(formView) }}
+
+				{{ form_row(formView.plainPassword) }}
+				{{ form_row(formView.submit) }}
+
+				{{ form_end(formView) }}
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

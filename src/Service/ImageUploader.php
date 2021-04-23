@@ -3,9 +3,10 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\Image;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ImageUploader
 {
@@ -36,5 +37,15 @@ class ImageUploader
     public function getTargetDirectory()
     {
         return $this->targetDirectory;
+    }
+
+
+    public function delete(Image $image)
+    {
+        $nom = $image->getImageFilename();
+
+        $filepath = "uploads\\images\\" . $nom;
+        unlink($filepath);
+        
     }
 }

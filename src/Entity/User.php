@@ -72,7 +72,7 @@ class User implements UserInterface
     private $validadmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="user", orphanRemoval=true)
      */
     private $images;
 
