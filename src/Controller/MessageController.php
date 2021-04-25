@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Repository\ChannelRepository;
 use DateTime;
-use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +41,7 @@ class MessageController extends AbstractController
         $message->setContent($receivedContent);
         $message->setChannel($channel);
         $message->setUser($this->getUser());
-        $message->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Paris')));
+        $message->setCreatedAt(new DateTime('now'));
 
         $em->persist($message);
         $em->flush();

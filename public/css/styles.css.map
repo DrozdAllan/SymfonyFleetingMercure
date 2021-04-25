@@ -8,7 +8,7 @@
         "sass/_base.sass",
         "sass/_home.sass",
         "sass/_chat.sass",
-        "sass/_offerverify.sass"
+        "sass/_checkout.sass"
     ],
     "names": [],
     "file": "styles.css"

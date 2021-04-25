@@ -11,11 +11,6 @@ class VipValidation
 
     public function VipTimeCalculator($paidAmount) {
 
-        //TEST DU CLI STRIPE = 2000 USD A ENLEVER AVANT PROD
-        if ($paidAmount == 2000) {
-            $VipTime = DateInterval::createFromDateString('2 months');
-        }
-
         if ($paidAmount == 1800) {
             $VipTime = DateInterval::createFromDateString('3 days');
         }

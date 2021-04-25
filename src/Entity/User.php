@@ -352,12 +352,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getVip(): ?\DateTimeInterface
+    public function getVip(): ?\DateTime
     {
         return $this->vip;
     }
 
-    public function setVip(?\DateTimeInterface $vip): self
+    public function setVip(?\DateTime $vip): self
     {
         $this->vip = $vip;
 

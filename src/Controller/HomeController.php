@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\ResearchType;
 use App\Repository\UserRepository;
 use DateTime;
-use DateTimeZone;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +19,7 @@ class HomeController extends AbstractController
     {
         
         // prendre l'heure qu'il est pour voir qui est encore vip
-        $time = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $time = new DateTime('now');
 
 
         $vips = $userRepository->findAnnouncersStillVip($time);

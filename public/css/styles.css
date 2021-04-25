@@ -90,7 +90,7 @@ main .advancedSearch {
   padding: 3px;
 }
 
-.payment-form {
+#payment-form {
   -webkit-box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
           box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
@@ -98,7 +98,7 @@ main .advancedSearch {
   background-color: #455d7a;
 }
 
-.payment-form .card-element {
+#payment-form #card-element {
   width: 50%;
   margin: auto;
   padding: 5px;
@@ -107,7 +107,7 @@ main .advancedSearch {
   background: #596fd6;
 }
 
-.payment-form button {
+#payment-form button {
   width: 50%;
   margin-right: auto;
   margin-bottom: 50px;
@@ -122,7 +122,7 @@ main .advancedSearch {
           box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
 }
 
-.payment-form a {
+#payment-form a {
   color: #596fd6;
   font-weight: 600;
   text-decoration: none;

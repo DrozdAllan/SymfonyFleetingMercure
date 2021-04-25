@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use DateTime;
-use DateTimeZone;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use App\Service\VipValidation;
 use App\Repository\UserRepository;
+use App\Service\OfferDecision;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,24 +24,36 @@ class VipController extends AbstractController
      */
     public function viptest(VipValidation $vipValidation, UserRepository $userRepository, EntityManagerInterface $em)
     {
-        
-        $customerMail = "bubu@gmail.com";
+        // Remplacer cette fonction par le système de mise en place du status VIP en fonction du paiement effectué (sûrement un service)
+        $paidAmount = 1800;
 
-        $paidAmount = 2000;
+        // $customerMail = $paymentIntent->charges->data[0]->billing_details->email; POUR LE PREBUILD CHECKOUT
+        $customerMail = 'jean@gmail.com';
 
         $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
 
-        $User = $userRepository->findOneBy(['mail' => $customerMail]);
+        $user = $userRepository->findOneBy(['mail' => $customerMail]);
 
-        $Now = new DateTime('now', new DateTimeZone('Europe/Paris'));
-        $VipExpireDate = $Now->add($VipTime); 
+        $userTime = $user->getVip();
+        // 3 JOURS
 
-        // dd($VipExpireDate);
-        /** @var User $User */
         
-        $User->setVip($VipExpireDate);
-        $em->flush();
+        $now = new DateTime('now');
+        
+        dump($userTime, $now);
 
+        if ($userTime < $now) {
+            dump('inferieur');
+            $AddedVipTime = $now->add($VipTime);
+            $user->setVip($AddedVipTime);
+        } else {
+            dump('superieur');
+            $MoreVipTime = $userTime->add($VipTime);
+            $user->setVip($MoreVipTime);
+        }
+
+        dd($user);
+        $em->flush();
 
         return $this->render('vip/test.html.twig');
     }
@@ -57,50 +69,35 @@ class VipController extends AbstractController
     }
 
     /**
-     * @Route("/vip/offer", name="offerverify")
+     * @Route("/vip/checkout/{id}", name="checkout")
      */
-    public function offerverify()
+    public function offerverify($id, OfferDecision $offerDecision)
     {
 
-        $publickey = $this->getParameter('StripePublicKey');
+        $userMail = $this->getUser()->getMail();
 
-        return $this->render('vip/offerverify.html.twig', [
-            'publickey' => $publickey
-        ]);
-    }
+        $offerInfo = $offerDecision->OfferCalculator($id);
 
-    /**
-     * @Route("/vip/checkout", name="checkout")
-     * @IsGranted("ROLE_USER")
-     */
-    public function checkout()
-    {
+
         \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
 
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'customer_email' => 'test@gmail.com',
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'eur',
-                    'unit_amount' => 2000,
-                    'product_data' => [
-                        'name' => 'Abonnement Fleeting VIP',
-                    ],
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
-
+        $intent = \Stripe\PaymentIntent::create([
+            'amount' => $offerInfo->VipPrice,
+            'currency' => 'eur',
+            'receipt_email' => $userMail,
         ]);
 
-        return new JsonResponse(['id' => $checkout_session->id]);
+        // dd($intent);
+
+        return $this->render('vip/checkout.html.twig', [
+            'clientSecret' => $intent->client_secret,
+            'offerInfo' => $offerInfo
+        ]);
     }
 
+
     /**
-     * @Route("/vip/checkout/success", name="checkoutsuccess")
+     * @Route("/vip/checkoutsuccess", name="checkoutsuccess")
      */
     public function checkoutsuccess()
     {
@@ -110,7 +107,7 @@ class VipController extends AbstractController
 
 
     /**
-     * @Route("/vip/checkout/cancel", name="checkoutcancel")
+     * @Route("/vip/checkoutcancel", name="checkoutcancel")
      */
     public function checkoutcancel()
     {
@@ -145,19 +142,33 @@ class VipController extends AbstractController
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
 
-                $loggerInterface->warning("payment_intent.succeeded");
+                $loggerInterface->warning("Triggered: Payment.intent_succeded");
 
                 // Remplacer cette fonction par le système de mise en place du status VIP en fonction du paiement effectué (sûrement un service)
                 $paidAmount = $paymentIntent->amount;
                 $loggerInterface->critical($paidAmount);
-                // 2000
-                
-                $customerMail = $paymentIntent->charges->data[0]->billing_details->email;
+
+                // $customerMail = $paymentIntent->charges->data[0]->billing_details->email; POUR LE PREBUILD CHECKOUT
+                $customerMail = $paymentIntent->receipt_email;
                 $loggerInterface->critical($customerMail);
 
                 $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
-                $loggerInterface->critical($VipTime);
-            
+
+                $user = $userRepository->findOneBy(['mail' => $customerMail]);
+
+                $userTime = $user->getVip();
+
+                $now = new DateTime('now');
+                if ($userTime < $now) {
+                    $AddedVipTime = $now->add($VipTime);
+                    $user->setVip($AddedVipTime);
+                } else {
+                    $MoreVipTime = $userTime->add($VipTime);
+                    $user->setVip($MoreVipTime);
+                }
+
+                $em->flush();
+
                 break;
                 // ... handle other event types
             default:
