@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -359,7 +360,7 @@ class User implements UserInterface
 
     public function setVip(?\DateTime $vip): self
     {
-        $this->vip = $vip;
+        $this->vip = clone $vip;
 
         return $this;
     }

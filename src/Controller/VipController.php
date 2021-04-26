@@ -3,62 +3,16 @@
 namespace App\Controller;
 
 use DateTime;
-use App\Entity\User;
-use Psr\Log\LoggerInterface;
 use App\Service\VipValidation;
 use App\Repository\UserRepository;
 use App\Service\OfferDecision;
-use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VipController extends AbstractController
 {
-    /**
-     * @Route("/vip/test", name="viptest")
-     */
-    public function viptest(VipValidation $vipValidation, UserRepository $userRepository, EntityManagerInterface $em)
-    {
-        // Remplacer cette fonction par le système de mise en place du status VIP en fonction du paiement effectué (sûrement un service)
-        $paidAmount = 1800;
-
-        // $customerMail = $paymentIntent->charges->data[0]->billing_details->email; POUR LE PREBUILD CHECKOUT
-        $customerMail = 'jean@gmail.com';
-
-        $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
-
-        $user = $userRepository->findOneBy(['mail' => $customerMail]);
-
-        $userTime = $user->getVip();
-        // 3 JOURS
-
-        
-        $now = new DateTime('now');
-        
-        dump($userTime, $now);
-
-        if ($userTime < $now) {
-            dump('inferieur');
-            $AddedVipTime = $now->add($VipTime);
-            $user->setVip($AddedVipTime);
-        } else {
-            dump('superieur');
-            $MoreVipTime = $userTime->add($VipTime);
-            $user->setVip($MoreVipTime);
-        }
-
-        dd($user);
-        $em->flush();
-
-        return $this->render('vip/test.html.twig');
-    }
-
-
     /**
      * @Route("/vip", name="vip")
      */
@@ -87,14 +41,14 @@ class VipController extends AbstractController
             'receipt_email' => $userMail,
         ]);
 
-        // dd($intent);
+        $publickey = $this->getParameter('StripePublicKey');
 
         return $this->render('vip/checkout.html.twig', [
             'clientSecret' => $intent->client_secret,
-            'offerInfo' => $offerInfo
+            'offerInfo' => $offerInfo,
+            'stripePublicKey' => $publickey
         ]);
     }
-
 
     /**
      * @Route("/vip/checkoutsuccess", name="checkoutsuccess")
@@ -105,21 +59,10 @@ class VipController extends AbstractController
         return $this->render('vip/checkoutsuccess.html.twig');
     }
 
-
-    /**
-     * @Route("/vip/checkoutcancel", name="checkoutcancel")
-     */
-    public function checkoutcancel()
-    {
-
-        return $this->render('vip/checkoutcancel.html.twig');
-    }
-
-
     /**
      * @Route("/webhook", name="webhook", methods={"POST"})
      */
-    public function Webhook(LoggerInterface $loggerInterface, UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
+    public function Webhook(UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
     {
         \Stripe\Stripe::setApiKey('%env(STRIPE_SECRET_KEY)%');
 
@@ -142,15 +85,9 @@ class VipController extends AbstractController
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
 
-                $loggerInterface->warning("Triggered: Payment.intent_succeded");
-
-                // Remplacer cette fonction par le système de mise en place du status VIP en fonction du paiement effectué (sûrement un service)
                 $paidAmount = $paymentIntent->amount;
-                $loggerInterface->critical($paidAmount);
-
                 // $customerMail = $paymentIntent->charges->data[0]->billing_details->email; POUR LE PREBUILD CHECKOUT
                 $customerMail = $paymentIntent->receipt_email;
-                $loggerInterface->critical($customerMail);
 
                 $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
 
@@ -159,14 +96,16 @@ class VipController extends AbstractController
                 $userTime = $user->getVip();
 
                 $now = new DateTime('now');
+
                 if ($userTime < $now) {
+                    // l'annonceur n'était pas ou plus vip
                     $AddedVipTime = $now->add($VipTime);
                     $user->setVip($AddedVipTime);
                 } else {
+                    // l'annonceur était déjà vip, on lui rajoute du temps
                     $MoreVipTime = $userTime->add($VipTime);
                     $user->setVip($MoreVipTime);
                 }
-
                 $em->flush();
 
                 break;

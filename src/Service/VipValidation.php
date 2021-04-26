@@ -3,12 +3,10 @@
 
 namespace App\Service;
 
-use App\Repository\UserRepository;
 use DateInterval;
 
 class VipValidation
 {
-
     public function VipTimeCalculator($paidAmount) {
 
         if ($paidAmount == 1800) {
