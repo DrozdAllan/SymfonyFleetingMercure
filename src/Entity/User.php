@@ -45,7 +45,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Announcer;
+    private $announcer;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -96,6 +96,11 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $vip;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripe;
 
     public function __construct()
     {
@@ -184,12 +189,12 @@ class User implements UserInterface
 
     public function getAnnouncer(): ?bool
     {
-        return $this->Announcer;
+        return $this->announcer;
     }
 
-    public function setAnnouncer(bool $Announcer): self
+    public function setAnnouncer(bool $announcer): self
     {
-        $this->Announcer = $Announcer;
+        $this->announcer = $announcer;
 
         return $this;
     }
@@ -361,6 +366,18 @@ class User implements UserInterface
     public function setVip(?\DateTime $vip): self
     {
         $this->vip = clone $vip;
+
+        return $this;
+    }
+
+    public function getStripe(): ?string
+    {
+        return $this->stripe;
+    }
+
+    public function setStripe(?string $stripe): self
+    {
+        $this->stripe = $stripe;
 
         return $this;
     }

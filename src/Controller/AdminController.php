@@ -18,7 +18,7 @@ class AdminController extends AbstractController
      */
     public function home(UserRepository $userRepository)
     {
-        $adminqueue = count($userRepository->findBy(['Announcer' => '1', 'validadmin' => null]));
+        $adminqueue = count($userRepository->findBy(['announcer' => '1', 'validadmin' => null]));
 
         return $this->render('admin/index.html.twig', [
             'adminqueue' => $adminqueue
@@ -31,7 +31,7 @@ class AdminController extends AbstractController
     public function adminAnnouncers(UserRepository $userRepository)
     {
 
-        $criteria = ['Announcer' => '1', 'validadmin' => null];
+        $criteria = ['announcer' => '1', 'validadmin' => null];
 
         $waitingAnnouncers = $userRepository->findBy($criteria, ['id' => 'ASC']);
 

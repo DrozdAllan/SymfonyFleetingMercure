@@ -87,9 +87,6 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-            // check desc
-
             $descriptionVerify = $descriptionFilter->filter($form->get('shortdescription')->getData());
 
             if ($descriptionVerify === true) {
@@ -115,6 +112,14 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+
+            \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
+            $NewStripeCustomer = \Stripe\Customer::create([
+                'email' => $user->getMail()
+            ]);
+
+            $user->setStripe($NewStripeCustomer->id);
 
             $user->setAnnouncer('1');
             $user->setVip(new DateTime('now'));
