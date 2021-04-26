@@ -27,7 +27,7 @@ class MessageController extends AbstractController
 
         $data = json_decode($request->getContent()); //decodage du JSON en objet (add parameter true pour avoir en array)
 
-        $receivedContent = htmlentities($data->content);
+        $receivedContent = htmlspecialchars($data->content);
 
         if (empty($receivedContent)) {
             throw new AccessDeniedHttpException('no data sent');

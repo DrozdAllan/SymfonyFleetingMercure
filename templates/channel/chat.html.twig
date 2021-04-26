@@ -39,7 +39,7 @@
 										{% if app.user == message.user %}
 											<div class="row float-right">
 												<span>{{ message.user.username }}
-													<sub>{{message.createdAt|date("H:i d/m") }}</sub>
+													<sub>{{message.createdAt|date("H:i d/m", "Europe/Paris") }}</sub>
 												</span>
 												<p class="alert alert-info w-100">{{ message.content }}
 												</p>
@@ -47,7 +47,7 @@
 										{% else %}
 											<div class="row float-left">
 												<span>{{ message.user.username }}
-													<sub>{{message.createdAt|date("H:i d/m") }}</sub>
+													<sub>{{message.createdAt|date("H:i d/m", "Europe/Paris") }}</sub>
 												</span>
 												<p class="alert alert-success w-100">
 													{{ message.content }}

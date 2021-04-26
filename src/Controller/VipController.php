@@ -7,6 +7,7 @@ use App\Service\VipValidation;
 use App\Repository\UserRepository;
 use App\Service\OfferDecision;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class VipController extends AbstractController
     /**
      * @Route("/vip/checkout/{id}", name="checkout")
      */
-    public function offerverify($id, OfferDecision $offerDecision)
+    public function checkout($id, OfferDecision $offerDecision)
     {
 
         $userMail = $this->getUser()->getMail();
@@ -35,10 +36,14 @@ class VipController extends AbstractController
 
         \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
 
+        $newCustomer = \Stripe\Customer::create([
+            'email' => $userMail
+        ]);
+
         $intent = \Stripe\PaymentIntent::create([
             'amount' => $offerInfo->VipPrice,
             'currency' => 'eur',
-            'receipt_email' => $userMail,
+            'customer' => $newCustomer->id
         ]);
 
         $publickey = $this->getParameter('StripePublicKey');
@@ -49,6 +54,19 @@ class VipController extends AbstractController
             'stripePublicKey' => $publickey
         ]);
     }
+
+    /**
+     * @Route("/vip/monthly", name="monthlysubscribe")
+     */
+    public function monthlySubscribe()
+    {
+
+
+        return $this->render('vip/monthlySubscribe.html.twig');
+    }
+
+
+
 
     /**
      * @Route("/vip/checkoutsuccess", name="checkoutsuccess")
@@ -62,10 +80,8 @@ class VipController extends AbstractController
     /**
      * @Route("/webhook", name="webhook", methods={"POST"})
      */
-    public function Webhook(UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
+    public function Webhook(LoggerInterface $logger, UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
     {
-        \Stripe\Stripe::setApiKey('%env(STRIPE_SECRET_KEY)%');
-
 
         $payload = @file_get_contents('php://input');
         $event = null;
@@ -82,16 +98,26 @@ class VipController extends AbstractController
 
         // Handle the event
         switch ($event->type) {
+            // Ecoute du seul event important
             case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
+                $paymentIntent = $event->data->object; // recup de l'objet \Stripe\PaymentIntent
 
+                // Connexion a notre compte stripe
+                \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
+
+
+                
+                // Recup de l'id du customer stripe et du montant qu'il vient de payer
+                $customerId = $paymentIntent->customer;
                 $paidAmount = $paymentIntent->amount;
-                // $customerMail = $paymentIntent->charges->data[0]->billing_details->email; POUR LE PREBUILD CHECKOUT
-                $customerMail = $paymentIntent->receipt_email;
 
+
+                // Utilisation du service pour calculer le temps vip a ajouter en fonction du montant payé
                 $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
-
-                $user = $userRepository->findOneBy(['mail' => $customerMail]);
+                
+                // Recup du mail du customer dont on reçoit l'event d'apres notre compte stripe pour le retrouver dans la db
+                $retrievedCustomer = \Stripe\Customer::retrieve($customerId);
+                $user = $userRepository->findOneBy(['mail' => $retrievedCustomer->email]);
 
                 $userTime = $user->getVip();
 
