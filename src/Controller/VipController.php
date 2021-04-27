@@ -8,6 +8,7 @@ use App\Service\OfferDecision;
 use App\Service\VipValidation;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,46 +22,52 @@ class VipController extends AbstractController
      * @Route("/vip", name="vip")
      */
     public function vip()
-    {  
+    {
 
         return $this->render('vip/presentation.html.twig');
     }
 
     /**
-     * @Route("/vip/test", name="test")
+     * @Route("/test", name="test")
      */
     public function test()
     {
-        // Connexion a notre compte stripe
-        // \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
 
-        // dd($checkout_session);
 
-        return $this->render('vip/checkouttest');
+        return $this->render('vip/test.html.twig');
     }
 
     /**
-     * @Route("/vip/checkout/{id}", name="checkout")
+     * @Route("/vip/offer/{id}", name="offer")
      */
-    public function checkout($id, OfferDecision $offerDecision)
+    public function offer($id, OfferDecision $offerDecision)
     {
+        dump($id);
 
-        $offerInfo = $offerDecision->OfferCalculator($id);
+        // Connexion a notre compte stripe
         \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
-        $StripeCustomer = \Stripe\Customer::retrieve($this->getUser()->getStripe());
 
-        $intent = \Stripe\PaymentIntent::create([
-            'amount' => $offerInfo->VipPrice,
-            'currency' => 'eur',
-            'customer' => $StripeCustomer->id
-        ]);
+        // Recup du customer dans notre db au travers de notre stripe
+        $customerId = \Stripe\Customer::retrieve($this->getUser()->getStripe());
 
         $publickey = $this->getParameter('StripePublicKey');
 
-        return $this->render('vip/checkout.html.twig', [
-            'clientSecret' => $intent->client_secret,
-            'offerInfo' => $offerInfo,
-            'stripePublicKey' => $publickey
+
+        $session = \Stripe\Checkout\Session::create([
+            'customer' => $customerId,
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price' => 'price_1IkDZuDTsj5RSWQCOuyzExjS',
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
+
+        return $this->render('vip/offer.html.twig', [
+            'stripePublicKey' => $publickey,
+            'id' => $session->id
         ]);
     }
 
@@ -73,9 +80,32 @@ class VipController extends AbstractController
 
         $customerId = $this->getUser()->getStripe();
 
+        \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
+
+        try {
+            $checkout_session = \Stripe\Checkout\Session::create([
+                'customer' => $customerId,
+                'payment_method_types' => ['card'],
+                'mode' => 'subscription',
+                'line_items' => [[
+                    'price' => 'price_1IkDp4DTsj5RSWQCno9DR63U',
+                    'quantity' => 1,
+                ]],
+                'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            ]);
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'error' => [
+                    'message' => $e->getMessage(),
+                ],
+            ], 400);
+        }
+
         return $this->render('vip/subscribe.html.twig', [
             'stripePublicKey' => $stripePublicKey,
-            'customerId' => $customerId
+            'customerId' => $customerId,
+            'sessionId' => $checkout_session->id
         ]);
     }
 
@@ -141,6 +171,26 @@ class VipController extends AbstractController
                 $em->flush();
 
                 break;
+            case 'checkout.session.completed':
+                // Payment is successful and the subscription is created.
+                // Creation du status vip pour un mois
+                break;
+            case 'invoice.paid':
+                // Continue to provision the subscription as payments continue to be made.
+                // Store the status in your database and check when a user accesses your service.
+                // This approach helps you avoid hitting rate limits.
+                // Rajout du statut vip pour un nouveau mois
+                break;
+            case 'invoice.payment_failed':
+                // The payment failed or the customer does not have a valid payment method.
+                // The subscription becomes past_due. Notify your customer and send them to the
+                // customer portal to update their payment information.
+                // Le paiement mensuel a échoué, envoyer notif à l'admin
+                break;
+                // ... handle other event types
+            case 'customer.subscription.deleted':
+                // L'abonnement d'un utilisateur vient d'être arrêté
+                break;
                 // ... handle other event types
             default:
                 echo 'Received unknown event type ' . $event->type;
@@ -154,8 +204,17 @@ class VipController extends AbstractController
      * @Route("/checkoutsuccess", name="checkoutsuccess")
      */
     public function checkoutsuccess()
-    {  
+    {
 
         return $this->render('vip/checkoutsuccess.html.twig');
+    }
+
+    /**
+     * @Route("/checkoutcancel", name="checkoutcancel")
+     */
+    public function checkoutcancel()
+    {
+
+        return $this->render('vip/checkoutcancel.html.twig');
     }
 }

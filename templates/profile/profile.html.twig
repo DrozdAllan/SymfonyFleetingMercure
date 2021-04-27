@@ -54,6 +54,10 @@
 				Modifier son profil
 			</a>
 		</h4>
+
+		<form method="POST" action="/stripeprofile">
+			<button type="submit">Historique d'abonnement et annulation </button>
+		</form>
 	{% else %}
 		<h4>
 			<a href="{{ path('modifyUserProfile') }}" class="btn btn-success btn-sm">

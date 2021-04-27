@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -33,6 +34,25 @@ class ProfileController extends AbstractController
     public function profile()
     {
         return $this->render('profile/profile.html.twig');
+    }
+
+    /**
+     * @Route("/stripeprofile", name="stripeprofile")
+     */
+    public function stripeprofile()
+    {
+        \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
+
+        $customerId = $this->getUser()->getStripe();
+        // Authenticate your user.
+        $session = \Stripe\BillingPortal\Session::create([
+            'customer' => $customerId,
+            'return_url' => $this->generateUrl('profile', [], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
+
+        // Redirect to the customer portal.
+        header("Location: " . $session->url);
+        exit();
     }
 
     /**
@@ -134,7 +154,7 @@ class ProfileController extends AbstractController
 
             //Si mdp correspond
             if ($passwordEncoder->isPasswordValid($user, $password)) {
-                
+
                 //Alors suppression images PHYSIQUEMENT et sur la db
 
                 /** @var User $user */
@@ -143,7 +163,7 @@ class ProfileController extends AbstractController
                 foreach ($userImages as $image) {
                     $user->removeImage($image);
                     $imageUploader->delete($image);
-                } 
+                }
 
                 // Suppression des channels concernés par l'user
                 $channels = $user->getChannels();
@@ -157,8 +177,8 @@ class ProfileController extends AbstractController
                 // Puis suppression du reste
                 $em->remove($user);
                 $em->flush();
-                
-                
+
+
                 //Suppression du token authentifié pour retour home sans erreur d'authentification
                 $tokenStorage->setToken(null);
                 //Invalidation session pour ne plus avoir le pseudo si tentative reco direct A TESTER
@@ -166,11 +186,9 @@ class ProfileController extends AbstractController
 
                 $this->addFlash("success", "Profil supprimé avec succès");
                 return $this->redirectToRoute('home');
-            }
-            else {
+            } else {
                 $this->addFlash("danger", "Mauvais mot de passe");
             }
-
         }
 
         return $this->render('profile/accountTermination.html.twig', [
