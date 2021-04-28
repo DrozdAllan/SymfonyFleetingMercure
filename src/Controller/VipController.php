@@ -3,23 +3,24 @@
 namespace App\Controller;
 
 use DateTime;
+use App\Service\OfferChoice;
 use Psr\Log\LoggerInterface;
-use App\Service\OfferDecision;
 use App\Service\VipValidation;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class VipController extends AbstractController
 {
     /**
      * @Route("/vip", name="vip")
+     * @IsGranted("ROLE_USER")
      */
     public function vip()
     {
@@ -28,84 +29,49 @@ class VipController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("vip/offer/checkout", priority=10, name="checkout", methods={"POST"})
+     * 
      */
-    public function test()
-    {
-
-
-        return $this->render('vip/test.html.twig');
-    }
-
-    /**
-     * @Route("/vip/offer/{id}", name="offer")
-     */
-    public function offer($id, OfferDecision $offerDecision)
-    {
-        dump($id);
+    public function checkout(Request $request)
+    {   
+        // Recup du fetch
+        $data = json_decode($request->getContent());
 
         // Connexion a notre compte stripe
         \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
 
-        // Recup du customer dans notre db au travers de notre stripe
-        $customerId = \Stripe\Customer::retrieve($this->getUser()->getStripe());
+        // Recup du stripe customer dans notre db
+        $customerId = $this->getUser()->getStripe();
 
-        $publickey = $this->getParameter('StripePublicKey');
-
-
+        // Creation du checkout
         $session = \Stripe\Checkout\Session::create([
             'customer' => $customerId,
             'payment_method_types' => ['card'],
+            'mode' => $data->offerMode,
             'line_items' => [[
-                'price' => 'price_1IkDZuDTsj5RSWQCOuyzExjS',
+                'price' => $data->offerId,
                 'quantity' => 1,
             ]],
-            'mode' => 'payment',
             'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
 
-        return $this->render('vip/offer.html.twig', [
-            'stripePublicKey' => $publickey,
-            'id' => $session->id
-        ]);
+        return new JsonResponse(['id' => $session->id], 200);
     }
 
     /**
-     * @Route("/vip/subscribe", name="subscribe")
+     * @Route("/vip/offer/{id}", name="offer")
+     * @IsGranted("ROLE_USER")
      */
-    public function subscribe()
+    public function offer($id, OfferChoice $offerChoice)
     {
-        $stripePublicKey = $this->getParameter('StripePublicKey');
+        $Offer = $offerChoice->getOffer($id);
 
-        $customerId = $this->getUser()->getStripe();
+        $publickey = $this->getParameter('StripePublicKey');
 
-        \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
-
-        try {
-            $checkout_session = \Stripe\Checkout\Session::create([
-                'customer' => $customerId,
-                'payment_method_types' => ['card'],
-                'mode' => 'subscription',
-                'line_items' => [[
-                    'price' => 'price_1IkDp4DTsj5RSWQCno9DR63U',
-                    'quantity' => 1,
-                ]],
-                'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
-                'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            ]);
-        } catch (Exception $e) {
-            return new JsonResponse([
-                'error' => [
-                    'message' => $e->getMessage(),
-                ],
-            ], 400);
-        }
-
-        return $this->render('vip/subscribe.html.twig', [
-            'stripePublicKey' => $stripePublicKey,
-            'customerId' => $customerId,
-            'sessionId' => $checkout_session->id
+        return $this->render('vip/offer.html.twig', [
+            'stripePublicKey' => $publickey,
+            'offer' => $Offer
         ]);
     }
 
@@ -114,7 +80,6 @@ class VipController extends AbstractController
      */
     public function Webhook(LoggerInterface $logger, UserRepository $userRepository, EntityManagerInterface $em, VipValidation $vipValidation)
     {
-
         $payload = @file_get_contents('php://input');
         $event = null;
 
@@ -130,30 +95,49 @@ class VipController extends AbstractController
 
         // Handle the event
         switch ($event->type) {
-                // Ecoute du seul event important
-            case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object; // recup de l'objet \Stripe\PaymentIntent
+                // Ecoute des events qui minteresse
+            case 'checkout.session.completed':
+                $logger->critical('checkout.session.completed');
 
-                // Connexion a notre compte stripe
-                \Stripe\Stripe::setApiKey($this->getParameter('StripeSecretKey'));
+                if ($event->data->object->mode == "payment") {
+                    $logger->critical("et cest un SIMPLE PAIEMENT MESDAMES ET MESSIEURS");
+                    // Ajout de temps vip en fonction du prix payé
+                    $session = $event->data->object; // recup de l'objet \Stripe\Checkout\Session
+                    // Recup montant payé
+                    $paidAmount = $session->amount_total;
+                    // Service pour calculer le temps vip fonction du montant payé
+                    $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
+                    // Recup customer dont on reçoit l'event pour le retrouver dans la db
+                    $user = $userRepository->findOneBy(['stripe' => $session->customer]);
 
+                    $userTime = $user->getVip();
+                    $now = new DateTime('now');
 
-
-                // Recup de l'id du customer stripe et du montant qu'il vient de payer
-                $customerId = $paymentIntent->customer;
-                $paidAmount = $paymentIntent->amount;
-
-                // verif si il sagit du montant de labonnement
-                if ($paidAmount == 3490) {
-                    // METTRE EN PLACE LA FONCTION DABONNEMENT DANS LA DB ET DANS SYMFONY (l'enfer)
+                    if ($userTime < $now) {
+                        // l'annonceur n'était pas ou plus vip
+                        $AddedVipTime = $now->add($VipTime);
+                        $user->setVip($AddedVipTime);
+                    } else {
+                        // l'annonceur était déjà vip, on lui rajoute du temps
+                        $MoreVipTime = $userTime->add($VipTime);
+                        $user->setVip($MoreVipTime);
+                    }
+                    $em->flush();
                 }
 
-                // Utilisation du service pour calculer le temps vip a ajouter en fonction du montant payé
-                $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
+                break;
+            case 'invoice.paid':
+                $logger->critical('invoice.paid');
 
-                // Recup du mail du customer dont on reçoit l'event d'apres notre compte stripe pour le retrouver dans la db
-                $retrievedCustomer = \Stripe\Customer::retrieve($customerId);
-                $user = $userRepository->findOneBy(['mail' => $retrievedCustomer->email]);
+                $logger->critical("et cest un ABONNEMENT MESDAMES ET MESSIEURS");
+
+                $invoice = $event->data->object; // recup de l'objet \Stripe\Invoice
+                // Recup montant payé
+                $paidAmount = $invoice->amount_paid;
+                // Rajout du statut vip pour un nouveau mois
+                $VipTime = $vipValidation->VipTimeCalculator($paidAmount);
+                // Recup customer dont on reçoit l'event pour le retrouver dans la db
+                $user = $userRepository->findOneBy(['stripe' => $invoice->customer]);
 
                 $userTime = $user->getVip();
 
@@ -169,33 +153,23 @@ class VipController extends AbstractController
                     $user->setVip($MoreVipTime);
                 }
                 $em->flush();
-
-                break;
-            case 'checkout.session.completed':
-                // Payment is successful and the subscription is created.
-                // Creation du status vip pour un mois
-                break;
-            case 'invoice.paid':
-                // Continue to provision the subscription as payments continue to be made.
-                // Store the status in your database and check when a user accesses your service.
-                // This approach helps you avoid hitting rate limits.
-                // Rajout du statut vip pour un nouveau mois
                 break;
             case 'invoice.payment_failed':
+                $logger->critical('invoice.payment_failed');
                 // The payment failed or the customer does not have a valid payment method.
                 // The subscription becomes past_due. Notify your customer and send them to the
                 // customer portal to update their payment information.
-                // Le paiement mensuel a échoué, envoyer notif à l'admin
+                // => no more monthly added time
                 break;
                 // ... handle other event types
             case 'customer.subscription.deleted':
-                // L'abonnement d'un utilisateur vient d'être arrêté
+                $logger->critical('customer.subscription.deleted');
+                // => no more monthly added time
                 break;
                 // ... handle other event types
             default:
                 echo 'Received unknown event type ' . $event->type;
         }
-
 
         return new Response(200);
     }

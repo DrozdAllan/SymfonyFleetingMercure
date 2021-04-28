@@ -2,13 +2,30 @@
 
 {% block body %}
 
-	<div class="container">
+<div class="container">
 
 
-		ça va frère le bosse
-		<button id="checkout-button">Checkout</button>
 
-	</div>
+  <form id="payment-form">
+	<h4>Vous avez sélectionné l'offre VIP {{offer.offerText}}</h4>
+	{% if offer.offerText == 'monthly subscribe' %}
+	Afin de vous prélever à chaque renouvellement, le système de paiement enregistre les informations de votre carte. <br>
+	Elle sera donc réutilisable si vous décidez d'un nouvel achat, sachez cependant qu'aucune information bancaire n'est enregistrée sur Fleeting.
+	{% endif %}
+	
+    <div id="card-element">
+  <div><b>Prix : {{offer.offerPrice | price}} </b></div>
+      <!-- Elements will create input elements here -->
+    </div>
+    <!-- We'll put the error messages in this element -->
+    <div id="card-element-errors" role="alert"></div>
+    <button id="checkout-button">Subscribe</button>
+	<br>
+	<a href="{{ path('vip') }}">revenir aux offres</a>
+  </form>
+	
+
+</div>
 
 
 {% endblock %}
@@ -17,26 +34,37 @@
 {% block javascripts %}
 	<script src="https://js.stripe.com/v3/"></script>
 	<script>
+		const checkoutButton = document.getElementById('checkout-button');
 		const stripe = Stripe('{{ stripePublicKey }}');
-const checkoutButton = document.getElementById('checkout-button');
-const sessionId = '{{ id }}';
+		const offerId = '{{offer.offerId}}'
+		const offerMode = '{{offer.offerMode}}'
 	</script>
 
 	<script>
-		checkoutButton.addEventListener('click', function () {
-// Create a new Checkout Session using the server-side endpoint you
-// created in step 3.
-stripe.redirectToCheckout({sessionId: sessionId}).then(function (result) {
-// If `redirectToCheckout` fails due to a browser or network
-// error, you should display the localized error message to your
-// customer using `error.message`.
-if (result.error) {
-alert(result.error.message);
-}
-}).catch(function (error) {
-console.error('Error:', error);
-});
-});
+		checkoutButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			fetch('checkout', {
+         		method: 'POST',
+				body: JSON.stringify({
+					offerId: offerId,
+					offerMode: offerMode
+				})
+        	})
+        	.then(function(response) {
+        		return response.json();
+        	})
+        	.then(function(session) {
+        		return stripe.redirectToCheckout({ sessionId: session.id });
+        	})
+        	.then(function(result) {
+        	// If `redirectToCheckout` fails due to a browser or network
+        	// error, you should display the localized error message to your
+        	// customer using `error.message`.
+        		if (result.error) {
+    				alert(result.error.message);
+        		}
+    		});
+		});
 	</script>
 
 
