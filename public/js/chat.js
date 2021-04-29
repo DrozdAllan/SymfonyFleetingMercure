@@ -31,13 +31,15 @@ eventSource.onmessage = ({ data }) => {
 $("button.buttonChat").click(function (e) {
   e.preventDefault(); // Empêche la page de se rafraîchir après le submit du formulaire
 
-  const inputBeforeButton = $(this).siblings("input");
+  const inputBeforeButton = $(this).siblings(".message");
   const message = inputBeforeButton[0].value;
   const channelNb = $(this).parents(".tab-pane").data("channel");
+  const target = $(this).parents(".tab-pane").data("target");
 
   const data = {
     content: message,
     channel: channelNb,
+    target: target,
   };
 
   inputBeforeButton[0].value = ""; // Efface le message dans l'input

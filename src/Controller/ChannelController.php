@@ -19,15 +19,12 @@ class ChannelController extends AbstractController
     /**
      * @Route("/chat/new/{targetId}", name="checkChannel")
      */
-    public function newChannel($targetId, ChannelRepository $channelRepository, UserRepository $userRepository, EntityManagerInterface $em)
+    public function checkChannel($targetId, ChannelRepository $channelRepository, UserRepository $userRepository, EntityManagerInterface $em)
     {
         // Recup id de l'user
         $User = $this->getUser();
         $UserId = $User->getId();
  
-        // Recup de l'id de celui a qui il veut parler
-        // dump($targetId);
-        
         // Verif que channel pas deja existant
         $recup = $channelRepository->findChannelByUsers($UserId, $targetId);
         
@@ -39,7 +36,6 @@ class ChannelController extends AbstractController
         }
 
         // Sinon, creation nouveau channel avec ces deux users
-
         else {
 
         $targetUser = $userRepository->find($targetId);
@@ -63,9 +59,12 @@ class ChannelController extends AbstractController
     /**
      * @Route("/chat", name="chatHub")
      */
-    public function getChannels(Request $request)
+    public function chatHub(Request $request, EntityManagerInterface $em)
     {
-
+        // Passage de user.message.status = 1 to 0
+        $this->getUser()->setNotif(0);
+        $em->flush();
+        // Récup les channels du plus récent au plus ancien avec une requete doctrine personnalisée
         $userChannels = $this->getUser()->getChannels();
 
         $hubUrl = $this->getParameter('mercure.default_hub'); // Recup de l'url du hub mercure à envoyer en Link dans le header

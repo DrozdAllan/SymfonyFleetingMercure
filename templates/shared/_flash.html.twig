@@ -1,8 +1,9 @@
 {% for rubrique, messages in app.flashes %}
-	<div class="alert alert-{{rubrique}}">
+	<div class="alert alert-{{rubrique}} fade show">
 		{% for message in messages %}
 			<p>
 				{{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</p>
 		{% endfor %}
 	</div>

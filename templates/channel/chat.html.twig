@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Chat
 {% endblock %}
 
@@ -7,15 +6,19 @@
 
 
 	<div class="container chatContainer">
+		{% if channels is empty %}
+			<div class="col">
+				Vous n'avez aucune conversation en cours
+			</div>
+		{% endif %}
 		<div class="row">
 			<div class="col-2">
-				<div
-					class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					{# <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a> #}
+
+				<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 					{% for key, channel in channels %}
 						{% for user in channel.users %}
 							{% if app.user != user %}
-								<a class="nav-link" data-toggle="pill" href="#v-pills-{{key}}" role="tab" aria-selected="false">
+								<a class="nav-link {% if key == 0 %}active{% endif %}" data-toggle="pill" href="#v-pills-{{key}}" role="tab" aria-selected="false">
 									<b>{{user.username}}</b>
 								</a>
 							{% endif %}
@@ -30,9 +33,7 @@
 					{# <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">pédé</div> #}
 
 					{% for key, channel in channels %}
-
-						<div class="tab-pane fade" id="v-pills-{{key}}" role="tabpanel" data-channel="{{ channel.id }}">
-
+						<div class="tab-pane fade {% if key == 0 %}active show{% endif %}" id="v-pills-{{key}}" role="tabpanel" data-channel="{{ channel.id }}" data-target="{% for user in channel.users %}{% if app.user != user %}{{user.username}}{% endif %}{% endfor %}">
 							<div class="container chatBloc">
 								<div class="container chatText">
 									{% for message in channel.messages %}
@@ -58,8 +59,21 @@
 								</div>
 
 								<form id="formChat" action="{{ asset('message') }}" method="post" class="container row js-data">
-									<input id="message" class="input-group-text col-sm-9" placeholder="Message" type="text"/>
-									<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
+									{% if app.user.announcer == null %}
+										<select class="form-control message col-sm-9" id="exampleSelect1">
+											<option>Coucou</option>
+											<option>Message prédéterminé ok</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+										<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
+
+									{% else %}
+										<input id="message" class="message input-group-text col-sm-9" placeholder="Message" type="text"/>
+										<button id="submit" type="submit" class="buttonChat btn btn-success col-sm-3">Send</button>
+									{% endif %}
+
 								</form>
 							</div>
 						</div>
@@ -74,21 +88,24 @@
 {% endblock %}
 
 
+
+
+
 {% block javascripts %}
 	<script>
 		$('.nav-link').mousemove(function (event) {
-$('.chatText').scrollTop($('.chatText').height()); // Faire une fonction pour scroll max en fonction de la fenetre de chat ouverte par le click
-});
-	</script>
-
-	<script>
+			$('.chatText').scrollTop($('.chatText').height()); // Faire une fonction pour scroll max en fonction de la fenetre de chat ouverte par le click
+		});
 
 		const link = '{{ app.request.attributes.get('_links').getLinksbyRel('mercure')[0].getHref }}' // Get mercure server link from controller
 
-const hub = new URL(link); // Getting the URL link hub
+		const hub = new URL(link); // Getting the URL link hub
 
-{% for channel in channels %} // Add all topics the user have to the hub
-hub.searchParams.append('topic', '{{ channel.id }}');{% endfor %}const sessionuser = "{{ app.user.username }}" // Get the actual user from twig to pass it into the chat.js
+		{% for channel in channels %} // Add all topics the user have to the hub
+			hub.searchParams.append('topic', '{{ channel.id }}');
+		{% endfor %}
+		
+		const sessionuser = "{{ app.user.username }}" // Get the actual user from twig to pass it into the chat.js
 	</script>
 
 

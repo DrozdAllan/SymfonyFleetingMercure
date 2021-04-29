@@ -102,6 +102,11 @@ class User implements UserInterface
      */
     private $stripe;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notif;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -378,6 +383,18 @@ class User implements UserInterface
     public function setStripe(?string $stripe): self
     {
         $this->stripe = $stripe;
+
+        return $this;
+    }
+
+    public function getNotif(): ?bool
+    {
+        return $this->notif;
+    }
+
+    public function setNotif(?bool $notif): self
+    {
+        $this->notif = $notif;
 
         return $this;
     }
