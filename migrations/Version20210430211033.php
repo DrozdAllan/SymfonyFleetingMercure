@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210430211033 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE channel (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -32,7 +32,12 @@ final class Version20210430211033 extends AbstractMigration
         $this->addSql('ALTER TABLE user ADD mail VARCHAR(255) NOT NULL, ADD vip DATETIME DEFAULT NULL, ADD stripe VARCHAR(255) DEFAULT NULL, ADD notif TINYINT(1) DEFAULT NULL');
     }
 
-    public function down(Schema $schema) : void
+    public function isTransactional(): bool
+    {
+        return false;
+    }
+
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE channel_user DROP FOREIGN KEY FK_11C7753772F5A1AA');
