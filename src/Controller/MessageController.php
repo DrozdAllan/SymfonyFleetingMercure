@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MessageController extends AbstractController
 {
@@ -58,7 +57,7 @@ class MessageController extends AbstractController
 
         $publisher(new Update(
             ["$data->channel"],
-            $jsonMessage
+            $jsonMessage,
         ));
 
         return new JsonResponse(
