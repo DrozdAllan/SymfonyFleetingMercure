@@ -32,6 +32,6 @@ final class Version20210302175010 extends AbstractMigration
 
     public function isTransactional(): bool
     {
-        return true;
+        return false;
     }
 }
