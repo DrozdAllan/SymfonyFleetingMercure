@@ -21,6 +21,7 @@ final class Version20210426155802 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE user ADD stripe VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user ADD mail VARCHAR(255) DEFAULT NOT NULL');
     }
 
     public function down(Schema $schema): void
