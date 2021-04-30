@@ -1,1 +1,3 @@
-mod=env last build
+mod=prod first build
+
+composer install --no-dev --optimize-autoloader
