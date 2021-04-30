@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210329133212 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307FF675F31B');
@@ -27,7 +27,7 @@ final class Version20210329133212 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_B6BD307FA76ED395 ON message (user_id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307FA76ED395');
@@ -35,5 +35,10 @@ final class Version20210329133212 extends AbstractMigration
         $this->addSql('ALTER TABLE message CHANGE user_id author_id INT NOT NULL');
         $this->addSql('ALTER TABLE message ADD CONSTRAINT FK_B6BD307FF675F31B FOREIGN KEY (author_id) REFERENCES user (id)');
         $this->addSql('CREATE INDEX IDX_B6BD307FF675F31B ON message (author_id)');
+    }
+
+    public function isTransactional(): bool
+    {
+        return true;
     }
 }

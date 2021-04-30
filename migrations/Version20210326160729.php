@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210326160729 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE channel DROP name');
@@ -26,12 +26,17 @@ final class Version20210326160729 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_8D93D64972F5A1AA ON user (channel_id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE channel ADD name VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE `user` DROP FOREIGN KEY FK_8D93D64972F5A1AA');
         $this->addSql('DROP INDEX IDX_8D93D64972F5A1AA ON `user`');
         $this->addSql('ALTER TABLE `user` DROP channel_id');
+    }
+
+    public function isTransactional(): bool
+    {
+        return true;
     }
 }

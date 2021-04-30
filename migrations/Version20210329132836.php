@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210329132836 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE participant DROP FOREIGN KEY FK_D79F6B119D86650F');
@@ -31,7 +31,7 @@ final class Version20210329132836 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_D79F6B1172F5A1AA ON participant (channel_id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE participant DROP FOREIGN KEY FK_D79F6B11A76ED395');
@@ -43,5 +43,10 @@ final class Version20210329132836 extends AbstractMigration
         $this->addSql('ALTER TABLE participant ADD CONSTRAINT FK_D79F6B11C86596CF FOREIGN KEY (channel_id_id) REFERENCES channel (id)');
         $this->addSql('CREATE INDEX IDX_D79F6B11C86596CF ON participant (channel_id_id)');
         $this->addSql('CREATE INDEX IDX_D79F6B119D86650F ON participant (user_id_id)');
+    }
+
+    public function isTransactional(): bool
+    {
+        return true;
     }
 }
