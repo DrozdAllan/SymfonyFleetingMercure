@@ -1,3 +1,3 @@
 web: heroku-php-apache2 public/
 
-release: php bin/console doctrine:migrations:migrate --all-or-nothing
+release: php bin/console doctrine:migrations:migrate --no-interaction
