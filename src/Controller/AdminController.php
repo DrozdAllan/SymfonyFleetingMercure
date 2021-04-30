@@ -92,22 +92,14 @@ class AdminController extends AbstractController
 
         if ($image) {
             $announcerId = $image->getUser()->getId();
-            // dump($imageid);
-            // 13 image id
-
-            // dump($announcerId);
-            // 14 announcer id 
 
             $urlBase = $this->generateUrl('announcerModify', ['id' => $announcerId]);
-
-            // dd($urlBase);
 
 
             // Supprimer image du dossier Public/Uploads
             $nom = $image->getImageFilename();
 
             $filePath = "uploads\\images\\" . $nom;
-            // dd($filePath);
             unlink($filePath);
 
             // Supprimer image de la DB

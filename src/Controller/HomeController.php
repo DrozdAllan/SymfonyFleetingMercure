@@ -40,13 +40,9 @@ class HomeController extends AbstractController
             //  mettre la fonction de recherche dans un service
 
             $check = $form->getData();
-            // dump($check);
             $hair = $user->getHair();
-            // dump($hair);
             $tattoo = $user->getTattoo();
-            // dump($tattoo);
             $smoke = $user->getSmoke();
-            // dump($smoke);
 
             if ($hair && $tattoo && $smoke) {
                 $criteria = ['validadmin' => '1', 'hair' => $hair, 'tattoo' => $tattoo, 'smoke' => $smoke];
@@ -71,11 +67,8 @@ class HomeController extends AbstractController
                 ]);
             }
 
-            // dump($criteria);
-
             $results = $userRepository->findBy($criteria, ['id' => 'DESC']);
 
-            // dd($results);
             return $this->render('search/advancedSearch.html.twig', [
                 'announcers' => $results
             ]);

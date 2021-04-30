@@ -20,8 +20,6 @@ class ResearchController extends AbstractController
         $username = $request->query->get('username');
 
         $result = $userRepository->findAllConteningNameKey($username);
-        
-        dump($result);
        
         return $this->render('search/simpleSearch.html.twig', [
             'announcers' => $result

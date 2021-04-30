@@ -31,7 +31,6 @@ class ChannelController extends AbstractController
         
         // Si déjà existant renvoyer à la page de chat dans la bonne conv
         if ($recup != null) {
-            // dd("channel déjà existant");
             return $this->redirectToRoute('chatHub');
         }
 
@@ -44,8 +43,6 @@ class ChannelController extends AbstractController
 
         $channel->addUser($User);
         $channel->addUser($targetUser);
-
-        // dd($channel);
 
         $em->persist($channel);
         $em->flush();

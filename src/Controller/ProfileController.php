@@ -61,7 +61,6 @@ class ProfileController extends AbstractController
     public function modifyAnnouncerProfile(Request $request, EntityManagerInterface $em)
     {
         $usermodify = $this->getUser();
-        // dd($usermodify);
         $form = $this->createForm(ModifyAnnouncerType::class, $usermodify);
 
         $form->handleRequest($request);
