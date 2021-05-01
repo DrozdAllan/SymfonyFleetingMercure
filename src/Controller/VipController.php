@@ -52,8 +52,8 @@ class VipController extends AbstractController
                 'price' => $data->offerId,
                 'quantity' => 1,
             ]],
-            'success_url' => $this->generateUrl('checkoutsuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url' => $this->generateUrl('checkoutcancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'success_url' => $this->generateUrl('checkoutSuccess', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('checkoutCancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
 
         return new JsonResponse(['id' => $session->id], 200);
