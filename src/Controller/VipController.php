@@ -175,20 +175,20 @@ class VipController extends AbstractController
     }
 
     /**
-     * @Route("/checkoutsuccess", name="checkoutsuccess")
+     * @Route("/checkoutsuccess", name="checkoutSuccess")
      */
-    public function checkoutsuccess()
+    public function checkoutSuccess()
     {
 
-        return $this->render('vip/checkoutsuccess.html.twig');
+        return $this->render('vip/checkoutSuccess.html.twig');
     }
 
     /**
-     * @Route("/checkoutcancel", name="checkoutcancel")
+     * @Route("/checkoutcancel", name="checkoutCancel")
      */
-    public function checkoutcancel()
+    public function checkoutCancel()
     {
 
-        return $this->render('vip/checkoutcancel.html.twig');
+        return $this->render('vip/checkoutCancel.html.twig');
     }
 }

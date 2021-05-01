@@ -130,7 +130,7 @@ class ProfileController extends AbstractController
             }
         }
 
-        return $this->render('profile/modifypassword.html.twig', [
+        return $this->render('profile/modifyPassword.html.twig', [
             'passwordFormView' => $form->createView()
         ]);
     }
