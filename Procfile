@@ -1,1 +1,1 @@
-web: ADDR=$PORT mercure/mercure.exe run
+web: ADDR=$PORT sudo mercure/mercure.exe run
