@@ -1,7 +1,36 @@
 nav.navbar
     background-color: $secondary-color
+    a.navbar-brand
+        img
+            animation: heartbeat 8s ease-in-out infinite both
+            +keyframes(heartbeat)
+                0%
+                    transform: scale(1)
+                    transform-origin: center center
+                    animation-timing-function: ease-out   
+                10%
+                    transform: scale(0.91)
+                    animation-timing-function: ease-in
+                17%
+                    transform: scale(0.98)
+                    animation-timing-function: ease-out
+                33%
+                    transform: scale(0.87)
+                    animation-timing-function: ease-in
+                45%
+                    transform: scale(1)
+                    animation-timing-function: ease-out     
     a.nav-link, .btn
         color: #c98e0f
+    .register-dropdown
+        @include st-sm
+            width: 100%
+    .register-dropdown-menu
+        min-width: 100%
+        .dropdown-item
+            padding: 4px 5px 4px 15px
+            +st-sm
+                text-align: center
     .desktopSearchDropdown
         position: initial
         left: -10rem
@@ -10,8 +39,7 @@ nav.navbar
         margin: 0 
         border: none
         height: 2.4rem
-        .transition
-            transition: all 2s ease
+            
     .mobileSearch
         @include lt-sm
             display: none

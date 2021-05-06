@@ -10,7 +10,6 @@
 		</span>
 	</button>
 
-
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav mr-auto">
 			{% if app.user %}
@@ -33,13 +32,12 @@
 				{% endif %}
 			{% else %}
 
-
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="btn btn-secondary dropdown-toggle register-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Inscription
 					</a>
 
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<div class="dropdown-menu register-dropdown-menu" aria-labelledby="dropdownMenuLink">
 						<a class="dropdown-item" href="{{ path('registrationAnnouncer') }}">Annonceur</a>
 						<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
 					</div>
@@ -75,8 +73,6 @@
 					</div>
 				</div>
 			{% endif %}
-			
-
 
 			{% if app.user.notif == 0 %}
 			<a class="nav-link" href="{{ path('chatHub') }}" role="button">
@@ -88,9 +84,6 @@
 			</a>
 			{% endif %}
 			
-
-
-
 		{% endif %}
 		<div class="btn-group dropright desktopSearch">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -110,7 +103,8 @@
 				</form>
 			</div>
 		</div>
-
-
 	</div>
 </nav>
+
+
+

@@ -38,10 +38,17 @@
 		<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 		<script>
 			$(document).ready(function () {
-bsCustomFileInput.init()
 $(".navbar-toggler").on("click", function () {
 $(".navbar-collapse").toggle('show');
 });
+
+// $('.dropdown-toggle').click(function () {
+//     $(this).next('.dropdown-menu').slideDown(300);
+// });
+// $('.dropdown-toggle').focusout(function () {
+//     $(this).next('.dropdown-menu').slideToggle(300);
+// })
+
 });
 		</script>
 		{% block javascripts %}{% endblock %}

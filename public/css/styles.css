@@ -2,8 +2,103 @@ nav.navbar {
   background-color: #455d7a;
 }
 
+nav.navbar a.navbar-brand img {
+  -webkit-animation: heartbeat 8s ease-in-out infinite both;
+          animation: heartbeat 8s ease-in-out infinite both;
+}
+
+@-webkit-keyframes heartbeat {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+}
+
 nav.navbar a.nav-link, nav.navbar .btn {
   color: #c98e0f;
+}
+
+@media screen and (max-width: 575px) {
+  nav.navbar .register-dropdown {
+    width: 100%;
+  }
+}
+
+nav.navbar .register-dropdown-menu {
+  min-width: 100%;
+}
+
+nav.navbar .register-dropdown-menu .dropdown-item {
+  padding: 4px 5px 4px 15px;
+}
+
+@media screen and (max-width: 575px) {
+  nav.navbar .register-dropdown-menu .dropdown-item {
+    text-align: center;
+  }
 }
 
 nav.navbar .desktopSearchDropdown {
@@ -14,11 +109,6 @@ nav.navbar .desktopSearchDropdown {
   margin: 0;
   border: none;
   height: 2.4rem;
-}
-
-nav.navbar .desktopSearchDropdown .transition {
-  -webkit-transition: all 2s ease;
-  transition: all 2s ease;
 }
 
 @media screen and (min-width: 576px) {
