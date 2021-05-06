@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta
+		charset="UTF-8">
 		{# <meta http-equiv="X-UA-Compatible" content="IE=edge"> #}
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
@@ -12,42 +13,38 @@
 		{# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
-			
+
 			{# bootstrap 4.6 #}
-			<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-			<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"> <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 			<link rel="stylesheet" href="{{ asset('css/all.css') }}">
 		{% endblock %}
 	</head>
 	<body>
-		{% include "shared/_navbar.html.twig" %} 
-
+		{% include "shared/_navbar.html.twig" %}
 
 
 		<div class="text-center py-5" id="basediv">
 
 			{% include "shared/_flash.html.twig" %}
 
-			{% block body %}
-			{% endblock %}
+			{% block body %}{% endblock %}
 		</div>
-		
-		{% include "shared/_footer.html.twig" %} 
 
-		
+		{% include "shared/_footer.html.twig" %}
+
+
 		<script src="{{ asset('js/jquery.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.js') }}"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 		<script>
 			$(document).ready(function () {
-       			bsCustomFileInput.init()
-				$(".navbar-toggler").on("click", function(){
-					$(".navbar-collapse").toggle('show');
-				});
-    		});
+bsCustomFileInput.init()
+$(".navbar-toggler").on("click", function () {
+$(".navbar-collapse").toggle('show');
+});
+});
 		</script>
-		{% block javascripts %}
-		{% endblock %}
+		{% block javascripts %}{% endblock %}
 	</body>
-		
+
 </html>
