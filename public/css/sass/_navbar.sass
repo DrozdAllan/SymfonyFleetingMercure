@@ -1,5 +1,6 @@
 nav.navbar
-    background-color: $secondary-color
+    background-color: #0000007c
+    border-radius: 0% 0% 10% 10%
     a.navbar-brand
         img
             animation: heartbeat 8s ease-in-out infinite both
@@ -19,14 +20,18 @@ nav.navbar
                     animation-timing-function: ease-in
                 45%
                     transform: scale(1)
-                    animation-timing-function: ease-out     
-    a.nav-link, .btn
-        color: #c98e0f
+                    animation-timing-function: ease-out
+    .navbar-toggler
+        color: $third-color  
+    .btn
+        color: $primary-color
+        background-color: $third-color
     .register-dropdown
         @include st-sm
             width: 100%
     .register-dropdown-menu
         min-width: 100%
+        background-color: $third-color
         .dropdown-item
             padding: 4px 5px 4px 15px
             +st-sm
@@ -41,8 +46,15 @@ nav.navbar
         height: 2.4rem
             
     .mobileSearch
+        margin-left: -15px
         @include lt-sm
             display: none
     .desktopSearch
+        .nav-link
+            i
+                color: $third-color
+        .dropdown-toggle::after
+                color: $third-color
         @include st-sm
             display: none
+        

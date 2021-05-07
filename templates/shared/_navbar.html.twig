@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar sticky-top navbar-expand-sm">
 
 	<a class="navbar-brand" href="{{ path('home') }}">
 		<img src="{{ asset('image/brandlogo.png') }}" alt="brandlogo"/>
@@ -33,7 +33,7 @@
 			{% else %}
 
 				<div class="dropdown">
-					<a class="btn btn-secondary dropdown-toggle register-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="btn dropdown-toggle register-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Inscription
 					</a>
 
@@ -42,7 +42,7 @@
 						<a class="dropdown-item" href="{{ path('registrationUser') }}">Membre</a>
 					</div>
 				</div>
-				<a class="btn btn-secondary nav-item" role="button" href="{{ path('app_login') }}">
+				<a class="btn nav-item" role="button" href="{{ path('app_login') }}">
 					Connexion
 				</a>
 			{% endif %}

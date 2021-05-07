@@ -1,5 +1,10 @@
+body {
+  background-color: #000000;
+}
+
 nav.navbar {
-  background-color: #455d7a;
+  background-color: #0000007c;
+  border-radius: 0% 0% 10% 10%;
 }
 
 nav.navbar a.navbar-brand img {
@@ -77,8 +82,13 @@ nav.navbar a.navbar-brand img {
   }
 }
 
-nav.navbar a.nav-link, nav.navbar .btn {
-  color: #c98e0f;
+nav.navbar .navbar-toggler {
+  color: #f7da59;
+}
+
+nav.navbar .btn {
+  color: #000000;
+  background-color: #f7da59;
 }
 
 @media screen and (max-width: 575px) {
@@ -89,6 +99,7 @@ nav.navbar a.nav-link, nav.navbar .btn {
 
 nav.navbar .register-dropdown-menu {
   min-width: 100%;
+  background-color: #f7da59;
 }
 
 nav.navbar .register-dropdown-menu .dropdown-item {
@@ -111,10 +122,22 @@ nav.navbar .desktopSearchDropdown {
   height: 2.4rem;
 }
 
+nav.navbar .mobileSearch {
+  margin-left: -15px;
+}
+
 @media screen and (min-width: 576px) {
   nav.navbar .mobileSearch {
     display: none;
   }
+}
+
+nav.navbar .desktopSearch .nav-link i {
+  color: #f7da59;
+}
+
+nav.navbar .desktopSearch .dropdown-toggle::after {
+  color: #f7da59;
 }
 
 @media screen and (max-width: 575px) {
@@ -124,16 +147,16 @@ nav.navbar .desktopSearchDropdown {
 }
 
 #basediv {
-  background-color: #ffb400;
+  background-color: #f7da59;
 }
 
 main {
-  background-color: #ffb400;
+  background-color: #f7da59;
 }
 
 main .videoBanner {
   background-color: #000;
-  margin-top: -50px;
+  margin-top: -48px;
 }
 
 main .carousel img {
@@ -163,11 +186,11 @@ main .advancedSearch {
 }
 
 .chatContainer {
-  background-color: #233142;
+  background-color: #000000;
 }
 
 .chatContainer .chatBloc {
-  background-color: #455d7a;
+  background-color: #ffffff;
 }
 
 .chatContainer .chatBloc .chatText {
@@ -185,7 +208,7 @@ main .advancedSearch {
           box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
   padding: 40px;
-  background-color: #455d7a;
+  background-color: #ffffff;
 }
 
 #payment-form #card-element {
@@ -201,7 +224,7 @@ main .advancedSearch {
   width: 50%;
   margin-right: auto;
   margin-bottom: 50px;
-  background: #ffb400;
+  background: #f7da59;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
   border: 0;
