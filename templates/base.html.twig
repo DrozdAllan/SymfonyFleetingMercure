@@ -21,9 +21,12 @@
 	</head>
 	<body>
 		{% include "shared/_navbar.html.twig" %}
-
-
-		<div class="text-center py-5" id="basediv">
+ 
+		<video autoplay loop muted poster="{{ asset('image/posterbrand.png') }}">
+			<source src="{{ asset('video/Pub_Fleeting.mp4') }}" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<div class="text-center py-5 mobile-bg">
 
 			{% include "shared/_flash.html.twig" %}
 

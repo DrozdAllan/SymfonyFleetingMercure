@@ -1,7 +1,8 @@
 nav.navbar
     background-color: #0000007c
-    border-radius: 0% 0% 10% 10%
+    border-bottom: 1px solid #fff4d4
     a.navbar-brand
+        border-right: 1px solid #fff6d0
         img
             animation: heartbeat 8s ease-in-out infinite both
             +keyframes(heartbeat)
@@ -24,15 +25,17 @@ nav.navbar
     .navbar-toggler
         color: $third-color  
     .btn
-        color: $primary-color
-        background-color: $third-color
+        color: $third-color
+        background-color: $primary-color
+        border: 1px solid #ffda6c
     .register-dropdown
         @include st-sm
             width: 100%
     .register-dropdown-menu
         min-width: 100%
-        background-color: $third-color
+        background-color: $primary-color
         .dropdown-item
+            color: $third-color
             padding: 4px 5px 4px 15px
             +st-sm
                 text-align: center

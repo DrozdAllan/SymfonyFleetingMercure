@@ -7,42 +7,35 @@
 {% block body %}
 
 	<main>
-		<div class="container-fluid px-0">
-			<div class="videoBanner">
-				<video width="50%" muted controls disablepictureinpicture controlslist="nodownload">
-					<source src="{{ asset('video/Pub_Fleeting.mp4') }}" type="video/mp4">
-					Your browser does not support the video tag.
-				</video>
-			</div>
-		</div>
-
 		<div class="container p-3">
 			<div class="row">
-			{% for vip in vips %}
-					<div class="col-6 col-md-3 p-2 bg-dark">
-						<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
-							<div class="image-wrapper">
-								<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
-									<div class="carousel-inner">
-										{% for image in vip.images %}
-											<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
-												<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
-												<div class="carousel-caption">
-													<div class="user-title">
-														{{ vip.username }}
-													</div>
-													<div class="user-desc">
-														{{ vip.shortdescription }}
+				{# {% if vips != null %} #}
+					{% for vip in vips %}
+						<div class="col-6 col-md-3 p-2 bg-dark">
+							<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
+								<div class="image-wrapper">
+									<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
+										<div class="carousel-inner">
+											{% for image in vip.images %}
+												<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
+													<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
+													<div class="carousel-caption">
+														<div class="user-title">
+															{{ vip.username }}
+														</div>
+														<div class="user-desc">
+															{{ vip.shortdescription }}
+														</div>
 													</div>
 												</div>
-											</div>
-										{% endfor %}
+											{% endfor %}
+										</div>
 									</div>
 								</div>
-							</div>
-						</a>
-					</div>
-				{% endfor %}
+							</a>
+						</div>
+					{% endfor %}
+				{# {% endif %} #}
 				{% for announcer in announcers %}
 					<div class="col-6 col-md-3 p-2">
 						<a href="{{ path('viewAnnouncer', {'username': announcer.username}) }}">
@@ -72,7 +65,7 @@
 			<div class="advancedSearch row mt-2 bg-dark">
 				<div class="col-12">
 					<h3>
-					Recherche avancée
+						Recherche avancée
 					</h3>
 				</div>
 				<div class="col-md-6">

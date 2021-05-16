@@ -1,10 +1,14 @@
 body {
-  background-color: #000000;
+  background-color: #181300;
 }
 
 nav.navbar {
   background-color: #0000007c;
-  border-radius: 0% 0% 10% 10%;
+  border-bottom: 1px solid #fff4d4;
+}
+
+nav.navbar a.navbar-brand {
+  border-right: 1px solid #fff6d0;
 }
 
 nav.navbar a.navbar-brand img {
@@ -87,8 +91,9 @@ nav.navbar .navbar-toggler {
 }
 
 nav.navbar .btn {
-  color: #000000;
-  background-color: #f7da59;
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
 }
 
 @media screen and (max-width: 575px) {
@@ -99,10 +104,11 @@ nav.navbar .btn {
 
 nav.navbar .register-dropdown-menu {
   min-width: 100%;
-  background-color: #f7da59;
+  background-color: #181300;
 }
 
 nav.navbar .register-dropdown-menu .dropdown-item {
+  color: #f7da59;
   padding: 4px 5px 4px 15px;
 }
 
@@ -146,12 +152,34 @@ nav.navbar .desktopSearch .dropdown-toggle::after {
   }
 }
 
-#basediv {
-  background-color: #f7da59;
+video {
+  position: fixed;
+  right: 0;
+  bottom: -5%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+}
+
+@media screen and (max-width: 575px) {
+  video {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .mobile-bg {
+    background: url(/image/posterbrand.png);
+    z-index: -100;
+    background-size: cover;
+  }
 }
 
 main {
-  background-color: #f7da59;
+  background-color: #0000007c;
+  margin: 50px;
 }
 
 main .videoBanner {
@@ -186,7 +214,7 @@ main .advancedSearch {
 }
 
 .chatContainer {
-  background-color: #000000;
+  background-color: #181300;
 }
 
 .chatContainer .chatBloc {
