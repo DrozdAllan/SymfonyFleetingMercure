@@ -1,11 +1,15 @@
 {% extends "base.html.twig" %}
 
 
-
 {% block body %}
-	<h1>
-		Bienvenue sur la page d'administration
-	</h1>
-	<p>Vous avez <b>{{ adminqueue }}</b> demandes d'inscription d'annonceurs en attente : <a href="{{ path('adminAnnouncers') }}">voir les demandes d'inscription</a></p>
-
+	<div class="container profile">
+		<h1>
+			Bienvenue sur la page d'administration
+		</h1>
+		<p>Vous avez
+			<b>{{ adminqueue }}</b>
+			demandes d'inscription d'annonceurs en attente :
+			<a href="{{ path('adminAnnouncers') }}">voir les demandes d'inscription</a>
+		</p>
+	</div>
 {% endblock %}

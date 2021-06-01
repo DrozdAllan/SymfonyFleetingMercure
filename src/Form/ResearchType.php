@@ -55,7 +55,7 @@ class ResearchType extends AbstractType
             ->add('nationality', ChoiceType::class, [
                 'label' => 'Nationalité',
                 'choices' => [
-                    'Tout' => 'null',
+                    'Tout' => null,
                     'Française' => 'fr',
                     'Allemande' => 'de',
                     'Belge' => 'be',
@@ -65,7 +65,7 @@ class ResearchType extends AbstractType
             ->add('language', ChoiceType::class, [
                 'label' => 'Langue',
                 'choices' => [
-                    'Tout' => 'null',
+                    'Tout' => null,
                     'Français' => 'fr',
                     'Allemand' => 'de',
                     'Espagnol' => 'es',

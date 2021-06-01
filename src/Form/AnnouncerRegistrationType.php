@@ -58,7 +58,6 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('eyes', ChoiceType::class, [
                 'label' => 'Yeux',
                 'choices' => [
-                    'Tout' => null,
                     'Bleu' => 'Blue',
                     'Vert' => 'Green',
                     'Brun' => 'Brown',
@@ -67,7 +66,6 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('nationality', ChoiceType::class, [
                 'label' => 'Nationalité',
                 'choices' => [
-                    'Tout' => 'null',
                     'Française' => 'fr',
                     'Allemande' => 'de',
                     'Belge' => 'be',
@@ -77,7 +75,6 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('language', ChoiceType::class, [
                 'label' => 'Langue',
                 'choices' => [
-                    'Tout' => 'null',
                     'Français' => 'fr',
                     'Allemand' => 'de',
                     'Espagnol' => 'es',
