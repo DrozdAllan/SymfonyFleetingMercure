@@ -51,11 +51,11 @@ $(".navbar-toggler").on("click", function () {
 $(".navbar-collapse").toggle('show');
 });
 
-$('.dropdown-toggle').click(function () {
-$(this).next('.dropdown-menu').slideDown(300);
+$('.droptoggle').focusin(function () {
+$(this).children('.dropdown-menu').slideDown(300);
 });
-$('.dropdown-toggle').focusout(function () {
-$(this).next('.dropdown-menu').slideToggle(300);
+$('.droptoggle').focusout(function () {
+$(this).children('.dropdown-menu').slideToggle(300);
 })
 $('.modalzz').click(function () {
 sessionStorage.setItem('cgu', 'ok');

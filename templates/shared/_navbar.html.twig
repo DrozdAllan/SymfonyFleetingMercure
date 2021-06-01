@@ -32,7 +32,7 @@
 				{% endif %}
 			{% else %}
 
-				<div class="dropdown">
+				<div class="dropdown droptoggle">
 					<a class="btn dropdown-toggle register-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Inscription
 					</a>
@@ -61,7 +61,7 @@
 		{% if app.user %}
 
 			{% if app.user.announcer == 1 %}
-				<div class="dropdown">
+				<div class="dropdown droptoggle">
 					<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						V.I.P.
 					</a>
@@ -85,7 +85,7 @@
 			{% endif %}
 			
 		{% endif %}
-		<div class="btn-group dropright desktopSearch">
+		<div class="btn-group dropright desktopSearch droptoggle">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-search"></i>
 			</a>
