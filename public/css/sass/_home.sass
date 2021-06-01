@@ -4,23 +4,37 @@ main
     .videoBanner
         background-color: #000
         margin-top: -48px
-    .vipstatus
-        background-color: $third-color
-        border-radius: 5px
-        border: px solid black
-    .carousel
+
+    #carouselVip
         img
-            width: 250px
-            height: 250px
+            width: 256px
+            height: 294px
             border-radius: 5px
+            +st-sm
+                width: 293px
+                height: 250px
+        .carousel-caption
+            transition-duration: 1s
+            background-color: rgba(#dbb023, 0.5)
+            color: #000
+            bottom: 0
+            padding: 5px
+            border-radius: 5px
+
+    #carousel
+        img
+            width: 256px
+            height: 294px
+            border-radius: 5px
+            +st-sm
+                width: 293px
+                height: 250px
         .carousel-caption
             transition-duration: 1s
             background-color: rgba(#000, 0.5)
             bottom: 0
-            padding-top: 10px
-            padding-bottom: 10px
-            border-radius: 5px 5px 5px 5px
-
+            padding: 5px
+            border-radius: 5px
     .carousel:hover
         .carousel-caption
             transition-duration: 1s

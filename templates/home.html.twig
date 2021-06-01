@@ -12,49 +12,45 @@
 				class="row">
 				{# {% if vips != null %} #}
 				{% for vip in vips %}
-					<div class="col-6 col-md-3 pl-3 py-3 vipstatus">
+
+					<div id="carouselVip" class="col-12 col-md-3 carousel slide carousel-fade" data-ride="carousel">
 						<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
-							<div class="image-wrapper">
-								<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
-									<div class="carousel-inner">
-										{% for image in vip.images %}
-											<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
-												<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
-												<div class="carousel-caption">
-													<div class="user-title">
-														{{ vip.username }}
-													</div>
-												</div>
+							<div class="carousel-inner">
+								{% for image in vip.images %}
+									<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
+										<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
+										<div class="carousel-caption">
+											<div class="user-title">
+												{{ vip.username }}
 											</div>
-										{% endfor %}
+										</div>
 									</div>
-								</div>
+								{% endfor %}
 							</div>
 						</a>
 					</div>
+
 				{% endfor %}
 				{# {% endif %} #}
 				{% for announcer in announcers %}
-					<div class="col-6 col-md-3 p-2">
+
+					<div id="carousel" class="col-12 col-md-3 carousel slide carousel-fade" data-ride="carousel">
 						<a href="{{ path('viewAnnouncer', {'username': announcer.username}) }}">
-							<div class="image-wrapper">
-								<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
-									<div class="carousel-inner">
-										{% for image in announcer.images %}
-											<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
-												<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
-												<div class="carousel-caption">
-													<div class="user-title">
-														{{ announcer.username }}
-													</div>
-												</div>
+							<div class="carousel-inner">
+								{% for image in announcer.images %}
+									<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
+										<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
+										<div class="carousel-caption">
+											<div class="user-title">
+												{{ announcer.username }}
 											</div>
-										{% endfor %}
+										</div>
 									</div>
-								</div>
+								{% endfor %}
 							</div>
 						</a>
 					</div>
+
 				{% endfor %}
 			</div>
 			<div class="advancedSearch row mt-2 bg-light">

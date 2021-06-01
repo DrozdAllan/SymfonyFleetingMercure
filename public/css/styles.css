@@ -195,26 +195,49 @@ main .videoBanner {
   margin-top: -48px;
 }
 
-main .vipstatus {
-  background-color: #f7da59;
-  border-radius: 5px;
-  border: px solid black;
-}
-
-main .carousel img {
-  width: 250px;
-  height: 250px;
+main #carouselVip img {
+  width: 256px;
+  height: 294px;
   border-radius: 5px;
 }
 
-main .carousel .carousel-caption {
+@media screen and (max-width: 575px) {
+  main #carouselVip img {
+    width: 293px;
+    height: 250px;
+  }
+}
+
+main #carouselVip .carousel-caption {
+  -webkit-transition-duration: 1s;
+          transition-duration: 1s;
+  background-color: rgba(219, 176, 35, 0.5);
+  color: #000;
+  bottom: 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+main #carousel img {
+  width: 256px;
+  height: 294px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 575px) {
+  main #carousel img {
+    width: 293px;
+    height: 250px;
+  }
+}
+
+main #carousel .carousel-caption {
   -webkit-transition-duration: 1s;
           transition-duration: 1s;
   background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 5px 5px 5px 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 main .carousel:hover .carousel-caption {
