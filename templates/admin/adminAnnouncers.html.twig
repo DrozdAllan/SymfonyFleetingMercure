@@ -2,78 +2,80 @@
 
 {% block body %}
 	<div class="container profile">
-		<table classe="table table-hover">
-			<thead>
-				<tr class="">
-					<th scope="col">
-						Username
-					</th>
-					<th scope="col">
-						mail
-					</th>
-					<th scope="col">
-						cheveux
-					</th>
-					<th scope="col">
-						tatouage
-					</th>
-					<th scope="col">
-						fume
-					</th>
-					<th scope="col">
-						description
-					</th>
-					<th scope="col">
-						image(s)
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for A in waitingAnnouncers %}
-					<tr>
-						<td scope="row">
-							{{ A.username }}
-						</td>
-						<td>
-							{{ A.mail }}
-						</td>
-						<td>
-							{{ A.hair }}
-						</td>
-						<td>
-							{{ A.tattoo | boolean }}
-						</td>
-						<td>
-							{{ A.smoke | boolean }}
-						</td>
-						<td>
-							{{ A.shortdescription }}
-						</td>
-
-						<td>
-							<div>
-								{% for image in A.images %}
-
-									<img src="{{ asset('/uploads/images/'~ image.imageFilename) }}" alt="Image" width="80">
-
-								{% endfor %}
-							</div>
-						</td>
-
-						<td>
-							<a href="{{ path('announcerValidate', {'id': A.id}) }}" class="btn btn-success btn-sm">
-								Valider
-							</a>
-
-							<a href="{{ path('announcerModify', {'id': A.id}) }}" class="btn btn-success btn-sm">
-								Modifier l'annonce
-							</a>
-						</td>
-
+		<div class="table-responsive">
+			<table classe="table table-hover">
+				<thead>
+					<tr class="">
+						<th scope="col">
+							Username
+						</th>
+						<th scope="col">
+							mail
+						</th>
+						<th scope="col">
+							cheveux
+						</th>
+						<th scope="col">
+							tatouage
+						</th>
+						<th scope="col">
+							fume
+						</th>
+						<th scope="col">
+							description
+						</th>
+						<th scope="col">
+							image(s)
+						</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for A in waitingAnnouncers %}
+						<tr>
+							<td scope="row">
+								{{ A.username }}
+							</td>
+							<td>
+								{{ A.mail }}
+							</td>
+							<td>
+								{{ A.hair }}
+							</td>
+							<td>
+								{{ A.tattoo | boolean }}
+							</td>
+							<td>
+								{{ A.smoke | boolean }}
+							</td>
+							<td>
+								{{ A.shortdescription }}
+							</td>
+
+							<td>
+								<div>
+									{% for image in A.images %}
+
+										<img src="{{ asset('/uploads/images/'~ image.imageFilename) }}" alt="Image" width="80">
+
+									{% endfor %}
+								</div>
+							</td>
+
+							<td>
+								<a href="{{ path('announcerValidate', {'id': A.id}) }}" class="btn btn-success btn-sm">
+									Valider
+								</a>
+
+								<a href="{{ path('announcerModify', {'id': A.id}) }}" class="btn btn-success btn-sm">
+									Modifier l'annonce
+								</a>
+							</td>
+
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<style>
 		table,

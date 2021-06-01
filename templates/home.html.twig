@@ -13,7 +13,7 @@
 				{# {% if vips != null %} #}
 				{% for vip in vips %}
 
-					<div id="carouselVip" class="col-12 col-md-3 carousel slide carousel-fade" data-ride="carousel">
+					<div id="carouselVip" class="col-12 col-md-3 mb-1 carousel slide carousel-fade" data-ride="carousel">
 						<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
 							<div class="carousel-inner">
 								{% for image in vip.images %}
