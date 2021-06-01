@@ -118,6 +118,10 @@ nav.navbar .register-dropdown-menu .dropdown-item {
   }
 }
 
+nav.navbar .register-dropdown-menu .dropdown-item:hover {
+  background-color: #302600;
+}
+
 nav.navbar .desktopSearchDropdown {
   position: initial;
   left: -10rem;
@@ -136,6 +140,10 @@ nav.navbar .mobileSearch {
   nav.navbar .mobileSearch {
     display: none;
   }
+}
+
+nav.navbar .nav-link i {
+  color: #f7da59;
 }
 
 nav.navbar .desktopSearch .nav-link i {
@@ -213,6 +221,16 @@ main .advancedSearch {
   border-radius: 5px;
 }
 
+main .advancedSearch button {
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
+}
+
+main .advancedSearch button:hover {
+  background-color: #302600;
+}
+
 .chatContainer {
   background-color: #181300;
 }
@@ -267,5 +285,98 @@ main .advancedSearch {
   color: #596fd6;
   font-weight: 600;
   text-decoration: none;
+}
+
+.announcer {
+  background-color: #ffffff;
+}
+
+.announcer h1 {
+  color: #181300;
+}
+
+.announcer .my-2 a {
+  color: #9b7a18;
+}
+
+.announcer button {
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
+}
+
+.announcer button:hover {
+  background-color: #302600;
+}
+
+.user {
+  background-color: #ffffff;
+}
+
+.user h1 {
+  color: #181300;
+}
+
+.user .my-2 a {
+  color: #9b7a18;
+}
+
+.user button {
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
+}
+
+.user button:hover {
+  background-color: #302600;
+}
+
+.login {
+  background-color: #ffffff;
+}
+
+.login h1 {
+  color: #181300;
+}
+
+.login .my-2 a {
+  color: #9b7a18;
+}
+
+.login button {
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
+}
+
+.login button:hover {
+  background-color: #302600;
+}
+
+.profile {
+  background-color: #ffffff;
+}
+
+.profile h1 {
+  color: #181300;
+}
+
+.profile .my-2 a {
+  color: #9b7a18;
+}
+
+.profile a.btn-color {
+  color: #f7da59;
+  background-color: #181300;
+}
+
+.profile button {
+  color: #f7da59;
+  background-color: #181300;
+  border: 1px solid #ffda6c;
+}
+
+.profile button:hover {
+  background-color: #302600;
 }
 /*# sourceMappingURL=styles.css.map */

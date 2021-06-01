@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ResearchType extends AbstractType
 {
@@ -41,6 +42,34 @@ class ResearchType extends AbstractType
                     'Non' => '0',
                 ],
                 'required' => true
+            ])
+            ->add('eyes', ChoiceType::class, [
+                'label' => 'Yeux',
+                'choices' => [
+                    'Tout' => null,
+                    'Bleu' => 'Blue',
+                    'Vert' => 'Green',
+                    'Brun' => 'Brown',
+                ]
+            ])
+            ->add('nationality', ChoiceType::class, [
+                'label' => 'Nationalité',
+                'choices' => [
+                    'Tout' => 'null',
+                    'Française' => 'fr',
+                    'Allemande' => 'de',
+                    'Belge' => 'be',
+                    'Espagnole' => 'es',
+                ]
+            ])
+            ->add('language', ChoiceType::class, [
+                'label' => 'Langue',
+                'choices' => [
+                    'Tout' => 'null',
+                    'Français' => 'fr',
+                    'Allemand' => 'de',
+                    'Espagnol' => 'es',
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher'

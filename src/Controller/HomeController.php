@@ -39,6 +39,9 @@ class HomeController extends AbstractController
 
             $elements = (object) array('hair' => $user->getHair(),
             'tattoo' => $user->getTattoo(),
+            'eyes' => $user->getEyes(),
+            'nationality' => $user->getNationality(),
+            'language' => $user->getLanguage(),
             'smoke' => $user->getSmoke());
 
 

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -54,6 +55,34 @@ class AnnouncerRegistrationType extends AbstractType
                     'Non' => '0',
                 ],
             ])
+            ->add('eyes', ChoiceType::class, [
+                'label' => 'Yeux',
+                'choices' => [
+                    'Tout' => null,
+                    'Bleu' => 'Blue',
+                    'Vert' => 'Green',
+                    'Brun' => 'Brown',
+                ]
+            ])
+            ->add('nationality', ChoiceType::class, [
+                'label' => 'Nationalité',
+                'choices' => [
+                    'Tout' => 'null',
+                    'Française' => 'fr',
+                    'Allemande' => 'de',
+                    'Belge' => 'be',
+                    'Espagnole' => 'es',
+                ]
+            ])
+            ->add('language', ChoiceType::class, [
+                'label' => 'Langue',
+                'choices' => [
+                    'Tout' => 'null',
+                    'Français' => 'fr',
+                    'Allemand' => 'de',
+                    'Espagnol' => 'es',
+                ]
+            ])
             ->add('shortdescription', TextareaType::class, [
                 'label' => 'Veuillez vous décrire en quelques mots',
             ])
@@ -87,7 +116,7 @@ class AnnouncerRegistrationType extends AbstractType
             ->add('mail', EmailType::class, [
                 'label' => 'Adresse mail',
                 'attr' => [
-                'placeholder' => 'Entrez une adresse mail'
+                    'placeholder' => 'Entrez une adresse mail'
                 ],
             ])
             ->add('image', FileType::class, [
@@ -114,8 +143,7 @@ class AnnouncerRegistrationType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Confirmer l\'inscription'
-            ])
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

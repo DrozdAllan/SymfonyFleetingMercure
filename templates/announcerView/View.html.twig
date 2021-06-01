@@ -1,40 +1,53 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<h1>
-		Profil de
-		{{ announcer.username }}
-	</h1>
+	<div class="container profile">
+		<h1>
+			Profil de
+			{{ announcer.username }}
+		</h1>
 
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Cheveux</th>
+							<th scope="col">Yeux</th>
+							<th scope="col">Tatouage</th>
+							<th scope="col">Fume</th>
+							<th scope="col">Langue</th>
+							<th scope="col">Nationalité</th>
+							<th scope="col">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								{{ announcer.hair }}</td>
+							<td>{{ announcer.eyes }}</td>
+							<td>{{ announcer.tattoo | boolean }}</td>
+							<td>{{ announcer.smoke | boolean }}</td>
+							<td>{{ announcer.language }}</td>
+							<td>{{ announcer.nationality }}</td>
+							<td>{{ announcer.shortdescription }}</td>
+						</tr>
+					</tbody>
+				</table>
+		<br>
+		{% for image in announcer.images %}
+			<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="250">
+		{% endfor %}
+		<br>
 
-	Cheveux :
-	{{ announcer.hair }}
-	<br>
-	Tatouage :
-	{{ announcer.tattoo | boolean }}
-	<br>
-	Fume :
-	{{ announcer.smoke | boolean }}
-	<br>
-	<p class="card-text">
-		{{ announcer.shortdescription }}
-	</p>
-	<br>
-	{% for image in announcer.images %}
-		<img src="{{ asset('/uploads/images/' ~ image.imageFilename) }}" alt="image" width="250">
-	{% endfor %}
-	<br>
+		{% if announcer %}
+			<a href="{{ path('checkChannel', {'targetId': announcer.id }) }}" class="btn btn-success">
+				Chat
+			</a>
+		{% endif %}
 
-	{% if app.user %}
-	<a href="{{ path('checkChannel', {'targetId': announcer.id }) }}" class="btn btn-success">
-			Chat
-		</a>
-	{% endif %}
-
-	{% if is_granted("ROLE_ADMIN") %}
-		<a href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn btn-success">
-			Modifier ce profil
-		</a>
-	{% endif %}
-
+		{% if is_granted("ROLE_ADMIN") %}
+			<a href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn btn-success">
+				Modifier ce profil
+			</a>
+		{% endif %}
+	</div>
 {% endblock %}

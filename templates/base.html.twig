@@ -39,21 +39,31 @@
 		<script src="{{ asset('js/jquery.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.js') }}"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
-		<script>
-			$(document).ready(function () {
+<script>
+	$(document).ready(function () {
+
+const cgu = sessionStorage.getItem('cgu');
+if (!cgu) {
+$('#staticBackdrop').modal('show');
+}
+
 $(".navbar-toggler").on("click", function () {
 $(".navbar-collapse").toggle('show');
 });
 
-// $('.dropdown-toggle').click(function () {
-//     $(this).next('.dropdown-menu').slideDown(300);
-// });
-// $('.dropdown-toggle').focusout(function () {
-//     $(this).next('.dropdown-menu').slideToggle(300);
-// })
-
+$('.dropdown-toggle').click(function () {
+$(this).next('.dropdown-menu').slideDown(300);
 });
-		</script>
+$('.dropdown-toggle').focusout(function () {
+$(this).next('.dropdown-menu').slideToggle(300);
+})
+$('.modalzz').click(function () {
+sessionStorage.setItem('cgu', 'ok');
+})
+});
+</script>
+
+
 		{% block javascripts %}{% endblock %}
 	</body>
 

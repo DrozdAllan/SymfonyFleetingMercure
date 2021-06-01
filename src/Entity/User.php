@@ -107,6 +107,21 @@ class User implements UserInterface
      */
     private $notif;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $eyes;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nationality;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $language;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -114,7 +129,7 @@ class User implements UserInterface
         $this->channels = new ArrayCollection();
     }
 
-    
+
 
     public function getId(): ?int
     {
@@ -395,6 +410,42 @@ class User implements UserInterface
     public function setNotif(?bool $notif): self
     {
         $this->notif = $notif;
+
+        return $this;
+    }
+
+    public function getEyes(): ?string
+    {
+        return $this->eyes;
+    }
+
+    public function setEyes(string $eyes): self
+    {
+        $this->eyes = $eyes;
+
+        return $this;
+    }
+
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(string $nationality): self
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

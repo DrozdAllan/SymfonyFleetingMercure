@@ -8,33 +8,34 @@
 
 	<main>
 		<div class="container p-3">
-			<div class="row">
+			<div
+				class="row">
 				{# {% if vips != null %} #}
-					{% for vip in vips %}
-						<div class="col-6 col-md-3 p-2 bg-dark">
-							<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
-								<div class="image-wrapper">
-									<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
-										<div class="carousel-inner">
-											{% for image in vip.images %}
-												<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
-													<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
-													<div class="carousel-caption">
-														<div class="user-title">
-															{{ vip.username }}
-														</div>
-														<div class="user-desc">
-															{{ vip.shortdescription }}
-														</div>
+				{% for vip in vips %}
+					<div class="col-6 col-md-3 p-2 bg-dark">
+						<a href="{{ path('viewAnnouncer', {'username': vip.username}) }}">
+							<div class="image-wrapper">
+								<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
+									<div class="carousel-inner">
+										{% for image in vip.images %}
+											<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
+												<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
+												<div class="carousel-caption">
+													<div class="user-title">
+														{{ vip.username }}
+													</div>
+													<div class="user-desc">
+														{{ vip.shortdescription }}
 													</div>
 												</div>
-											{% endfor %}
-										</div>
+											</div>
+										{% endfor %}
 									</div>
 								</div>
-							</a>
-						</div>
-					{% endfor %}
+							</div>
+						</a>
+					</div>
+				{% endfor %}
 				{# {% endif %} #}
 				{% for announcer in announcers %}
 					<div class="col-6 col-md-3 p-2">
@@ -62,7 +63,7 @@
 					</div>
 				{% endfor %}
 			</div>
-			<div class="advancedSearch row mt-2 bg-dark">
+			<div class="advancedSearch row mt-2 bg-light">
 				<div class="col-12">
 					<h3>
 						Recherche avancée
@@ -72,11 +73,18 @@
 					{{ form_start(formView) }}
 					{{ form_row(formView.hair) }}
 					{{ form_row(formView.tattoo) }}
+					{{ form_row(formView.nationality) }}
 				</div>
 				<div class="col-md-6">
 					{{ form_row(formView.smoke) }}
+					{{ form_row(formView.eyes) }}
+					{{ form_row(formView.language) }}
+				</div>
+				<div class="col-12">
+					{{ form_row(formView.submit) }}
 					{{ form_end(formView) }}
 				</div>
+
 			</div>
 		</div>
 	</div>

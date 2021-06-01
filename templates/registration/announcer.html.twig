@@ -120,7 +120,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container announcer">
 			<h1>
 				Nouvel annonceur
 			</h1>
@@ -149,6 +149,10 @@
 
 				{{ form_row(formView.smoke) }}
 
+				{{ form_row(formView.eyes) }}
+				{{ form_row(formView.nationality) }}
+				{{ form_row(formView.language) }}
+
 				{{ form_row(formView.shortdescription) }}
 
 			</div>
@@ -167,4 +171,12 @@
 
 		{{ form_end(formView) }}
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
+	</script>
 {% endblock %}

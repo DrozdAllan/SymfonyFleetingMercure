@@ -23,7 +23,7 @@ nav.navbar
                     transform: scale(1)
                     animation-timing-function: ease-out
     .navbar-toggler
-        color: $third-color  
+        color: $third-color
     .btn
         color: $third-color
         background-color: $primary-color
@@ -39,6 +39,8 @@ nav.navbar
             padding: 4px 5px 4px 15px
             +st-sm
                 text-align: center
+        .dropdown-item:hover
+           background-color: #302600
     .desktopSearchDropdown
         position: initial
         left: -10rem
@@ -52,6 +54,9 @@ nav.navbar
         margin-left: -15px
         @include lt-sm
             display: none
+    .nav-link
+        i
+            color: $third-color
     .desktopSearch
         .nav-link
             i
