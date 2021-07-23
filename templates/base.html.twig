@@ -15,17 +15,18 @@
 			{#{{ encore_entry_link_tags('app') }}#}
 
 			{# bootstrap 4.6 #}
-			<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"> <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/sass/styles.css') }}">
 			<link rel="stylesheet" href="{{ asset('css/all.css') }}">
 		{% endblock %}
 	</head>
 	<body>
 		{% include "shared/_navbar.html.twig" %}
 
-		<video autoplay loop muted poster="{{ asset('image/posterbrand.png') }}">
-			<source src="{{ asset('video/Pub_Fleeting.mp4') }}" type="video/mp4">
-			Your browser does not support the video tag.
-		</video>
+{#		<video autoplay loop muted poster="{{ asset('image/posterbrand.png') }}">#}
+{#			<source src="{{ asset('video/Pub_Fleeting.mp4') }}" type="video/mp4">#}
+{#			Your browser does not support the video tag.#}
+{#		</video>#}
 		<div class="text-center py-5 mobile-bg">
 
 			{% include "shared/_flash.html.twig" %}

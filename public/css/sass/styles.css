@@ -2,126 +2,141 @@ body {
   background-color: #181300;
 }
 
+.personnalRound {
+  border-radius: 5px;
+}
+
 nav.navbar {
   background-color: #0000007c;
   border-bottom: 1px solid #fff4d4;
 }
-
 nav.navbar a.navbar-brand {
   border-right: 1px solid #fff6d0;
 }
-
 nav.navbar a.navbar-brand img {
-  -webkit-animation: heartbeat 8s ease-in-out infinite both;
-          animation: heartbeat 8s ease-in-out infinite both;
+  animation: heartbeat 8s ease-in-out infinite both;
 }
-
 @-webkit-keyframes heartbeat {
   0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform-origin: center center;
-            transform-origin: center center;
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
   }
   10% {
-    -webkit-transform: scale(0.91);
-            transform: scale(0.91);
-    -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
   }
   17% {
-    -webkit-transform: scale(0.98);
-            transform: scale(0.98);
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
   }
   33% {
-    -webkit-transform: scale(0.87);
-            transform: scale(0.87);
-    -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
   }
   45% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(1);
+    animation-timing-function: ease-out;
   }
 }
-
+@-moz-keyframes heartbeat {
+  0% {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+@-ms-keyframes heartbeat {
+  0% {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
 @keyframes heartbeat {
   0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-transform-origin: center center;
-            transform-origin: center center;
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
   }
   10% {
-    -webkit-transform: scale(0.91);
-            transform: scale(0.91);
-    -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
   }
   17% {
-    -webkit-transform: scale(0.98);
-            transform: scale(0.98);
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
   }
   33% {
-    -webkit-transform: scale(0.87);
-            transform: scale(0.87);
-    -webkit-animation-timing-function: ease-in;
-            animation-timing-function: ease-in;
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
   }
   45% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-    -webkit-animation-timing-function: ease-out;
-            animation-timing-function: ease-out;
+    transform: scale(1);
+    animation-timing-function: ease-out;
   }
 }
-
 nav.navbar .navbar-toggler {
   color: #f7da59;
 }
-
 nav.navbar .btn {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 @media screen and (max-width: 575px) {
   nav.navbar .register-dropdown {
     width: 100%;
   }
 }
-
 nav.navbar .register-dropdown-menu {
   min-width: 100%;
   background-color: #181300;
 }
-
 nav.navbar .register-dropdown-menu .dropdown-item {
   color: #f7da59;
   padding: 4px 5px 4px 15px;
 }
-
 @media screen and (max-width: 575px) {
   nav.navbar .register-dropdown-menu .dropdown-item {
     text-align: center;
   }
 }
-
 nav.navbar .register-dropdown-menu .dropdown-item:hover {
   background-color: #302600;
 }
-
 nav.navbar .desktopSearchDropdown {
   position: initial;
   left: -10rem;
@@ -131,29 +146,23 @@ nav.navbar .desktopSearchDropdown {
   border: none;
   height: 2.4rem;
 }
-
 nav.navbar .mobileSearch {
   margin-left: -15px;
 }
-
 @media screen and (min-width: 576px) {
   nav.navbar .mobileSearch {
     display: none;
   }
 }
-
 nav.navbar .nav-link i {
   color: #f7da59;
 }
-
 nav.navbar .desktopSearch .nav-link i {
   color: #f7da59;
 }
-
 nav.navbar .desktopSearch .dropdown-toggle::after {
   color: #f7da59;
 }
-
 @media screen and (max-width: 575px) {
   nav.navbar .desktopSearch {
     display: none;
@@ -170,7 +179,6 @@ video {
   height: auto;
   z-index: -100;
 }
-
 @media screen and (max-width: 575px) {
   video {
     display: none;
@@ -185,74 +193,59 @@ video {
     background-size: cover;
   }
 }
-
 main {
   background-color: #0000007c;
   margin: 50px;
 }
-
 main .videoBanner {
   background-color: #000;
   margin-top: -48px;
 }
-
 main #carouselVip img {
   width: 256px;
   height: 294px;
   border-radius: 5px;
 }
-
 @media screen and (max-width: 575px) {
   main #carouselVip img {
     width: 293px;
     height: 250px;
   }
 }
-
 main #carouselVip .carousel-caption {
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
+  transition-duration: 1s;
   background-color: rgba(219, 176, 35, 0.5);
   color: #000;
   bottom: 0;
   padding: 5px;
   border-radius: 5px;
 }
-
 main #carousel img {
   width: 256px;
   height: 294px;
-  border-radius: 5px;
 }
-
 @media screen and (max-width: 575px) {
   main #carousel img {
     width: 293px;
     height: 250px;
   }
 }
-
 main #carousel .carousel-caption {
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
+  transition-duration: 1s;
   background-color: rgba(0, 0, 0, 0.5);
   bottom: 0;
   padding: 5px;
   border-radius: 5px;
 }
-
 main .carousel:hover .carousel-caption {
-  -webkit-transition-duration: 1s;
-          transition-duration: 1s;
+  transition-duration: 1s;
   background-color: rgba(0, 0, 0, 0.8);
 }
-
 main .advancedSearch button {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 main .advancedSearch button:hover {
   background-color: #302600;
 }
@@ -260,29 +253,24 @@ main .advancedSearch button:hover {
 .chatContainer {
   background-color: #181300;
 }
-
 .chatContainer .chatBloc {
   background-color: #ffffff;
 }
-
 .chatContainer .chatBloc .chatText {
   height: 700px;
   overflow: auto;
 }
-
 .chatContainer .chatBloc .chatText .row {
   width: 60%;
   padding: 3px;
 }
 
 #payment-form {
-  -webkit-box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
-          box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
   padding: 40px;
   background-color: #ffffff;
 }
-
 #payment-form #card-element {
   width: 50%;
   margin: auto;
@@ -291,7 +279,6 @@ main .advancedSearch button:hover {
   border: 1px solid rgba(50, 50, 93, 0.1);
   background: #596fd6;
 }
-
 #payment-form button {
   width: 50%;
   margin-right: auto;
@@ -303,10 +290,8 @@ main .advancedSearch button:hover {
   padding: 12px 16px;
   font-weight: 500;
   cursor: pointer;
-  -webkit-box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
 }
-
 #payment-form a {
   color: #596fd6;
   font-weight: 600;
@@ -318,21 +303,17 @@ main .advancedSearch button:hover {
   border-radius: 5px;
   padding: 10px;
 }
-
 .announcer h1 {
   color: #181300;
 }
-
 .announcer .my-2 a {
   color: #9b7a18;
 }
-
 .announcer button {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 .announcer button:hover {
   background-color: #302600;
 }
@@ -340,21 +321,17 @@ main .advancedSearch button:hover {
 .user {
   background-color: #ffffff;
 }
-
 .user h1 {
   color: #181300;
 }
-
 .user .my-2 a {
   color: #9b7a18;
 }
-
 .user button {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 .user button:hover {
   background-color: #302600;
 }
@@ -362,21 +339,17 @@ main .advancedSearch button:hover {
 .login {
   background-color: #ffffff;
 }
-
 .login h1 {
   color: #181300;
 }
-
 .login .my-2 a {
   color: #9b7a18;
 }
-
 .login button {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 .login button:hover {
   background-color: #302600;
 }
@@ -384,27 +357,23 @@ main .advancedSearch button:hover {
 .profile {
   background-color: #ffffff;
 }
-
 .profile h1 {
   color: #181300;
 }
-
 .profile .my-2 a {
   color: #9b7a18;
 }
-
 .profile a.btn-color {
   color: #f7da59;
   background-color: #181300;
 }
-
 .profile button {
   color: #f7da59;
   background-color: #181300;
   border: 1px solid #ffda6c;
 }
-
 .profile button:hover {
   background-color: #302600;
 }
+
 /*# sourceMappingURL=styles.css.map */

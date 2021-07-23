@@ -39,7 +39,7 @@
 							<div class="carousel-inner">
 								{% for image in announcer.images %}
 									<div class="carousel-item {% if loop.index0 == 0 %} active {% endif %}">
-										<img class="d-block" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
+										<img class="d-block rounded" src="{{ asset('/uploads/images/' ~ image.imageFilename) }}">
 										<div class="carousel-caption">
 											<div class="user-title">
 												{{ announcer.username }}
@@ -53,7 +53,7 @@
 
 				{% endfor %}
 			</div>
-			<div class="advancedSearch row mt-2 bg-light">
+			<div class="advancedSearch rounded row mt-2 bg-light">
 				<div class="col-12">
 					<h3>
 						Recherche avancée
