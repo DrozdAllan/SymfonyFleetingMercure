@@ -1,9 +1,8 @@
+@import url(https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap);
 body {
-  background-color: #181300;
-}
-
-.personnalRound {
-  border-radius: 5px;
+  background-color: #191919;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: normal;
 }
 
 nav.navbar {
@@ -109,12 +108,12 @@ nav.navbar a.navbar-brand img {
   }
 }
 nav.navbar .navbar-toggler {
-  color: #f7da59;
+  color: #f4d8a9;
 }
 nav.navbar .btn {
-  color: #f7da59;
-  background-color: #181300;
-  border: 1px solid #ffda6c;
+  color: #f4d8a9;
+  background-color: #191919;
+  border: 1px solid #f4d8a9;
 }
 @media screen and (max-width: 575px) {
   nav.navbar .register-dropdown {
@@ -123,10 +122,10 @@ nav.navbar .btn {
 }
 nav.navbar .register-dropdown-menu {
   min-width: 100%;
-  background-color: #181300;
+  background-color: #191919;
 }
 nav.navbar .register-dropdown-menu .dropdown-item {
-  color: #f7da59;
+  color: #f4d8a9;
   padding: 4px 5px 4px 15px;
 }
 @media screen and (max-width: 575px) {
@@ -155,18 +154,26 @@ nav.navbar .mobileSearch {
   }
 }
 nav.navbar .nav-link i {
-  color: #f7da59;
+  color: #f4d8a9;
 }
 nav.navbar .desktopSearch .nav-link i {
-  color: #f7da59;
+  color: #f4d8a9;
 }
 nav.navbar .desktopSearch .dropdown-toggle::after {
-  color: #f7da59;
+  color: #f4d8a9;
 }
 @media screen and (max-width: 575px) {
   nav.navbar .desktopSearch {
     display: none;
   }
+}
+
+.footerSass {
+  border-top: 1px solid #fff4d4;
+  color: #f4d8a9;
+}
+.footerSass a {
+  color: #f4d8a9;
 }
 
 video {
@@ -185,16 +192,21 @@ video {
   }
 }
 
+@media screen and (min-width: 576px) {
+  .desktop-bg {
+    background: url(/image/luxurious-black-marble.jpg);
+    background-size: cover;
+  }
+}
 @media screen and (max-width: 575px) {
-  .mobile-bg {
-    background-color: black;
-    background: url(/image/posterbrand.png);
+  .desktop-bg .mobile-bg {
+    background: black url(/image/posterbrand.png);
     z-index: -100;
     background-size: cover;
   }
 }
+
 main {
-  background-color: #0000007c;
   margin: 50px;
 }
 main .videoBanner {
@@ -241,20 +253,26 @@ main .carousel:hover .carousel-caption {
   transition-duration: 1s;
   background-color: rgba(0, 0, 0, 0.8);
 }
+main .advancedSearch {
+  background-color: #191919;
+  border: 2px solid #fff4d4;
+  border-radius: 5px;
+  color: #fff4d4;
+}
 main .advancedSearch button {
-  color: #f7da59;
-  background-color: #181300;
-  border: 1px solid #ffda6c;
+  color: #f4d8a9;
+  background-color: #191919;
+  border: 1px solid #f4d8a9;
 }
 main .advancedSearch button:hover {
   background-color: #302600;
 }
 
 .chatContainer {
-  background-color: #181300;
+  background-color: #191919;
 }
 .chatContainer .chatBloc {
-  background-color: #ffffff;
+  background-color: #AB942C;
 }
 .chatContainer .chatBloc .chatText {
   height: 700px;
@@ -269,7 +287,7 @@ main .advancedSearch button:hover {
   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
   padding: 40px;
-  background-color: #ffffff;
+  background-color: #AB942C;
 }
 #payment-form #card-element {
   width: 50%;
@@ -283,7 +301,7 @@ main .advancedSearch button:hover {
   width: 50%;
   margin-right: auto;
   margin-bottom: 50px;
-  background: #f7da59;
+  background: #f4d8a9;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
   border: 0;
@@ -299,19 +317,21 @@ main .advancedSearch button:hover {
 }
 
 .announcer {
-  background-color: #ffffff;
+  background-color: #191919;
+  border: 2px solid #fff4d4;
+  color: #fff4d4;
   border-radius: 5px;
   padding: 10px;
 }
 .announcer h1 {
-  color: #181300;
+  color: #fff4d4;
 }
 .announcer .my-2 a {
   color: #9b7a18;
 }
 .announcer button {
-  color: #f7da59;
-  background-color: #181300;
+  color: #f4d8a9;
+  background-color: #191919;
   border: 1px solid #ffda6c;
 }
 .announcer button:hover {
@@ -319,17 +339,17 @@ main .advancedSearch button:hover {
 }
 
 .user {
-  background-color: #ffffff;
+  background-color: #AB942C;
 }
 .user h1 {
-  color: #181300;
+  color: #191919;
 }
 .user .my-2 a {
   color: #9b7a18;
 }
 .user button {
-  color: #f7da59;
-  background-color: #181300;
+  color: #f4d8a9;
+  background-color: #191919;
   border: 1px solid #ffda6c;
 }
 .user button:hover {
@@ -337,17 +357,17 @@ main .advancedSearch button:hover {
 }
 
 .login {
-  background-color: #ffffff;
+  background-color: #AB942C;
 }
 .login h1 {
-  color: #181300;
+  color: #191919;
 }
 .login .my-2 a {
   color: #9b7a18;
 }
 .login button {
-  color: #f7da59;
-  background-color: #181300;
+  color: #f4d8a9;
+  background-color: #191919;
   border: 1px solid #ffda6c;
 }
 .login button:hover {
@@ -355,21 +375,26 @@ main .advancedSearch button:hover {
 }
 
 .profile {
-  background-color: #ffffff;
+  background-color: #191919;
+  border: 2px solid #fff4d4;
+  border-radius: 5px;
+}
+.profile tr {
+  color: #fff4d4;
 }
 .profile h1 {
-  color: #181300;
+  color: #191919;
 }
 .profile .my-2 a {
   color: #9b7a18;
 }
 .profile a.btn-color {
-  color: #f7da59;
-  background-color: #181300;
+  color: #f4d8a9;
+  background-color: #191919;
 }
 .profile button {
-  color: #f7da59;
-  background-color: #181300;
+  color: #f4d8a9;
+  background-color: #191919;
   border: 1px solid #ffda6c;
 }
 .profile button:hover {

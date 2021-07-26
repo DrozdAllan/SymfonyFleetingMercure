@@ -40,15 +40,15 @@
 		<br>
 
 		{% if announcer %}
-			<a href="{{ path('checkChannel', {'targetId': announcer.id }) }}" class="btn btn-success my-2">
+			<button href="{{ path('checkChannel', {'targetId': announcer.id }) }}" class="btn my-2">
 				Chat
-			</a>
+			</button>
 		{% endif %}
 
 		{% if is_granted("ROLE_ADMIN") %}
-			<a href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn btn-success">
+			<button href="{{ path('announcerModify', {'id': announcer.id }) }}" class="btn">
 				Modifier ce profil
-			</a>
+			</button>
 		{% endif %}
 	</div>
 {% endblock %}
